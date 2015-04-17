@@ -1,0 +1,5 @@
+Polinomio estensione
+pp = 301 = x^8+x^5+x^3+x^2+1
+
+Polinomio per RS
+PARTE DA 1!
