@@ -25,7 +25,7 @@ p = [1, a^215, a^234, a^158, a^94, a^184, a^97, a^118, a^170, a^79, a^187, a^152
  ECCodewordByte = zeros(18,8,2);
  
  RSOutput(1,:) = gf2dec(rsenc(gf(DataCodewordInteger(1,:),8),35,17,p),8); % codifico in reed solomon il primo blocco e converto in interi
- RSOutput(2,:) = gf2dec(rsenc(gf(DataCodewordInteger(2,:),8),35,17,p),8); % codifico in reed solomon il secondo blocco e converto in interi
+ RSOutput(2,:) = g'f2dec(rsenc(gf(DataCodewordInteger(2,:),8),35,17,p),8); % codifico in reed solomon il secondo blocco e converto in interi
  
 for i =1:18
  
