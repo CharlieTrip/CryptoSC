@@ -2,4 +2,6 @@
 
 a = imread('test.png');
 
-b = leggiDM(a)
+b = leggiDM(a);
+
+c = orientaDM(b);

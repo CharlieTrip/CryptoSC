@@ -15,26 +15,26 @@ function matrixDM = leggiDM(immDM)
 
 	% Just for test.png
 	% Waiting for contaCambi
-	quietZone = 11;
-	numeroCambi = 10;
+	% quietZone = 11;
+	% numeroCambi = 10;
 
 
 
 	% Elimino la QuietZone
 	% Cerco la prima riga che ha un contaCambi diverso da 0
 
-	% quietZone = 0;
+	quietZone = 1;
 
-	% while( contaCambi(immDM(quietZone,:)) == 0)
-	% 	quietZone = quietZone + 1; 
-	% end
+	while( contaCambi(immDM(quietZone,:)) == 1)
+		quietZone = quietZone + 1; 
+	end
 
 
 
 
 	% Estraggo la sottomatrice togliendo la quietZone
 
-	immDM = immDM(quietZone : (length(immDM(1,:))-quietZone +1) ,quietZone : (length(immDM(1,:))-quietZone +1));
+	immDM = immDM(quietZone : (length(immDM(1,:))-quietZone +1) , quietZone : (length(immDM(1,:))-quietZone +1));
 
 
 
@@ -42,11 +42,11 @@ function matrixDM = leggiDM(immDM)
 	% Prendo i 3 lati esterni e faccio il massimo della
 	% conta per quello diverso da 0.
 
-	% lato1 = contaCambi(immDM(1,:));
-	% lato2 = contaCambi(immDM(:,1));
-	% lato3 = contaCambi(immDM(length(immDM(0)),:));
+	lato1 = contaCambi(immDM(1,:));
+	lato2 = contaCambi(immDM(:,1));
+	lato3 = contaCambi(immDM(length(immDM(1)),:));
 
-	% numeroCambi = max(lato1,lato2,lato3);
+	numeroCambi = max([lato1,lato2,lato3]);
 
 
 
@@ -72,8 +72,22 @@ function matrixDM = leggiDM(immDM)
 
 	for i = 1 : numeroCambi
 		for j = 1 : numeroCambi
+
+
+			% Controllo con soglia per impostare il bit della tabella
+			% Se è un grigio sopra 127, setta a 0 il valore. 1 altrimenti
+
+			tmp = 0;
+
+			if (immDM( int8(passo + ((2 * passo) * (i-1))) , int8(passo + ((2 * passo) * (j-1)))) > 127)
+				tmp = 0;
+			else
+				tmp = 1;
+			end;
 			
-			matrixDM(i , j) = immDM( int8(passo + ((2 * passo) * (i-1))) , int8(passo + ((2 * passo) * (j-1))));
+			matrixDM(i , j) = tmp;
+
+
 		end
 	end
 
