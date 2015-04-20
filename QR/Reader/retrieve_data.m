@@ -2,7 +2,7 @@ function [ data ] = retrieve_data (qr_matrix)
 %starting from right down corner
 n=7;
 data = [];
-for c=(size(qr_matrix,2)):-2:5
+for c=(size(qr_matrix,2)):-2:9
     [qr_matrix, p, n, data] = upwards(qr_matrix, [size(qr_matrix,1),c], n, data);
     qr_matrix=rotate_matrix(qr_matrix);
 end

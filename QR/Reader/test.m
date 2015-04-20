@@ -1,44 +1,26 @@
-qr=imread('QRCode.png');
+global null;
+null = -1;
+%read image
+qr=imread('qr_test/HELLO WORLD.png');
+%try to convert in gray if it isn't
 try
 qr=rgb2gray(qr);
 catch
 end
+%invert ones with zeros
 qr = uint8(ones(size(qr)))-qr;
+%extract matrix from image
 qr_matrix = get_matrix_from_image(qr);
+%retrieve and decode format information
 [ecl, mask_n, version]=decode_format_information(qr_matrix);
-
+%apply mask
 qr_matrix = release_masking(qr_matrix, mask_n);
-
-%%%%%%%%%%%% Mettere in una funzione %%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%value for pointless bit
-global null;
-null = -1;
-side = size(qr_matrix,1);
-%qr_matrix = qr_matrix*255;
-%%Remove position detection pattern (i 3 quadratoni)
-%remove up left
-qr_matrix([1:9],[1:9]) = null;
-%remove up right
-qr_matrix([1:9],[side-7:side])=null;
-%remove down left
-qr_matrix([side-7:side], [1:9])=null;
-
-%%remove timing patterns (le linee)
-qr_matrix(7,:) = null;
-qr_matrix(:,7) = null;
-
-%%removing allignement patterns
-if version >1
-    centers = get_allignment_patterns_center(version);
-    %if the centers are more then one TODO:add for more then 7
-    for c=centers.list
-        qr_matrix([side-6-2:side-6+2],[c+1-2:c+1+2]) = null;
-    end
-end
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%remove allignments bits
+qr_matrix =remove_allignments_bits(qr_matrix, version);
+%retrieve data
 data = retrieve_data (qr_matrix);
-
+%retrieve message
+message = retrieve_message(data, version, ecl);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
