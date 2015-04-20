@@ -9,7 +9,7 @@
 % 	comeMsg : list that rappresent the message
 % 
 % Output
-%	decodeMsg ; decoded message of length k
+%	decodeMsg ; decoded message of length k -
 % 
 
 function decodedMsg = RSDecoder(n,k, codedMsg)
