@@ -9,8 +9,9 @@
 %  
 % Output
 %	m 		: padded message
+%	t		: matrix-size index
 
-function m = Padding(m)
+function [m, t] = Padding(m)
 
 	% Vector of matrix sizes
 	DataWordLength = [3, 5, 8, 12, 18, 22, 30, 36, 44, ...
@@ -21,17 +22,17 @@ function m = Padding(m)
 	size = 0;			% Size of the matrix
 
 	% Choice the right matrix dimension
-	i = 1;
+	t = 0;
 	while size<1
-		if data_word_length(i)>=l
-			size = data_word_length(i);
+		t = t+1;
+		if data_word_length(t)>=l
+			size = DataWordLength(t);
 		end
-		i = i+1;
 	end
 
 	% Padding
-	pad_length = size-l;
-	for i=1:pad_length
+	PadLength = size-l;
+	for i=1:PadLength
 		m(l+i)=129;
 	end
 

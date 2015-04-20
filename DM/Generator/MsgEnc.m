@@ -27,8 +27,8 @@ m = [97, 98, 99, 100];		% Message to be encoded
                     18, 20, 22];
 
 % Padding function
-	msg = Padding(m);
+	[msg, index] = Padding(m);
 	sprintf('Padded message = %s', msg)
 % Encoding function
-	msg = RSEncoder(msg);
+	msg = RSEncoder(DataRegionSize[index], DataWordLength[index], msg);
 	sprintf('Encoded message with ECC= %s', msg)
