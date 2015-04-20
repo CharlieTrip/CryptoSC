@@ -3,7 +3,7 @@
 
 + Num. Cambi	| contaCambi			| [vettore di 0 e 1]	| Marilù
 + Matrice 0/1	| leggiDM				| immagine DM 			| Carlo
-+ matrice 0/1	| orientaDM				| matrice 0/1			| Marilù
+V matrice 0/1	| orientaDM				| matrice 0/1			| Marilù
 + stringa 8bit	| leggiBloccoFacile		| mat 0/1, x , y 		| Carlo
 + stringa 8bit	| leggiBloccoAngolo		| mat 0/1, x , y 		| Carlo
 + stringa 8bit	| leggiBloccoDifficile	| mat 0/1, x , y 		| Carlo
