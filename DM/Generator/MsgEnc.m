@@ -1,14 +1,12 @@
 % 
 % Message encoder script
-% Perform the padding and the encoding of the message,
+% Perform the padding and the RS-encoding of the message
 %  
 % Input
 % 	m 		: raw message
 %  
 % Output
 %	msg		: padded message with ECC
-
-m = [97, 98, 99, 100];		% Message to be encoded
 
 % Max data that can be encoded, size by size
 	DataWordLength = [3, 5, 8, 12, 18, 22, 30, 36, 44, ...
@@ -26,9 +24,15 @@ m = [97, 98, 99, 100];		% Message to be encoded
                     14, 16, 18, 20, 22, 24, ...
                     18, 20, 22];
 
+function msg = MsgEnc(m);
+
 % Padding function
 	[msg, index] = Padding(m);
-	sprintf('Padded message = %s', msg)
+	disp('Padded message = ')
+	disp(msg)
+	
 % Encoding function
-	msg = RSEncoder(DataRegionSize[index], DataWordLength[index], msg);
-	sprintf('Encoded message with ECC= %s', msg)
+	msg = RSEncoder(DataRegionSize(index), DataWordLength(index), msg);
+	disp('Encoded message = ')
+	disp(msg)
+end
