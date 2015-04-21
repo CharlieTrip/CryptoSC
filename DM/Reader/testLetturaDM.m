@@ -1,6 +1,6 @@
 % Opening the test.png and extract the matrix
 
-a = imread('test.png');
+a = imread('test12.png');
 
 b = leggiDM(a);
 
