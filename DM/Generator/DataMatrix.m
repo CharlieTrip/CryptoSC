@@ -2,13 +2,13 @@
 % Main file
 %   
 % Input
-% 	m 		: raw message
+% 	M 		: raw message
 %  
 % Output
-%	img		: DataMatrix image
+%	IMG		: DataMatrix image
 
 % Message to be encoded
-m = [97, 98, 99, 100];
+M = [97, 98, 99, 100];
 
 % Max data that can be encoded, size by size
 	DataWordLength = [3, 5, 8, 12, 18, 22, 30, 36, 44, ...
@@ -32,14 +32,14 @@ m = [97, 98, 99, 100];
 	
 				
 % Padding function
-	[msg, index] = Padding(m);
+	[Msg, SizeIndex] = Padding(M);
 	disp('Padded message = ')
-	disp(msg)
+	disp(Msg)
 	
 % RS-Encoding function
-	msg = RSEncoder(DataRegionSize(index), DataWordLength(index), msg);
+	Msg = RSEncoder(DataRegionSize(SizeIndex), DataWordLength(SizeIndex), Msg);
 	disp('Encoded message = ')
-	disp(msg)
+	disp(Msg)
 	
 % Message-to-matrix function
 	
