@@ -26,30 +26,51 @@ if version >1
         qr_matrix(c.r-2:c.r+2,c.c-2:c.c+2) = null;
     end
 end
+%removing version information if version is bigger then 6
+if version > 6
+    %down left
+    qr_matrix([(size(qr_matrix)-10):(size(qr_matrix)-8)], [1:6]) = null;
+    %up right
+    qr_matrix([1:6], [(size(qr_matrix)-10):(size(qr_matrix)-8)]) = null;
+end
 end
 
 %%return the center of the allignemts patterns
 function [ result ] = get_allignment_patterns_center( v )
 %TODO: edit center in case bigger then 7
-switch v
-    case 2
-        result =struct('r',21+(v-1)*4-6,'c',18+1);
-    case 3
-result =struct('r',21+(v-1)*4-6,'c',22+1);
-    case 4
-result =struct('r',21+(v-1)*4-6,'c',26+1);
-    case 5
-result =struct('r',21+(v-1)*4-6,'c',30+1);
-    case 6
-result =struct('r',21+(v-1)*4-6,'c',34+1);
-    case 7 %TODO: continue 
-result =[struct('r',(21+(v-1)*4)-6,'c',38+1),struct('r',21+(v-1)*4-6,'c',21+(v-1)*4-22),...
-                 struct('r',21+(v-1)*4-22,'c',21+(v-1)*4-6),struct('r',21+(v-1)*4-22,'c',21+(v-1)*4-22),struct('r',21+(v-1)*4-22,'c',6+1),...
-                 struct('r',7,'c',21+(v-1)*4-22)];
-    case 8
-result =[struct('r',(21+(v-1)*4)-6,'c',42+1),struct('r',21+(v-1)*4-6,'c',21+(v-1)*4-24),...
-                 struct('r',21+(v-1)*4-24,'c',21+(v-1)*4-6),struct('r',21+(v-1)*4-24,'c',21+(v-1)*4-24),struct('r',21+(v-1)*4-24,'c',6+1),...
-                 struct('r',7,'c',21+(v-1)*4-24)];        
+if v<=6
+    switch v
+        case 2
+            result =struct('r',21+(v-1)*4-6,'c',18+1);
+        case 3
+            result =struct('r',21+(v-1)*4-6,'c',22+1);
+        case 4
+            result =struct('r',21+(v-1)*4-6,'c',26+1);
+        case 5
+            result =struct('r',21+(v-1)*4-6,'c',30+1);
+        case 6
+            result =struct('r',21+(v-1)*4-6,'c',34+1);
+    end
+elseif v<=13
+    switch v
+        case 7
+            rc=[22 38];
+        case 8
+            rc=[24 42];
+        case 9
+            rc=[26 46];
+        case 10 
+            rc=[28 50];
+        case 11
+            rc=[30 54];
+        case 12
+            rc=[32 58];
+        case 13
+            rc=[34 62];
+    end
+    result =[struct('r',(21+(v-1)*4)-6,'c',rc(2)+1),struct('r',21+(v-1)*4-6,'c',21+(v-1)*4-rc(1)),...
+                 struct('r',21+(v-1)*4-rc(1),'c',21+(v-1)*4-6),struct('r',21+(v-1)*4-rc(1),'c',21+(v-1)*4-rc(1)),struct('r',21+(v-1)*4-rc(1),'c',6+1),...
+                 struct('r',7,'c',21+(v-1)*4-rc(1))];     
 end
 
 end

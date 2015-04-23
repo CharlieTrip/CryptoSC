@@ -1,5 +1,6 @@
 function [ data ] = retrieve_data (qr_matrix)
 %starting from right down corner
+%n is the bit counter
 n=7;
 data = [];
 for c=(size(qr_matrix,2)):-2:9
@@ -14,8 +15,8 @@ data = fliplr(data);
 end
 
 function [qr_matrix, p ,n, data] = upwards(qr_matrix, p, n, data)
-
- null=-1;
+global null;
+ %null=-1;
     r=p(1);
     c=p(2);
     if r>0 && r<=size(qr_matrix,1)

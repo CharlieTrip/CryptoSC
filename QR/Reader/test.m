@@ -1,7 +1,7 @@
 global null;
 null = -1;
 %read image
-qr=imread('qr_test/HELLO WORLD.png');
+qr=imread('qr_test/vmore7.png');
 %try to convert in gray if it isn't
 try
 qr=rgb2gray(qr);
@@ -19,9 +19,11 @@ qr_matrix = release_masking(qr_matrix, mask_n);
 qr_matrix =remove_allignments_bits(qr_matrix, version);
 %retrieve data
 data = retrieve_data (qr_matrix);
-%retrieve message
+%retrieve and cecode message
 message = retrieve_message(data, version, ecl);
-
+%join all character
+message=strjoin(message,'');
+sprintf('%s',message(:))
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % %Print result

@@ -29,8 +29,12 @@ end
 %get mask
 mask_n = mat2str(decoded_format([3:5]));
 mask_n = mask_n([2,4,6]);
-%calculate version
+%%calculate version
 version = (size(qr_matrix,1)-21)/4+1;
+if version >6
+    %TODO: do decoding
+    %version = retrieve_version_information(qr_matrix);
+end
 end
 
 function [format_information_h, format_information_v] = retrieve_format_information(qr_matrix)
@@ -48,4 +52,24 @@ f1 = horzcat(qr_matrix([1:6],9)', qr_matrix([8,9],9)');
 f2 = qr_matrix([size(qr_matrix,2)-6:size(qr_matrix,2)],9);
 format_information_v = uint8(fliplr(horzcat(f1,f2')));
 format_information_v = bitxor(mask,format_information_v);
+end
+
+function version = retrieve_version_information(qr_matrix)
+%TODO: fix it, it doesn't work
+    %get rectangle down left
+    v1 = qr_matrix([(size(qr_matrix)-10):(size(qr_matrix)-8)], [1:6]);
+    %reshape for getting ordering bit sequence
+    v1 = uint8(reshape(v1,1,[]));
+    %try to decode the version
+    [version,err_num]=bchdec(gf(v1,2),18,6);
+    if err_num == -1
+        %get rectangle up right
+        v2 = qr_matrix([1:6], [(size(qr_matrix)-10):(size(qr_matrix)-8)]);
+        %reshape for getting ordering bit sequence
+        v2 = reshape(v2,1,[]);
+        [version,err_num]=bchdec(gf(v2),18,6);
+        if err_num == -1
+            assert(false,'Decoding information is not possible');
+        end
+    end
 end
