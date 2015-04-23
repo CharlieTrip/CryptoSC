@@ -120,7 +120,7 @@ switch version
             case 'Q'
                 car = struct('nblock',[4 4],'n',[36 37],'k',[16 17]);
             case 'H'
-                car = struct('nblock',[4 1],'n',[36 37],'k',[12 13]);
+                car = struct('nblock',[4 4],'n',[36 37],'k',[12 13]);
         end
         
     case 10
@@ -266,7 +266,274 @@ switch version
                 car = struct('nblock',[15 10],'n',[43 44],'k',[15 16]);
         end
         
+   case 21
+        r = 4;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[4 4],'n',[144 145],'k',[116 117]);
+            case 'M'
+                car = struct('nblock',17,'n', 68,'k',42);
+            case 'Q'
+                car = struct('nblock',[17 6],'n',[50 51],'k',[22 23]);
+            case 'H'
+                car = struct('nblock',[19 6],'n',[46 47],'k',[16 17]);
+        
+        end
+
+case 22
+        r = 4;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[2 7],'n',[139 140],'k',[111 112]);
+            case 'M'
+                car = struct('nblock',17,'n', 74,'k',46);
+            case 'Q'
+                car = struct('nblock',[7 16],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',34,'n',37,'k',13);
+        
+        end
+        
+    case 23
+        r = 4;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[4 5],'n',[151 152],'k',[121 122]);
+            case 'M'
+                car = struct('nblock',[4 14],'n', [75 76],'k',[47 48]);
+            case 'Q'
+                car = struct('nblock',[11 14],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',[16 14],'n',[45 46],'k',[15 16]);
+                
+        end
+    case 24
+        r = 4;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[6 4],'n',[147 148],'k',[117 118]);
+            case 'M'
+                car = struct('nblock',[6 14],'n', [73 74],'k',[45 46]);
+            case 'Q'
+                car = struct('nblock',[11 16],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',[30 2],'n',[46 47],'k',[16 17]);
+                
+        end
+case 25
+        r = 4;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[8 4],'n',[132 133],'k',[106 107]);
+            case 'M'
+                car = struct('nblock',[8 13],'n', [75 76],'k',[47 48]);
+            case 'Q'
+                car = struct('nblock',[7 22],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',[22 13],'n',[45 46],'k',[15 16]);
+        
+        end      
+        
+    case 26
+        r = 4;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[10 2],'n',[142 143],'k',[114 115]);
+            case 'M'
+                car = struct('nblock',[19 4],'n', [74 75],'k',[46 47]);
+            case 'Q'
+                car = struct('nblock',[28 6],'n',[50 51],'k',[22 23]);
+            case 'H'
+                car = struct('nblock',[33 4],'n',[46 47],'k',[16 17]);
+                
+        end
+        
+    case 27
+        r = 4;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[8 4],'n',[152 153],'k',[122 123]);
+            case 'M'
+                car = struct('nblock',[22 3],'n', [73 74],'k',[45 46]);
+            case 'Q'
+                car = struct('nblock',[8 26],'n',[53 54],'k',[23 24]);
+            case 'H'
+                car = struct('nblock',[12 28],'n',[45 46],'k',[15 16]);
+                
+        end
+    case 28
+        r = 3;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[3 10],'n',[147 148],'k',[117 118]);
+            case 'M'
+                car = struct('nblock',[3 23],'n', [73 74],'k',[45 46]);
+            case 'Q'
+                car = struct('nblock',[4 31],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',[11 31],'n',[45 46],'k',[15 16]);
+                
+        end   
+    case 29
+        r = 3;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[7 7],'n',[146 147],'k',[116 117]);
+            case 'M'
+                car = struct('nblock',[21 7],'n', [73 74],'k',[45 46]);
+            case 'Q'
+                car = struct('nblock',[1 37],'n',[53 54],'k',[23 24]);
+            case 'H'
+                car = struct('nblock',[19 26],'n',[45 46],'k',[15 16]);
+                
+        end
+    case 30
+        r = 3;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[5 10],'n',[145 146],'k',[115 116]);
+            case 'M'
+                car = struct('nblock',[19 10],'n', [75 76],'k',[47 48]);
+            case 'Q'
+                car = struct('nblock',[15 25],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',[23 25],'n',[45 46],'k',[15 16]);
+                
+        end
+   case 31
+        r = 3;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[13 3],'n',[145 146],'k',[115 116]);
+            case 'M'
+                car = struct('nblock',[2 29],'n', [74 75],'k',[46 47]);
+            case 'Q'
+                car = struct('nblock',[42 1],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',[23 28],'n',[45 46],'k',[15 16]);
+                
+        end
+        
+   case 32
+        r = 3;
+        switch ecl
+            case 'L'
+                car = struct('nblock',17,'n',145,'k',115);
+            case 'M'
+                car = struct('nblock',[10 23],'n', [74 75],'k',[46 47]);
+            case 'Q'
+                car = struct('nblock',[10 35],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',[19 35],'n',[45 46],'k',[15 16]);
+                
+        end
+    case 33
+        r = 3;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[17 1],'n',[145 146],'k',[115 116]);
+            case 'M'
+                car = struct('nblock',[14 21],'n', [74 75],'k',[46 47]);
+            case 'Q'
+                car = struct('nblock',[29 19],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',[11 46],'n',[45 46],'k',[15 16]);
+                
+        end
+    case 34
+        r = 3;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[13 6],'n',[145 146],'k',[115 116]);
+            case 'M'
+                car = struct('nblock',[14 23],'n', [74 75],'k',[46 47]);
+            case 'Q'
+                car = struct('nblock',[44 7],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',[59 1],'n',[46 47],'k',[16 17]);
+                
+        end
+      case 35
+        r = 0;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[12 7],'n',[151 152],'k',[121 122]);
+            case 'M'
+                car = struct('nblock',[12 26],'n', [75 76],'k',[47 48]);
+            case 'Q'
+                car = struct('nblock',[39 14],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',[22 41],'n',[45 46],'k',[15 16]);
+                
+        end
+    case 36
+        r = 0;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[6 14],'n',[151 152],'k',[121 122]);
+            case 'M'
+                car = struct('nblock',[6 34],'n', [75 76],'k',[47 48]);
+            case 'Q'
+                car = struct('nblock',[46 10],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',[2 64],'n',[45 46],'k',[15 16]);
+                
+        end
+    case 37
+        r = 0;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[17 4],'n',[152 153],'k',[122 123]);
+            case 'M'
+                car = struct('nblock',[29 14],'n', [74 75],'k',[46 47]);
+            case 'Q'
+                car = struct('nblock',[49 10],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',[24 46],'n',[45 46],'k',[15 16]);
+                
+        end
+        
+    case 38
+        r = 0;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[4 18],'n',[152 153],'k',[122 123]);
+            case 'M'
+                car = struct('nblock',[13 32],'n', [74 75],'k',[46 47]);
+            case 'Q'
+                car = struct('nblock',[48 14],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',[42 32],'n',[45 46],'k',[15 16]);
+        end
+        
+    case 39
+        r = 0;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[20 4],'n',[147 148],'k',[117 118]);
+            case 'M'
+                car = struct('nblock',[40 7],'n', [75 76],'k',[47 48]);
+            case 'Q'
+                car = struct('nblock',[43 22],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',[10 67],'n',[45 46],'k',[15 16]);
+        end
+  
+    case 40
+        r = 0;
+        switch ecl
+            case 'L'
+                car = struct('nblock',[19 6],'n',[148 149],'k',[118 119]);
+            case 'M'
+                car = struct('nblock',[18 31],'n', [75 76],'k',[47 48]);
+            case 'Q'
+                car = struct('nblock',[34 34],'n',[54 55],'k',[24 25]);
+            case 'H'
+                car = struct('nblock',[20 61],'n',[45 46],'k',[15 16]);
+        end
+        
+end
 end
 
-end
+
 
