@@ -126,7 +126,7 @@ function listaBit = leggiBloccoAngolo(matrixDM , x , y)
     % x == grandezza + 5 and y == 3 and (grandezza % 8 == 0)
     %
 
-    if (x == (n + 5)) && (y == 3) && (mod(n,8) == 0)
+    if (x == (n + 5)) && (y == 4) && (mod(n,8) == 0)
     	bit1 = matrixDM( n , 1);
 		bit2 = matrixDM( n , n);
 		bit3 = matrixDM( 1 , n - 2);

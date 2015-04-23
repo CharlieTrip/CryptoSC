@@ -13,32 +13,37 @@ function [seq] = leggiBlocco(mat,x,y)
 
 	N=length(mat);
 
+	x
+	y
 
-	%bolcco facile
 
-	if ( x>2 && x<(N-2) && y>2 && x<(N-2) ) 
+
+	% blocco facile
+
+	if ( x>2 && x<=(N) && y>2 && y<=(N) ) 
 		seq=leggiBloccoFacile(mat,x,y);
 
 
-	%blocco all'angolo
+	% blocco all'angolo
 
-	elseif ((x==N+1 && y==1) || (x==N-1 && y==1 && mod(N,4)) || (x==N-1 && y==1 && mod(N,8)==4) || (x==N+5 && y==3 && mod(N,8)==0))
+	elseif ((x==N+1 && y==1) || (x==N-1 && y==1 && mod(N,4)) || (x==N-1 && y==1 && mod(N,8)==4) || (x==N+5 && y==4 && mod(N,8)==0))
 			seq=leggiBloccoAngolo(mat,x,y);
 
 
-			% (x,y) fuori dalla matrice quadrata e non è il caso di un angolo
+	% (x,y) fuori dalla matrice quadrata e non è il caso di un angolo
 
-			elseif (x>N || x<1 || y>N || y<1)
-					seq=[];
+	elseif (x>N || x<1 || y>N || y<1)
+			seq=[];
 
 
-				% blocco difficile (sono all'interno della matrice ma non nel caso di un blocco facile)
+	% blocco difficile (sono all'interno della matrice ma non nel caso di un blocco facile)
 
-				else
-				seq=leggiBloccoDifficile(mat,x,y);
+	else
+		seq=leggiBloccoDifficile(mat,x,y);
 
 	end;
 
+		seq
 
 end
 

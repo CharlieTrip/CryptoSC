@@ -26,5 +26,12 @@ function [ xp , yp ] = controllaPosizione(x,y,n)
 	    xp = x + (4 - mod((n + 4),8)) ;
 	end
 
+	if xp > n || xp < 1
+		xp = mod(xp - 1,n) + 1;
+	end
+
+	if yp > n || yp < 1  
+		yp = mod(yp - 1,n) + 1;
+	end
 
 end

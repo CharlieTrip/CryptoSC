@@ -28,7 +28,7 @@ function [sequenza] = estraiByte(mat)
 	contatorePercorsi=1; % serve per sapere il percorso che sto seguendo (verso l'alto/destro o verso basso/sinistra)
 
 
-	while ( ~( (mod(contatorePercorsi,2)) == 1 && y>N) && ~( (mod(contatorePercorsi,2)) == 1 && y>N) ) % esce dal while quando supera l'angolo in basso a sinistra
+	while ( y<= N || x<=N ) % esce dal while quando supera l'angolo in basso a sinistra
 
 
 
@@ -65,22 +65,27 @@ function [sequenza] = estraiByte(mat)
 			end;
 
 
+
 		else
+
+
+
 
 
 			% il blocchetto esce dall'alto o da destra
 
-			if (x<1 || y>N) 
-			
-			x=x+1;
-			y=y+3;
+			if (x<1 || y>N)
+				
+				x=x+1;
+				y=y+3;
 
-			while (x<1 || y>N)
+				while ((x<1 || y>N) && ~( y > N && x > N ))
+
 				x=x+2;
-				y=y-2;
-			end;
+					y=y-2;
+				end;
 
-			contatorePercorsi=contatorePercorsi+1; 
+				contatorePercorsi=contatorePercorsi+1; 
 
 			end;
 
@@ -92,12 +97,31 @@ function [sequenza] = estraiByte(mat)
 				x=x+3;
 				y=y+1;
 
-				while (x>N || y<1)
+				while ((x>N || y<1) && ~( y > N && x > N ))
+
+
+
+					sequenzaBit=leggiBlocco(mat,x,y);
+
+					% trasformo sequenzaBit in byte e l'aggiungo a sequenza (solo se la sequenzaBit non è vuota)
+
+					if ( length(sequenzaBit) ~= 0 )
+
+						byte=sequenzaBit(1)+sequenzaBit(2)*2+sequenzaBit(3)*4+sequenzaBit(4)*8+...
+						sequenzaBit(5)*16+sequenzaBit(6)*32+sequenzaBit(7)*64+sequenzaBit(8)*128;
+						
+						sequenza=[sequenza,byte]; % aggiungo il byte a sequenza
+
+					end;
+
+
+
+					
 					x=x-2;
 					y=y+2;
 				end;
 
-			contatorePercorsi=contatorePercorsi+1; 
+				contatorePercorsi=contatorePercorsi+1; 
 
 			end;
 
