@@ -5,35 +5,39 @@
 % with the ASCII pad char 129
 %  
 % Input
-% 	m 		: message
+% 	M 		: message
 %  
 % Output
-%	m 		: padded message
+%	Msg 	: padded message
 %	t		: matrix-size index
 
-function [m, t] = Padding(m)
+function [Msg, t] = Padding(M)
 
-	% Vector of matrix sizes
+% Vector of matrix sizes
 	DataWordLength = [3, 5, 8, 12, 18, 22, 30, 36, 44, ...
 						62, 86, 114, 144, 174, 204, ...
 						280, 368, 456, 576, 696, 816, ...
 						1050, 1304, 1558];
-	l = length(m);		% Length of the unpadded message
-	size = 0;			% Size of the matrix
+					
+% Length of the unpadded message
+	Len = length(Msg);
+	
+% Size of the matrix
+	Size = 0;
 
-	% Choice the right matrix dimension
+% Choice the right matrix dimension
 	t = 0;
-	while size<1
+	while Size<=Len
 		t = t+1;
-		if data_word_length(t)>=l
-			size = DataWordLength(t);
+		if data_word_length(t)>=Len
+			Size = DataWordLength(t);
 		end
 	end
 
-	% Padding
-	PadLength = size-l;
+% Padding
+	PadLength = Size-Len;
 	for i=1:PadLength
-		m(l+i)=129;
+		Msg(Len+i)=129;
 	end
 
 end
