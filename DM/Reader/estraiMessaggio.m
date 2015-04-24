@@ -13,7 +13,7 @@ function msg = estraiMessaggio (msgPadded)
 
 	% Lunghezza del messaggio
 
-	n = length(msgPadded)
+	n = length(msgPadded);
 
 	
 	% Estraggo l'indice del primo 129 presente nella stringa

@@ -9,41 +9,42 @@
 % in ogni caso rimanda alla funzione giusta
 %
 
-function [seq] = leggiBlocco(mat,x,y)
+function [matr,seq] = leggiBlocco(mat,x,y)
 
 	N=length(mat);
-
-	x
-	y
-
-
 
 	% blocco facile
 
 	if ( x>2 && x<=(N) && y>2 && y<=(N) ) 
-		seq=leggiBloccoFacile(mat,x,y);
+		[matr,seq]=leggiBloccoFacile(mat,x,y);
 
 
 	% blocco all'angolo
 
 	elseif ((x==N+1 && y==1) || (x==N-1 && y==1 && mod(N,4)) || (x==N-1 && y==1 && mod(N,8)==4) || (x==N+5 && y==4 && mod(N,8)==0))
-			seq=leggiBloccoAngolo(mat,x,y);
+			[matr,seq]=leggiBloccoAngolo(mat,x,y);
 
 
 	% (x,y) fuori dalla matrice quadrata e non è il caso di un angolo
 
 	elseif (x>N || x<1 || y>N || y<1)
 			seq=[];
+			matr = mat;
 
 
 	% blocco difficile (sono all'interno della matrice ma non nel caso di un blocco facile)
 
 	else
-		seq=leggiBloccoDifficile(mat,x,y);
+		[matr,seq]=leggiBloccoDifficile(mat,x,y);
 
 	end;
 
-		seq
+
+	if sum(any( (-1) == seq))
+		seq = [-1];
+		matr = mat;
+	end
+
 
 end
 

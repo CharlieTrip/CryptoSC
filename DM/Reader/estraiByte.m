@@ -35,7 +35,7 @@ function [sequenza] = estraiByte(mat)
 		% faccio leggiBlocco: se sono nel caso di un blocco facile, di un angolo o di un blocco difficile, legge il blocco;
 		% altrimenti la seq è vuota e devo rientrare nella matrice
 
-		sequenzaBit=leggiBlocco(mat,x,y);
+		[mat,sequenzaBit] = leggiBlocco(mat,x,y);
 
 
 
@@ -43,11 +43,13 @@ function [sequenza] = estraiByte(mat)
 
 		if ( length(sequenzaBit) ~= 0 )
 
-			byte=sequenzaBit(1)+sequenzaBit(2)*2+sequenzaBit(3)*4+sequenzaBit(4)*8+...
-			sequenzaBit(5)*16+sequenzaBit(6)*32+sequenzaBit(7)*64+sequenzaBit(8)*128;
-			
-			sequenza=[sequenza,byte]; % aggiungo il byte a sequenza
-
+			if (length(sequenzaBit) ~= 1)
+				byte=sequenzaBit(1)+sequenzaBit(2)*2+sequenzaBit(3)*4+sequenzaBit(4)*8+...
+				sequenzaBit(5)*16+sequenzaBit(6)*32+sequenzaBit(7)*64+sequenzaBit(8)*128;
+				
+				
+				sequenza=[sequenza,byte]; % aggiungo il byte a sequenza
+			end;
 			
 
 			% passo al blocchetto successivo
@@ -81,7 +83,7 @@ function [sequenza] = estraiByte(mat)
 
 				while ((x<1 || y>N) && ~( y > N && x > N ))
 
-				x=x+2;
+					x=x+2;
 					y=y-2;
 				end;
 
@@ -101,7 +103,7 @@ function [sequenza] = estraiByte(mat)
 
 
 
-					sequenzaBit=leggiBlocco(mat,x,y);
+					[mat,sequenzaBit] = leggiBlocco(mat,x,y);
 
 					% trasformo sequenzaBit in byte e l'aggiungo a sequenza (solo se la sequenzaBit non è vuota)
 
@@ -116,7 +118,7 @@ function [sequenza] = estraiByte(mat)
 
 
 
-					
+
 					x=x-2;
 					y=y+2;
 				end;

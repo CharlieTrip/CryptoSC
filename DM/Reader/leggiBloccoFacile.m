@@ -13,7 +13,10 @@
 %	listaBit	: lista dei bit del blocchetto
 % 
 
-function listaBit = leggiBloccoFacile(matrixDM , x , y)
+function [matr,listaBit] = leggiBloccoFacile(matrixDM , x , y)
+
+
+	matr = matrixDM;
 
 	% Il blocchetto deve esser letto in questo modo
 	%
@@ -31,6 +34,17 @@ function listaBit = leggiBloccoFacile(matrixDM , x , y)
 	bit6 = matrixDM( x , y - 2 );
 	bit7 = matrixDM( x , y - 1);
 	bit8 = matrixDM( x  , y );
+
+    matr(x-2,y-2) = -1;
+    matr(x-2,y-1) = -1;
+    matr(x-1,y-2) = -1;
+    matr(x-1,y-1) = -1;
+    matr(x-1,y) = -1;
+    matr(x,y-2) = -1;
+    matr(x,y-1) = -1;
+    matr(x,y) = -1;
+
+
 
 
 	% Genero la lista

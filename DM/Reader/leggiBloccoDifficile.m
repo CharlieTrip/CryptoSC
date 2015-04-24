@@ -13,7 +13,10 @@
 %	listaBit	: lista dei bit del blocchetto
 % 
 
-function listaBit = leggiBloccoDifficile(matrixDM , x , y)
+function [matr,listaBit] = leggiBloccoDifficile(matrixDM , x , y)
+
+
+	matr = matrixDM;
 
 	% Il blocchetto deve esser letto in questo modo
 	%
@@ -88,6 +91,16 @@ function listaBit = leggiBloccoDifficile(matrixDM , x , y)
 	bit6 = matrixDM( xbit6 , ybit6 );
 	bit7 = matrixDM( xbit7 , ybit7 );
 	bit8 = matrixDM( xbit8 , ybit8 );
+
+
+    matr(xbit1,ybit1) = -1;
+    matr(xbit2,ybit2) = -1;
+    matr(xbit3,ybit3) = -1;
+    matr(xbit4,ybit4) = -1;
+    matr(xbit5,ybit5) = -1;
+    matr(xbit6,ybit6) = -1;
+    matr(xbit7,ybit7) = -1;
+    matr(xbit8,ybit8) = -1;
 
 
 

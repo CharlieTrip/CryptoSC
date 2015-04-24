@@ -14,13 +14,14 @@
 %	listaBit	: lista dei bit del blocchetto
 % 
 
-function listaBit = leggiBloccoAngolo(matrixDM , x , y)
+function [matr,listaBit] = leggiBloccoAngolo(matrixDM , x , y)
  
  	% Grandezza della matriceDM
 
  	n = length(matrixDM(:,1));
             
- 
+    matr = matrixDM;
+
  	%
   	% Corner case 1
     %
@@ -44,6 +45,15 @@ function listaBit = leggiBloccoAngolo(matrixDM , x , y)
 		bit6 = matrixDM( 2 , n );
 		bit7 = matrixDM( 3 , n);
 		bit8 = matrixDM( 4  , n );
+
+        matr(n,1) = -1;
+        matr(n,2) = -1;
+        matr(n,3) = -1;
+        matr(1, n-1) = -1;
+        matr(1,n) = -1;
+        matr(2,n) = -1;
+        matr(3,n) = -1;
+        matr(4,n) = -1;
 	end;
 
 
@@ -72,6 +82,15 @@ function listaBit = leggiBloccoAngolo(matrixDM , x , y)
 		bit6 = matrixDM( 1 , n - 1 );
 		bit7 = matrixDM( 1 , n);
 		bit8 = matrixDM( 2  , n );
+
+        matr(n-2,1) = -1;
+        matr(n-1,1) = -1;
+        matr(n,1) = -1;
+        matr(1, n-3) = -1;
+        matr(1,n-2) = -1;
+        matr(1,n-1) = -1;
+        matr(1,n) = -1;
+        matr(2,n) = -1;
 	end;
 
 
@@ -106,6 +125,15 @@ function listaBit = leggiBloccoAngolo(matrixDM , x , y)
 		bit6 = matrixDM( 2 , n );
 		bit7 = matrixDM( 3 , n);
 		bit8 = matrixDM( 4  , n );
+
+        matr(n-2,1) = -1;
+        matr(n-1,1) = -1;
+        matr(n,1) = -1;
+        matr(1, n-1) = -1;
+        matr(1,n) = -1;
+        matr(2,n) = -1;
+        matr(3,n) = -1;
+        matr(4,n) = -1;
 	end;
 
 
@@ -135,6 +163,15 @@ function listaBit = leggiBloccoAngolo(matrixDM , x , y)
 		bit6 = matrixDM( 2 , n - 2 );
 		bit7 = matrixDM( 2 , n - 1);
 		bit8 = matrixDM( 2  , n );
+
+        matr(n,1) = -1;
+        matr(n,n) = -1;
+        matr(1,n-2) = -1;
+        matr(1, n-1) = -1;
+        matr(1,n) = -1;
+        matr(2,n-2) = -1;
+        matr(2,n-1) = -1;
+        matr(2,n) = -1;
 	end;
 
 
