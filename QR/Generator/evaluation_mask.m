@@ -1,7 +1,7 @@
 function n=evaluation_mask(qr_matrix,k)
 
 %Applico la maschera i-esima
-qr_matrix=release_masking(qr_matrix,k);
+qr_matrix=release_masking(qr_matrix,k);%VA SISTEMATA
 
 %EVALUATION FOR ALL ENTIRE MATRIX.
 
@@ -49,7 +49,18 @@ for j=1:size(qr_matrix,2)%scorre le righe della matrice
 end;
 
 %Feature 2
+%Ricerco solo blocchi 2x2, che e' equivalente al cercare i blocchi delle
+%varie size mxn
+square_n=[1,1;1,1]; %quadrato 2x2 nero
+square_b=[0,0;0,0]; %quadrato 2x2 bianco
 
+for i=1:size(qr_matrix,1)-1
+    for j=1:size(qr_matrix,2)-1
+        if isequal(qr_matrix(i:i+1,j:j+1),square_n) || isequal(qr_matrix(i:i+1,j:j+1),square_b)
+            n=n+3;
+        end
+    end
+end
 
 %Feature 3
 %righe
@@ -57,7 +68,7 @@ dldddld=[1 0 1 1 1 0 1];
 
 for i=1:size(qr_matrix,1)
     for j=1:size(qr_matrix,2)-6;
-        if qr_matrix(i,j:j+6) == dldddld
+        if isequal(qr_matrix(i,j:j+6),dldddld)
             n=n+40;
         end
     end
@@ -66,7 +77,7 @@ end
 %colonne
 for j=1:size(qr_matrix,2)
     for i=1:size(qr_matrix,1)-6;
-        if qr_matrix(i:i+6,j) == transpose(dldddld)
+        if isequal(qr_matrix(i:i+6,j),transpose(dldddld))
             n=n+40;
         end
     end
