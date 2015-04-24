@@ -70,6 +70,12 @@ function matrixDM = leggiDM(immDM)
 
 	% Estraggo dalla matrice il valore e lo inserisco nella matrice di output
 
+	normalizzare = max(max(immDM));
+	colore = sum([ uint8(immDM(passo,passo)/normalizzare) uint8(immDM(length(immDM) - passo , passo)/normalizzare) uint8(immDM(passo , length(immDM) - passo )/normalizzare) uint8(immDM(length(immDM) - passo , length(immDM) - passo ))]);
+
+
+
+
 	for i = 1 : numeroCambi
 		for j = 1 : numeroCambi
 
@@ -78,11 +84,21 @@ function matrixDM = leggiDM(immDM)
 			% Se è un grigio sopra 127, setta a 0 il valore. 1 altrimenti
 
 			tmp = 0;
+			x = int32(passo + ((2 * passo) * (i-1)));
+			y = int32(passo + ((2 * passo) * (j-1)));
 
-			if (immDM( int8(passo + ((2 * passo) * (i-1))) , int8(passo + ((2 * passo) * (j-1)))) > 127)
-				tmp = 0;
+			if ( immDM( x , y )/normalizzare ) > 0.5
+				if colore == 1
+					tmp = 0;
+				else
+					tmp = 1;
+				end
 			else
-				tmp = 1;
+				if colore == 1
+					tmp = 1;
+				else
+					tmp = 0;
+				end
 			end;
 			
 			matrixDM(i , j) = tmp;
