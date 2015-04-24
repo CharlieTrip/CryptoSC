@@ -29,7 +29,6 @@ ruy = ruy+1;
 end
 end
 
-%TODO: use left down corner
 %Looking for lef down corner
 ldx=1;
 ldy=size(qr,2);
@@ -53,20 +52,24 @@ ty=1;
 while qr(tx,ty)==0
     tx=tx+1;
 end
+%total number of modulo in the side
+tn = floor(size(qr,1)/((tx-1)/7));
+%is incredible but the resize works very nice 
+qr_matrix = ones([tn tn])-double(imresize(qr,[tn tn]));
 %modulo length
-ml=idivide(uint8(tx-1),7);
-
-tx = ml;
-ty = ml;
-
-qr_matrix = ones(uint8(size(qr))/ml);
-
-for tx=ml:ml:size(qr,1)
-    for ty=ml:ml:size(qr,2)
-        %mean of modulo for get the color
-        modulo_color=mean2(qr([tx-ml+1:tx],[ty-ml+1:ty]));
-        qr_matrix(tx/ml,ty/ml)=qr_matrix(tx/ml,ty/ml)-modulo_color;
-    end
-end
+% ml=idivide(uint8(tx-1),7);
+% 
+% tx = ml;
+% ty = ml;w
+% 
+% qr_matrix = ones(uint8(size(qr))/ml);
+% 
+% for tx=ml:ml:size(qr,1)
+%     for ty=ml:ml:size(qr,2)
+%         %mean of modulo for get the color
+%         modulo_color=mean2(qr([tx-ml+1:tx],[ty-ml+1:ty]));
+%         qr_matrix(tx/ml,ty/ml)=qr_matrix(tx/ml,ty/ml)-modulo_color;
+%     end
+% end
 
 end

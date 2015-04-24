@@ -74,8 +74,8 @@ switch mode([2,4,6,8])
         mode = 'Structured Append';
 end
 
- disp('Mode:');
- disp(mode);
+ %disp('Mode:');
+ %disp(mode);
 
 %numer of char in string
 %character_num = mat2str(character_count);
@@ -142,7 +142,7 @@ function message = retrieve_alphanumeric(data,character_num)
         l1=bi2de(data((cn/2)*11+1:(cn/2)*11+6),'left-msb');
         message = [message, number_to_alphanumeric(l1)];
     end
-    message = message';
+    %message = message';
 end
 
 
