@@ -5,7 +5,7 @@ qr_matrix=release_masking(qr_matrix,k);
 
 %EVALUATION FOR ALL ENTIRE MATRIX.
 
-%Feature Adjacents modules
+%Feature 1 Adjacents modules
 %Righe
 n=0;
 for i=1:size(qr_matrix,1)%scorre le righe della matrice
@@ -47,6 +47,41 @@ for j=1:size(qr_matrix,2)%scorre le righe della matrice
                     n= n+(n_uguali-5)+3;
                 end;
 end;
+
+%Feature 2
+
+%Feature 3
+%righe
+dldddld=[1 0 1 1 1 0 1];
+
+for i=1:size(qr_matrix,1)
+    for j=1:size(qr_matrix,2)-6;
+        if qr_matrix(i,j:j+6) == dldddld
+            n=n+40;
+        end
+    end
+end
+
+%colonne
+for j=1:size(qr_matrix,2)
+    for i=1:size(qr_matrix,1)-6;
+        if qr_matrix(i:i+6,j) == transpose(dldddld)
+            n=n+40;
+        end
+    end
+end
+
+%Feature 4
+number_of_blacks=0;
+for i= 1: size(qr_matrix,1)
+    for j = 1 size(qr_matrix,2)
+        if qr_matrix(i,j) == 0;
+            number_of_blacks= number_of_blacks+1;
+        end
+    end
+end
+
+number_of_blacks=%finire
 
 
 
