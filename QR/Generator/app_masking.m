@@ -1,5 +1,8 @@
 function [ qr_matrix ] = app_masking(qr_matrix, mask_n)
 
+%Bisogna modificare perch? la maschera non va applicata sugli allignments
+%pattern
+
 switch mask_n
     
     case 0
