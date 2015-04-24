@@ -50,6 +50,7 @@ end;
 
 %Feature 2
 
+
 %Feature 3
 %righe
 dldddld=[1 0 1 1 1 0 1];
@@ -74,15 +75,22 @@ end
 %Feature 4
 number_of_blacks=0;
 for i= 1: size(qr_matrix,1)
-    for j = 1 size(qr_matrix,2)
-        if qr_matrix(i,j) == 0;
+    for j = 1:size(qr_matrix,2)
+        if qr_matrix(i,j) == 1;
             number_of_blacks= number_of_blacks+1;
         end
     end
 end
 
-number_of_blacks=%finire
+perc_number_of_blacks=floor(number_of_blacks*100/(size(qr_matrix,1)^2));
 
-
+if mod(perc_number_of_blacks,5) == 0
+    n=n+norm(50-perc_number_of_blacks)*10;
+else
+    q=floor(perc_number_of_blacks/5);
+    a=norm(q*5-50)/5;
+    b=norm((q+1)*5-50)/5;
+    n=n+min(a,b)*10;
+end
 
 end
