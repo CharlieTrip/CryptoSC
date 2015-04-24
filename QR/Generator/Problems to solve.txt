@@ -1,0 +1,7 @@
+Problems
+
+- DEBUGGARE primo file
+- Evaluation mask
+- Creare funzioni che generano i blocchi per le versioni 1, 7 - 40.
+- Sistemare l’encoding per i casi n-k= dispari.
+
