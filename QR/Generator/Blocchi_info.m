@@ -57,6 +57,6 @@ QRplaced(m-8:m-4,m-4) = 0;
 QRplaced(m-8:m-4,m-8) = 0;
 QRplaced(m-6,m-6) = 0;
 
-
+imshow(QRplaced);
 
 end
