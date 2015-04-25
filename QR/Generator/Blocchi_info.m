@@ -10,8 +10,10 @@ QR_matrix_out = Blocchi(QR_matrix_in,Version); % metto i blocchi
 
 QR_matrix_out = QRmatrix_information(QR_matrix_out,mask_reference, ECC_level);
 
-
 end
+
+
+
 
 function QRplaced = Blocchi(QRplaced,Version)
 
@@ -102,7 +104,7 @@ switch ECC_level
         eclvl = [1 0 mask_reference];
 end
 
- Bitsequence = bchenc(gf(eclvl),15,5); % ottengo la sequenza codificata con BCH(15,5)
+ Bitsequence = comm.BCHencoder(gf(eclvl),15,5); % ottengo la sequenza codificata con BCH(15,5)
  
  Bitsequence = gf2dec(Bitsequence+Mask_pattern,1); % faccio lo xor con il mask pattern
  
