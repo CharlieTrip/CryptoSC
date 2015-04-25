@@ -1,3 +1,4 @@
 # .gitignore
 *.psd
 Programmare/*
+*.m~

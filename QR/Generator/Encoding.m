@@ -7,7 +7,7 @@
 function ECCodewordByte = Encoding(DataCodewordByte)
 
 a = gf(2,8); % definisco un elemento primitivo di gf(2^8)
-% questo che segue è il polinomio di grado 18 proprio del metodo 3-Q
+% questo che segue ?? il polinomio di grado 18 proprio del metodo 3-Q
 p = [1, a^215, a^234, a^158, a^94, a^184, a^97, a^118, a^170, a^79, a^187, a^152, a^148, a^252, a^179, a^5, a^98, a^96, a^153];
 k = 17; % dimensione propria della versione 3-Q
 n = 35; % lunghezza propria della versione 3-Q (per blocco)
@@ -30,8 +30,8 @@ end
  
 for i =1:18
  
- ECCodewordByte(i,:,1) = de2bi(RSOutput(1,k+i),8,'left-msb'); % converto in byte e salvo solo la ridondanza, che sarà la EC CodeWord, blocco 1
- ECCodewordByte(i,:,2) = de2bi(RSOutput(2,k+i),8,'left-msb'); % converto in byte salvo solo la ridondanza, che sarà la EC CodeWord, blocco 2
+ ECCodewordByte(i,:,1) = de2bi(RSOutput(1,k+i),8,'left-msb'); % converto in byte e salvo solo la ridondanza, che sar?? la EC CodeWord, blocco 1
+ ECCodewordByte(i,:,2) = de2bi(RSOutput(2,k+i),8,'left-msb'); % converto in byte salvo solo la ridondanza, che sar?? la EC CodeWord, blocco 2
  
 end
 
@@ -72,7 +72,9 @@ end
 % p=[1, a^200, a^183, a^98, a^16, a^172, a^31, a^246, a^234, a^60, a^152, a^115, 1, a^167, a^152, a^113, a^248, a^238, a^107, a^18, a^63, a^218, a^37, a^87 , a^210, %%% a^105, a^177, a^120, a^74, a^121, a^196, a^117, a^251, a^113, a^233, a^30, a^120];
 
 
-
+%polgrad 
+%a=gf(2,8);
+%p=
 
 
 
