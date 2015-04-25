@@ -29,28 +29,3 @@ if version >1
 end
 end
 
-%%return the center of the allignemts patterns
-function [ result ] = get_allignment_patterns_center( v )
-%TODO: edit center in case bigger then 7
-switch v
-    case 2
-        result =struct('r',21+(v-1)*4-6,'c',18+1);
-    case 3
-result =struct('r',21+(v-1)*4-6,'c',22+1);
-    case 4
-result =struct('r',21+(v-1)*4-6,'c',26+1);
-    case 5
-result =struct('r',21+(v-1)*4-6,'c',30+1);
-    case 6
-result =struct('r',21+(v-1)*4-6,'c',34+1);
-    case 7 %TODO: continue 
-result =[struct('r',(21+(v-1)*4)-6,'c',38+1),struct('r',21+(v-1)*4-6,'c',21+(v-1)*4-22),...
-                 struct('r',21+(v-1)*4-22,'c',21+(v-1)*4-6),struct('r',21+(v-1)*4-22,'c',21+(v-1)*4-22),struct('r',21+(v-1)*4-22,'c',6+1),...
-                 struct('r',7,'c',21+(v-1)*4-22)];
-    case 8
-result =[struct('r',(21+(v-1)*4)-6,'c',42+1),struct('r',21+(v-1)*4-6,'c',21+(v-1)*4-24),...
-                 struct('r',21+(v-1)*4-24,'c',21+(v-1)*4-6),struct('r',21+(v-1)*4-24,'c',21+(v-1)*4-24),struct('r',21+(v-1)*4-24,'c',6+1),...
-                 struct('r',7,'c',21+(v-1)*4-24)];        
-end
-
-end
