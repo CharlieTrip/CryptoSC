@@ -7,7 +7,7 @@
 
 function ArrayByte = Codifica(Stringa,Version,mode,EClevel)
 
-[numDataBits, n_data_block1, n_block1, n_data_block2, n_block2] = info_version(version,eclevel);
+[numDataBits, n_data_block1, n_block1, n_data_block2, n_block2] = info_version(Version,EClevel);
 
 
 if mode == [0,0,1,0] %  TODO aggiungere gli altri mode
@@ -27,27 +27,40 @@ while not(mod(length(ArrayBit),8) == 0)
     ArrayBit = cat(2,ArrayBit,0);
 end
 
-while not(length(ArrayBit)== numDataBits)
+while length(ArrayBit) < numDataBits
     ArrayBit = cat(2,ArrayBit,[1,1,1,0,1,1,0,0]);
     if (length(ArrayBit) == numDataBits)
-        break;
+        break
     end
-    ArrayBit = cat(2,ArrayBit,[0,0,0,1,0,0,0,1]);
-    if (length(ArrayBit) == numDataBits)
-        break;
-    end    
+    ArrayBit = cat(2,ArrayBit,[0,0,0,1,0,0,0,1]);  
 end
 
-tempArrayByte=reshape(ArrayBit,8,length(ArrayBit)/8/2,2);  % I codeword sono in colonne
+tmpt = transpose(reshape(ArrayBit,8,numDataBits/8))
 
 
+ArrayByte = [];
+if  n_block2 == 0
+    for i = 1:n_block1
+        ArrayByte(1:n_data_block1,:,i) = tmpt(1:n_data_block1,:);
+        tmpt(1:n_data_block1,:) = [];
+    end
+else
+    for i = 1:n_block1
+        ArrayByte(1:n_data_block1,:,i) = tmpt(1:n_data_block1,:);
+        tmpt(1:n_data_block1,:) = [];
+    end
+    for i = n_block1+1:n_block1+n_block2
+        ArrayByte(1:n_data_block2,:,i) = tmpt(1:n_data_block2,:);
+        tmpt(1:n_data_block2,:) = [];
+    end
+end
 
 
-ArrayByte(:,:,1) = transpose(tempArrayByte(:,:,1));
-ArrayByte(:,:,2) = transpose(tempArrayByte(:,:,2));  % I codeword ora sono in righe divisi in due blocchi
 
 
 end
+
+
 
 
 
@@ -112,9 +125,6 @@ end
 
 
 function [numDataBits, n_data_block1, n_block1, n_data_block2, n_block2] = info_version(version,eclevel)  
-
-LunghBit = [19 16 13 9 34 28 22 16 55 44 34 26 80 64 48 36 108 86 62 46 136 108 76 60 156 124 88 66 194 154 110 86 232 182 132 100 274 216 154 122 324 254 180 140 370 290 206 158 428 334 244 180 461 365 261 197 523 415 295 223 589 453 325 253 647 507 367 283 721 563 397 313 795 627 445 341 861 669 485 385 932 714 512 406 1006 782 568 442 1094 860 614 464 1174 914 664 514 1276 1000 718 538 1370 1062 754 596 1468 1128 808 628 1531 1193 871 661 1631 1267 911 701 1735 1373 985 745 1843 1455 1033 793 1955 1541 1115 845 2071 1631 1171 901 2191 1725 1231 961 2306 1812 1286 986 2434 1914 1354 1054 2566 1992 1426 1096 2702 2102 1502 1142 2812 2216 1582 1222 2956 2334 1666 1276]; 
-
 
 Block_info = [19	7	1	19	0	0	;
 16	10	1	16	0	0	;
@@ -290,12 +300,11 @@ switch eclevel
         c = 4;
 end
 
-numDataBits = LunghBit(4*version + c);
-
-n_data_block1 = Block_info(4*version + c,4);
-n_block1 = Block_info(4*version + c,3);
-n_data_block2 = Block_info(4*version + c,6);
-n_block2 = Block_info(4*version + c,5); 
+numDataBits = Block_info(4*(version-1) + c,1)*8;
+n_data_block1 = Block_info(4*(version-1) + c,4);
+n_block1 = Block_info(4*(version-1) + c,3);
+n_data_block2 = Block_info(4*(version-1) + c,6);
+n_block2 = Block_info(4*(version-1) + c,5); 
 
 
 
