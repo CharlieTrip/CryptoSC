@@ -1,5 +1,5 @@
 % return the center of the allignemts patterns
-function [ result ] = get_allignment_patterns_center( v )
+function result = get_allignment_patterns_center( v )
 if v>1
     switch v
         case 2

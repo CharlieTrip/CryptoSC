@@ -61,18 +61,18 @@ QRplaced(m-7,1:8) = 0;
 QRplaced(m-7:m,8) = 0;
 QRplaced(m-7,9) = 1; % metto il dark module
 
-if version>1
+if version
     %Disegno i quadratini
-    Center = get_allignment_patterns_center(Version);
+Center = get_allignment_patterns_center(Version);
 
-    for i=1:length(Center)
+for i=1:length(Center)
     
-        QRplaced(Center.r-2:Center.r+2,Center.c-2:Center.c+2) = 1;
-        QRplaced(Center.r-1:Center.r+1,Center.c-1:Center.c+1) = 0;
-        QRplaced(Center.r,Center.c) = 1;
+    QRplaced(Center.r-2:Center.r+2,Center.c-2:Center.c+2) = 1;
+    QRplaced(Center.r-1:Center.r+1,Center.c-1:Center.c+1) = 0;
+    QRplaced(Center.r,Center.c) = 1;
     
-    end
 end
+    
     
     
 end
@@ -104,7 +104,7 @@ switch ECC_level
         eclvl = [1 0 mask_reference];
 end
 
- Bitsequence = bchenc(gf(eclvl),15,5); % ottengo la sequenza codificata con BCH(15,5) DA AGGIUSTARE
+ Bitsequence = common.BCHencoder(gf(eclvl),15,5); % ottengo la sequenza codificata con BCH(15,5) DA AGGIUSTARE
  
  Bitsequence = gf2dec(Bitsequence+Mask_pattern,1); % faccio lo xor con il mask pattern
  
