@@ -3,9 +3,13 @@
 
 
 
-function qr_matrix = Positioner(ArrayCodeword,dim)
+function qr_matrix = Positioner(ArrayCodeword, version)
 global null ;
 null = -1;
+
+get_dim = [21 25 29 33 37 41 45 49 53 57 61 65 69 73 77 81 85 89 93 97 101 105 109 113 117 121 125 129 133 137 141 145 149 153 157 161 165 169 173 177];
+
+dim = get_dim(version);
 
 qr_matrix = zeros(dim,dim);
 qr_matrix = remove_allignments_bits(qr_matrix,3); % 3 sta per la versione, va generalizzato

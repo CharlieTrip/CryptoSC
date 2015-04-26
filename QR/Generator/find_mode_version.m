@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
 
-
-=======
->>>>>>> Stashed changes
 %ecl 'L', 'M', 'Q', 'H'
 function [mode, version] = find_mode_version( msg, ecl )
 
@@ -23,15 +19,7 @@ else
     mode = [0 1 0 0];
 end
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
 mode = [0 0 1 0]; %TODO da modificare colpa di Andrea
-=======
-
->>>>>>> Stashed changes
-=======
->>>>>>> origin/master
-
 
 version = retrieve_version(length(msg), mode, ecl);
 end
@@ -47,12 +35,9 @@ function version=retrieve_version(length, mode, ecl)
 
 
         % numeric
-<<<<<<< Updated upstream
         if isequal(mode,[0,0,0,1])
-=======
-        if mode == [0,0,0,1]          
->>>>>>> Stashed changes
-            switch ecl
+
+           switch ecl
                 
                 case 'L'
                 
@@ -95,11 +80,7 @@ function version=retrieve_version(length, mode, ecl)
             
             
             % alphanumeric
-<<<<<<< Updated upstream
         elseif isequal(mode,[0,0,1,0])          
-=======
-        elseif mode == [0,0,1,0]          
->>>>>>> Stashed changes
             switch ecl        
              case 'L'
                 
@@ -141,21 +122,11 @@ function version=retrieve_version(length, mode, ecl)
             
             
             
-            % byte mode
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-       % elseif isequal(mode,[0,1,0,0])          
-=======
-       % elseif mode == [0,1,0,0]          
->>>>>>> Stashed changes
-       %     switch ecl  
-                
-      %          case 'L'
-=======
-       elseif isequal(mode,[0,1,0,0])          
-      switch ecl        
+     % 8byte mode
+
+      elseif isequal(mode,[0,1,0,0])          
+        switch ecl        
              case 'L'
->>>>>>> origin/master
                 
                     Data_capacity = [17	32	53	78	106	134	154	192	230	271	321	367	425	458	520	586	644	718	792	858	929	1003	1 091	1171	1273	1367	1465	1528	1628	1732	1840	1952	2068	2188	2303	2431	2563 2699 2809 2953];
                     version = 1;

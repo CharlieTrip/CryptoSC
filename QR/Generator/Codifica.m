@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 % Funzione che prende in input la stringa, il mode,la Version, l'EClevel, e
 % restituisce due gruppi di blocchi di DataCodeword in byte, nel caso il
 % gruppo (dipende dalla versione) sia solo uno, restituisce 0 al posto del
@@ -6,16 +6,7 @@
 
 
 function [ArrayByte1,ArrayByte2] = Codifica(Stringa,Version,mode,EClevel)
-=======
-% Funzione che prende in input una stringa e restituisce un array di bit
-% corrispondente (conversione alfanumerica)
-% Gli input devono essere maiuscoli... nel caso bisogna fixare il problema
-% del casesensitive
-% Livello di correzione Q, versione 3
 
-
-function ArrayByte = Codifica(Stringa,Version,mode,EClevel)
->>>>>>> Stashed changes
 
 [numDataBits, n_data_block1, n_block1, n_data_block2, n_block2] = info_version(Version,EClevel);
 
@@ -50,7 +41,7 @@ end
 tmpt = transpose(reshape(ArrayBit,8,numDataBits/8));
 
 
-<<<<<<< Updated upstream
+
 ArrayByte1 = [];
 ArrayByte2 = [];
 if  n_block2 == 0
@@ -59,14 +50,7 @@ if  n_block2 == 0
         tmpt(1:n_data_block1,:) = [];
     end
     ArrayByte2 = 0;
-=======
-ArrayByte = {};
-if  n_block2 == 0
-    for i = 1:n_block1
-        ArrayByte(1:n_data_block1,:,i) = tmpt(1:n_data_block1,:);
-        tmpt(1:n_data_block1,:) = [];
-    end
->>>>>>> Stashed changes
+
 else
     for i = 1:n_block1
         ArrayByte1(1:n_data_block1,:,i) = tmpt(1:n_data_block1,:);
@@ -78,23 +62,16 @@ else
     end
 end
 
-<<<<<<< Updated upstream
-=======
-ArrayByte = [ArrayByte1,ArrayByte2];
-
-
-
->>>>>>> Stashed changes
 
 end
 
 
 
-<<<<<<< Updated upstream
+
+
+
 % TODO da sistemare, ERMES sa come si fa e dice che lo fa lui
-=======
-% TODO da sistemare
->>>>>>> Stashed changes
+
 
 
 function ArrayBit = alfa_numeric(Stringa)
@@ -103,7 +80,13 @@ keySet = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H
 
 mode = [0,0,1,0];
 
-ArrayBit= cat(2,mode,de2bi(length(Stringa),9,'left-msb'));  % Inizializzo il mod che sarà la prima parte dell'Array con il valore che indica il mode alfanumerico con la lunghezza in bit della Stringa
+if version < 10
+ArrayBit = cat(2,mode,de2bi(length(Stringa),9,'left-msb'));
+elseif  and(version >= 10, version < 27)
+    ArrayBit = cat(2,mode,de2bi(length(Stringa),11,'left-msb'));
+else
+    ArrayBit = cat(2,mode,de2bi(length(Stringa),13,'left-msb'));
+end
 
 
 parity = mod(length(Stringa),2);    % Verifico se la lunghezza della stringa sia pari o dispari(parity = 1 \/ 0)
@@ -132,15 +115,8 @@ end
 
 
 
-<<<<<<< Updated upstream
 
-% prende in input una stringa di numeri e la versione e la codifica nel
-% mode numerico
-=======
-%% prende in input una stringa di numeri e la versione e la codifica nel mode numerico.
-%% poi bisognera fare ancora il padding
 
->>>>>>> Stashed changes
 
 function ArrayByte = numerica(Stringa,version)
 parity = mod(length(Stringa),3); %resto mod 3
@@ -174,29 +150,7 @@ end
 
 
 
-<<<<<<< Updated upstream
-=======
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> Stashed changes
 function [numDataBits, n_data_block1, n_block1, n_data_block2, n_block2] = info_version(version,eclevel)  
 
 Block_info = [19	7	1	19	0	0	;
@@ -379,15 +333,5 @@ n_block1 = Block_info(4*(version-1) + c,3);
 n_data_block2 = Block_info(4*(version-1) + c,6);
 n_block2 = Block_info(4*(version-1) + c,5); 
 
-
-
-<<<<<<< Updated upstream
 end
 
-=======
-
-
-end
-
-
->>>>>>> Stashed changes
