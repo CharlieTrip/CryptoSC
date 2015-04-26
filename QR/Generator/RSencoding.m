@@ -1,5 +1,6 @@
 function msg = RSencoding( msg, k, n )
 %Questa funzione effettua la codifica Reed-Solomon.
+%Codifica sistematica: ridondanza + messaggio
 %Input: 'msg' ? messaggio da codificare - Vector of elements in gf(2^8)
 %       'k'   ? la lughezza del messaggio in input - Integer
 %       'n'   ? la lunghezza del messaggio in output - Integer
