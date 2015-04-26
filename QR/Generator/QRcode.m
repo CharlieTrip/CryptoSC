@@ -2,9 +2,7 @@
 
 function QRmatrix = QRcode(Stringa)
 
-ecl = input('Inserisci il livello di codifica (L,M,Q,H)' :,'s');
-
-ecl = 'Q';
+ecl = input('Inserisci il livello di codifica (L,M,Q,H) :','s');
 
 [mode, version] = find_mode_version( Stringa, ecl );
 
