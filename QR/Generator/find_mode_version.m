@@ -1,5 +1,8 @@
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 %ecl 'L', 'M', 'Q', 'H'
 function [mode, version] = find_mode_version( msg, ecl )
 
@@ -20,7 +23,11 @@ else
     mode = [0 1 0 0];
 end
 
+<<<<<<< Updated upstream
 mode = [0 0 1 0]; %TODO da modificare colpa di Andrea
+=======
+
+>>>>>>> Stashed changes
 
 
 version = retrieve_version(length(msg), mode, ecl);
@@ -37,7 +44,11 @@ function version=retrieve_version(length, mode, ecl)
 
 
         % numeric
+<<<<<<< Updated upstream
         if isequal(mode,[0,0,0,1])
+=======
+        if mode == [0,0,0,1]          
+>>>>>>> Stashed changes
             switch ecl
                 
                 case 'L'
@@ -81,7 +92,11 @@ function version=retrieve_version(length, mode, ecl)
             
             
             % alphanumeric
+<<<<<<< Updated upstream
         elseif isequal(mode,[0,0,1,0])          
+=======
+        elseif mode == [0,0,1,0]          
+>>>>>>> Stashed changes
             switch ecl        
              case 'L'
                 
@@ -124,7 +139,11 @@ function version=retrieve_version(length, mode, ecl)
             
             
             % byte mode
+<<<<<<< Updated upstream
        % elseif isequal(mode,[0,1,0,0])          
+=======
+       % elseif mode == [0,1,0,0]          
+>>>>>>> Stashed changes
        %     switch ecl  
                 
       %          case 'L'
