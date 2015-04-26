@@ -6,14 +6,19 @@
 % Livello di correzione Q, versione 3
 
 
-function ArrayByte = AlfaNumConv(Stringa)
+function ArrayByte = AlfaNumConv(Stringa,version)
 
 numDataBits = 272;   % Cambia da versione a versione (272) 3-Q
 
 keySet = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',' ','$','%','*','+','-','.','/',':'];
 
-ArrayBit= cat(2,[0,0,1,0],de2bi(length(Stringa),9,'left-msb'));  % Inizializzo il mod che sarà la prima parte dell'Array con il valore che indica il mode alfanumerico con la lunghezza in bit della Stringa
-
+if version < 10 % inserisco il mode e una stringa di bit indicante la lunghezza della stringa che voglio convertire( dipende dalla versione)
+ArrayByte = cat(2,[0,0,1,0],de2bi(length(Stringa),9,'left-msb'));
+elseif  and(version >= 10, version < 27)
+    ArrayByte = cat(2,[0,0,1,0],de2bi(length(Stringa),11,'left-msb'));
+else
+    ArrayByte = cat(2,[0,0,1,0],de2bi(length(Stringa),13,'left-msb'));
+end
 
 parity = mod(length(Stringa),2);    % Verifico se la lunghezza della stringa sia pari o dispari(parity = 1 \/ 0)
 lenStringa = (length(Stringa)-parity);   % Lunghezza della stringa a meno dell'ultimo carattere
