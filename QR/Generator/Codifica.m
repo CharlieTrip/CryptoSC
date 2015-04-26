@@ -137,26 +137,6 @@ end
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function [numDataBits, n_data_block1, n_block1, n_data_block2, n_block2] = info_version(version,eclevel)  
 
 Block_info = [19	7	1	19	0	0	;
@@ -341,8 +321,5 @@ n_block2 = Block_info(4*(version-1) + c,5);
 
 
 
-
-
 end
-
 

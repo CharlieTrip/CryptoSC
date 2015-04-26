@@ -1,3 +1,5 @@
+
+
 %ecl 'L', 'M', 'Q', 'H'
 function [mode, version] = find_mode_version( msg, ecl )
 
@@ -18,7 +20,7 @@ else
     mode = [0 1 0 0];
 end
 
-
+mode = [0 0 1 0]; %TODO da modificare colpa di Andrea
 
 
 version = retrieve_version(length(msg), mode, ecl);
@@ -35,7 +37,7 @@ function version=retrieve_version(length, mode, ecl)
 
 
         % numeric
-        if mode == [0,0,0,1]          
+        if isequal(mode,[0,0,0,1])
             switch ecl
                 
                 case 'L'
@@ -79,7 +81,7 @@ function version=retrieve_version(length, mode, ecl)
             
             
             % alphanumeric
-        elseif mode == [0,0,1,0]          
+        elseif isequal(mode,[0,0,1,0])          
             switch ecl        
              case 'L'
                 
@@ -122,7 +124,7 @@ function version=retrieve_version(length, mode, ecl)
             
             
             % byte mode
-       % elseif mode == [0,1,0,0]          
+       % elseif isequal(mode,[0,1,0,0])          
        %     switch ecl  
                 
       %          case 'L'
