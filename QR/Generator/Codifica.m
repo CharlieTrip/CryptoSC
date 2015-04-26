@@ -1,11 +1,10 @@
-% Funzione che prende in input una stringa e restituisce un array di bit
-% corrispondente (conversione alfanumerica)
-% Gli input devono essere maiuscoli... nel caso bisogna fixare il problema
-% del casesensitive
-% Livello di correzione Q, versione 3
+% Funzione che prende in input la stringa, il mode,la Version, l'EClevel, e
+% restituisce due gruppi di blocchi di DataCodeword in byte, nel caso il
+% gruppo (dipende dalla versione) sia solo uno, restituisce 0 al posto del
+% secondo gruppo.
 
 
-function ArrayByte = Codifica(Stringa,Version,mode,EClevel)
+function [ArrayByte1,ArrayByte2] = Codifica(Stringa,Version,mode,EClevel)
 
 [numDataBits, n_data_block1, n_block1, n_data_block2, n_block2] = info_version(Version,EClevel);
 
@@ -40,12 +39,14 @@ end
 tmpt = transpose(reshape(ArrayBit,8,numDataBits/8));
 
 
-ArrayByte = {};
+ArrayByte1 = [];
+ArrayByte2 = [];
 if  n_block2 == 0
     for i = 1:n_block1
-        ArrayByte(1:n_data_block1,:,i) = tmpt(1:n_data_block1,:);
+        ArrayByte1(1:n_data_block1,:,i) = tmpt(1:n_data_block1,:);
         tmpt(1:n_data_block1,:) = [];
     end
+    ArrayByte2 = 0;
 else
     for i = 1:n_block1
         ArrayByte1(1:n_data_block1,:,i) = tmpt(1:n_data_block1,:);
@@ -57,16 +58,12 @@ else
     end
 end
 
-ArrayByte = [ArrayByte1,ArrayByte2];
-
-
-
 
 end
 
 
 
-% TODO da sistemare
+% TODO da sistemare, ERMES sa come si fa e dice che lo fa lui
 
 
 function ArrayBit = alfa_numeric(Stringa)
@@ -104,9 +101,9 @@ end
 
 
 
-%% prende in input una stringa di numeri e la versione e la codifica nel mode numerico.
-%% poi bisognera fare ancora il padding
 
+% prende in input una stringa di numeri e la versione e la codifica nel
+% mode numerico
 
 function ArrayByte = numerica(Stringa,version)
 parity = mod(length(Stringa),3); %resto mod 3
@@ -135,26 +132,6 @@ end
 end
 
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -344,8 +321,5 @@ n_block2 = Block_info(4*(version-1) + c,5);
 
 
 
-
-
 end
-
 
