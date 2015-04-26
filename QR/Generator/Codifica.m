@@ -92,16 +92,16 @@ end
 parity = mod(length(Stringa),2);    % Verifico se la lunghezza della stringa sia pari o dispari(parity = 1 \/ 0)
 lenStringa = (length(Stringa)-parity);   % Lunghezza della stringa a meno dell'ultimo carattere
 
-Coppie = zeros(2,lenStringa/2);  % inizializzo un array a due dimensioni in cui registrerò le coppie di char
+Coppie = zeros(2,lenStringa/2);  % inizializzo un array a due dimensioni in cui registrer?? le coppie di char
 
-for (i = 1:lenStringa/2)  % registro ogni coppia di caratteri
+for i = 1:lenStringa/2  % registro ogni coppia di caratteri
     Coppie(1,i) = find(keySet == Stringa(2*i-1))-1;
     Coppie(2,i) = find(keySet == Stringa(2*i))-1;
         
 end
 
 
-for (i = 1:lenStringa/2) % converto ogni coppia di caratteri in bit e casto tutto in un unico array 
+for i = 1:lenStringa/2 % converto ogni coppia di caratteri in bit e casto tutto in un unico array 
     ArrayBit = cat(2,ArrayBit,de2bi(Coppie(1,i)*45 + Coppie(2,i),11,'left-msb'));
     
 end

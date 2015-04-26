@@ -13,7 +13,7 @@ ecl = input('Inserisci il livello di codifica (L,M,Q,H) :','s');
 
 Finsequence = Assembler(ArrayByte1,ArrayByte2, ECCodewordByte1, ECCodewordByte2, version, ecl); % sistemo tutto in un array
 
-QRmatrix = Positioner(Finsequence,version);  % Qui si posizionano i bit nella matrice, la dimensione va poi aggiornata quando si farà lo script generalizzato
+QRmatrix = Positioner(Finsequence,version);  % Qui si posizionano i bit nella matrice, la dimensione va poi aggiornata quando si far?? lo script generalizzato
 
 
 %%% Manca da inserire: maschera, blocchi e information bits e xorare,
