@@ -9,7 +9,7 @@
 % 
 % Output
 %	EncodeMsg ; encoded message of length n
-function encodedMsg = RSEncoder(n,k, codedMsg)
+function encodedMsg = RSEncoder(codedMsg, n, k)
 
 	% Creating the Encoder using the Matlab's built-in function
 	encoder = comm.RSEncoder(n, k);
