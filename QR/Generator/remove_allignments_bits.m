@@ -2,6 +2,7 @@
 function [ qr_matrix ] = remove_allignments_bits( qr_matrix, version)
 %value for pointless bit
 global null;
+null=0;
 side = size(qr_matrix,1);
 %qr_matrix = qr_matrix*255;
 %%Remove position detection pattern (i 3 quadratoni)
