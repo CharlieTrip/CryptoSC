@@ -67,9 +67,9 @@ if version>1
 
     for i=1:length(Center)
     
-        QRplaced(Center.r-2:Center.r+2,Center.c-2:Center.c+2) = 1;
-        QRplaced(Center.r-1:Center.r+1,Center.c-1:Center.c+1) = 0;
-        QRplaced(Center.r,Center.c) = 1;
+        QRplaced(Center(i).r-2:Center(i).r+2,Center(i).c-2:Center(i).c+2) = 1;
+        QRplaced(Center(i).r-1:Center(i).r+1,Center(i).c-1:Center(i).c+1) = 0;
+        QRplaced(Center(i).r,Center(i).c) = 1;
     
     end
 end
@@ -115,8 +115,6 @@ end
   
  QRmatrix(9,m:-1:m-7) = Bitsequence(15:-1:8);
  QRmatrix(m:-1:m-6,9) = Bitsequence(1:7);
-
-imshow(QRplaced);
 
 end
 
