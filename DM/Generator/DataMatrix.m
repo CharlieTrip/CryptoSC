@@ -8,7 +8,7 @@
 %	IMG		: DataMatrix image
 
 % Message to be encoded
-M = [97, 98, 99, 100];
+M = [98, 98, 98, 98];
 
 % Max data that can be encoded, size by size
 	DataWordLength = [3, 5, 8, 12, 18, 22, 30, 36, 44, ...
@@ -37,11 +37,19 @@ M = [97, 98, 99, 100];
 	disp(Msg)
 	
 % RS-Encoding function
-	Msg = RSEncoder(DataRegionSize(SizeIndex), DataWordLength(SizeIndex), Msg);
+	Msg = RSEncoder(DataWordLength(SizeIndex)+ErrorWordLength(SizeIndex), DataWordLength(SizeIndex), Msg);
 	disp('Encoded message = ')
 	disp(Msg)
 	
 % Message-to-matrix function
+	DM = Placement(Msg, DataRegionSize(SizeIndex));
+	disp('Matrix form = ')
+	disp(DM)
 	
+% Adding margin
+	DM = Margin(DM, DataRegionSize(SizeIndex));
+	disp('Matrix form with margin = ')
+	disp(DM)
 
 % Matrix-to-image function
+	%Img = imshow(ones(DataRegionSize(SizeIndex)+2)-DM);

@@ -1,7 +1,7 @@
 % 
-% Corner Matrix Form
+% Standard Matrix Form
 % Function to place the message into the matrix form
-% in the four cases of the corners
+% wrapped around the matrix
 % 
 % Input
 %	DM		: old DataMatrix
@@ -13,10 +13,13 @@
 % Output
 %	DM		: new DataMatrix
 
-function DM = CornerMatForm(DM, n, Msg, x,y)
+function DM = MsgToMatrix(DM, Msg, x,y, n)
 
 % Convertion to binary
 	BinMsg=de2bi(Msg);
+	while length(BinMsg)<8
+		BinMsg(length(BinMsg)+1)=0;
+	end
 
 %
   	% Corner case 1
@@ -122,5 +125,30 @@ function DM = CornerMatForm(DM, n, Msg, x,y)
 		DM(n , n  ) = BinMsg(2);
 		DM(n , 1  ) = BinMsg(1);
 	end;
+
+% Standard codeword placement
+%	|1|2|
+%	|3|4|5|
+%	|6|7|8|
+	
+% Set the right position for every bit
+	[x8, y8] = checkPos(x  , y  , n);
+	[x7, y7] = checkPos(x  , y-1, n);
+	[x6, y6] = checkPos(x  , y-2, n);
+	[x5, y5] = checkPos(x-1, y  , n);
+	[x4, y4] = checkPos(x-1, y-1, n);
+	[x3, y3] = checkPos(x-1, y-2, n);
+	[x2, y2] = checkPos(x-2, y-1, n);
+	[x1, y1] = checkPos(x-2, y-2, n);
+	
+% Placement of the message	
+	DM(x8, y8) = BinMsg(1);
+	DM(x7, y7) = BinMsg(2);
+	DM(x6, y6) = BinMsg(3);
+	DM(x5, y5) = BinMsg(4);
+	DM(x4, y4) = BinMsg(5);
+	DM(x3, y3) = BinMsg(6);
+	DM(x2, y2) = BinMsg(7);
+	DM(x1, y1) = BinMsg(8);
 	
 end

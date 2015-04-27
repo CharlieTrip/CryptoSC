@@ -8,12 +8,12 @@
 % 	Msg		: message
 %	x		: x-position of the LSB
 %	y		: y-position of the LSB
-%	size	: size of the matrix
+%	n		: size of the matrix
 % 
 % Output
 %	DM		: new DataMatrix
 
-function DM = WrappedMatForm(DM, Msg, x,y, size)
+function DM = WrappedMatForm(DM, Msg, x,y, n)
 
 % Standard codeword placement
 %	|1|2|
@@ -24,14 +24,14 @@ function DM = WrappedMatForm(DM, Msg, x,y, size)
 	BinMsg=de2bi(Msg);
 	
 % Set the right position for every bit
-	[ x1 , y1 ] = checkPos(x  , y  , size);
-	[ x2 , y2 ] = checkPos(x-1, y  , size);
-	[ x3 , y3 ] = checkPos(x-2, y  , size);
-	[ x4 , y4 ] = checkPos(x  , y-1, size);
-	[ x5 , y5 ] = checkPos(x-1, y-1, size);
-	[ x6 , y6 ] = checkPos(x-2, y-1, size);
-	[ x7 , y7 ] = checkPos(x-1, y-2, size);
-	[ x8 , y8 ] = checkPos(x-2, y-2, size);
+	[x1, y1] = checkPos(x  , y  , n);
+	[x2, y2] = checkPos(x-1, y  , n);
+	[x3, y3] = checkPos(x-2, y  , n);
+	[x4, y4] = checkPos(x  , y-1, n);
+	[x5, y5] = checkPos(x-1, y-1, n);
+	[x6, y6] = checkPos(x-2, y-1, n);
+	[x7, y7] = checkPos(x-1, y-2, n);
+	[x8, y8] = checkPos(x-2, y-2, n);
 	
 % Placement of the message	
 	DM(x8, y8) = BinMsg(8);
