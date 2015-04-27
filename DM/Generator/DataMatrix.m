@@ -8,7 +8,7 @@
 %	IMG		: DataMatrix image
 
 % Message to be encoded
-M = [98, 98, 98, 98];
+Str = 'Budroni infame!!';
 
 % Max data that can be encoded, size by size
 	DataWordLength = [3, 5, 8, 12, 18, 22, 30, 36, 44, ...
@@ -31,6 +31,9 @@ M = [98, 98, 98, 98];
                     18, 20, 22];
 	
 				
+% String to ASCII
+	M = uint8(Str);
+				
 % Padding function
 	[Msg, SizeIndex] = Padding(M);
 	disp('Padded message = ')
@@ -47,9 +50,10 @@ M = [98, 98, 98, 98];
 	disp(DM)
 	
 % Adding margin
-	DM = Margin(DM, DataRegionSize(SizeIndex));
-	disp('Matrix form with margin = ')
-	disp(DM)
+ 	DM = Margin(DM, DataRegionSize(SizeIndex));
+ 	disp('Matrix form with margin = ')
+ 	disp(DM)
 
 % Matrix-to-image function
-	%Img = imshow(ones(DataRegionSize(SizeIndex)+2)-DM);
+	Q = ones(DataRegionSize(SizeIndex)+4)-DM;
+	imwrite(Q, 'test.png');
