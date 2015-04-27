@@ -10,6 +10,11 @@ function [msg] = readerDM (immDM)
 % dall'immagine alla matrice di 1 e 0
 
 immDM = imread(immDM);
+
+if length(size(immDM)) == 3
+	immDM = rgb2gray(immDM);
+end
+
 matrix = leggiDM (immDM);
 
 
@@ -76,4 +81,6 @@ seq = RSDecoder(n, k, seq);
 % estraggo il messaggio
 
 msg = estraiMessaggio (seq);
+
+msg = convertiASCII(msg);
 
