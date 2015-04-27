@@ -4,11 +4,11 @@
 % Prende in input la dimensione della matrice
 
 
-function QR_matrix_out = Blocchi_info(QR_matrix_in, mask_reference, ECC_level, Version)
+function QR_matrix = Blocchi_info(QR_matrix, mask_reference, ECC_level, version)
 
-QR_matrix_out = Blocchi(QR_matrix_in,Version); % metto i blocchi
+QR_matrix = Blocchi(QR_matrix,version); % metto i blocchi
 
-QR_matrix_out = format_information(QR_matrix_out,mask_reference, ECC_level);
+QR_matrix = format_information(QR_matrix,mask_reference, ECC_level);
 
 end
 
@@ -118,3 +118,10 @@ end
 
 
 
+
+function QR_matrix = version_information(QR_matrix,version)
+
+
+
+
+end

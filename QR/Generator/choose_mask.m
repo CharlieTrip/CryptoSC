@@ -15,6 +15,12 @@ n_mask=find(evaluation == min(evaluation))-1; %calcolo la valutazione minima
 %REMARK la maschera restituita e' un numero tra 0 e 7.
 end 
 
+
+
+
+
+
+
 %Questa funzione applica a una matrice 'qr_matrix' di versione 
 %'version' la maschera 'mask_n'. Per chiarimenti vedi funzioni 'locali' 
 %in basso
@@ -33,6 +39,14 @@ for i=1:s
 end
 
 end
+
+
+
+
+
+
+
+
 
 %Applica la maschera a tutta la matrice - modificata da release_masking.m
 function [ qr_matrix ] = app_masking_all(qr_matrix, mask_n)
@@ -112,6 +126,12 @@ switch mask_n
         end
 end
 end
+
+
+
+
+
+
 
 %%Remove the various finder puttin the null value
 function [ qr_matrix ] = remove_allignments_bits( qr_matrix, version)
@@ -256,6 +276,13 @@ if v>1
 end
 
 end
+
+
+
+
+
+
+
 
 %Data in input una matrice qr, valuta quale maschera tra le 8 definite
 %dalle referenze va applicata
