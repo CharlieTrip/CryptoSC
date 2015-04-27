@@ -1,4 +1,3 @@
-%=================================================================
 %gf2dec.m
 %Convert a Galois Field Array into a Decimal Array.
 %The calling syntax is:

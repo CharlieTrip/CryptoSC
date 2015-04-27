@@ -1,33 +1,76 @@
 % 
 % Placement
-% Function to place the matrix into the position
+% Function to place the matrices into the position
+% to get the matrix form of the DataMatrix
 % 
 % Input
 %	Msg		: message
-%	x		: x-position of the LSB
-%	y		: y-position of the LSB
+%	size	: size of the matrix
 % 
 % Output
-%	NewDM	: new DataMatrix
+%	DM		: matrix form of the DataMatrix
 
-function DM = Placement(DM, Msg, x,y)
-
-% Standard codeword placement
-%	|1|2|
-%	|3|4|5|
-%	|6|7|8|
-
-% Convertion to binary
-	BinMsg=de2bi(Msg);
+function DM = Placement(Msg, size)
 	
-% Placement of the message	
-	DM(x-2, y-2) = BinMsg(8);
-	DM(x-1, y-2) = BinMsg(7);
-	DM(x-2, y-1) = BinMsg(6);
-	DM(x-1, y-1) = BinMsg(5);
-	DM(x  , y-1) = BinMsg(4);
-	DM(x-2, y  ) = BinMsg(3);
-	DM(x-1, y  ) = BinMsg(2);
-	DM(x  , y  ) = BinMsg(1);
+	% Initialization of the matrix
+	DM = ones(size)*5;
+	
+	% Start position
+	x = 5;
+	y = 1;
+	i = 1;
+	
+	while 1
+		
+		% Downwards
+		while 1
+			if x<=size && y>0 && DM(x,y)==5
+				DM = MsgToMatrix(DM, Msg(i), x,y, size);
+				i=i+1;
+			end
+			x=x-2;
+			y=y+2;
+			if x<1 || y>size
+				break
+			end
+		end
+		x = x+1;
+		y = y+3;
+		
+		if i>length(Msg)
+			break
+		end
+		
+		% Upwards
+		while 1
+			if x>0 && y<=size && DM(x,y)==5
+				DM = MsgToMatrix(DM, Msg(i), x,y, size);
+				i=i+1;
+			end
+			x=x+2;
+			y=y-2;
+			if x>size || y<1
+				break
+			end
+		end
+		
+		if x>size && y>size
+ 			break
+		end
+		x=x+3;
+		y=y+1;
+		
+		if i>length(Msg)
+			break
+		end
+	end
+	
+	for i=1:size
+		for j=1:size
+			if DM(i,j)==5
+				DM(i,j)=0;
+			end
+		end
+	end
 	
 end

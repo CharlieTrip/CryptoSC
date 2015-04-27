@@ -12,7 +12,7 @@ get_dim = [21 25 29 33 37 41 45 49 53 57 61 65 69 73 77 81 85 89 93 97 101 105 1
 dim = get_dim(version);
 
 qr_matrix = zeros(dim,dim);
-qr_matrix = remove_allignments_bits(qr_matrix,3); % 3 sta per la versione, va generalizzato
+qr_matrix = remove_allignments_bits(qr_matrix,version); 
 %starting from right down corner
 %n is used for count the number of bit, 
 %it start from 7 and end in 0, then begin 

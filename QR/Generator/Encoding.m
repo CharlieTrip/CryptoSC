@@ -12,11 +12,11 @@ function [ECCodewordByte1, ECCodewordByte2] = Encoding(ArrayByte1,ArrayByte2,ver
 
 if ArrayByte2 == 0
 
-poli = get_polynomial(ECxBlock);
+% poli = get_polynomial(ECxBlock);
     
 for j = 1:n_Block1
 
-        IntegerData_EC1(:,j) =  gf2dec(rsenc(gf(bi2de(ArrayByte1(:,:,j),'left-msb'),8)',dim_k1+ECxBlock,dim_k1,poli),8);
+        IntegerData_EC1(:,j) =  RSEncoder(bi2de(ArrayByte1(:,:,j),'left-msb')',dim_k1+ECxBlock,dim_k1);
 
 end
 
@@ -30,11 +30,11 @@ ECCodewordByte2 = 0;
 
 else
     
-    poli = get_polynomial(ECxBlock);
+%    poli = get_polynomial(ECxBlock);
     
 for j = 1:n_Block1
 
-    IntegerData_EC1(:,j) =  gf2dec(rsenc(gf(bi2de(ArrayByte1(:,:,j),'left-msb'),8)',dim_k1+ECxBlock,dim_k1,poli),8);
+    IntegerData_EC1(:,j) =  RSEncoder(bi2de(ArrayByte1(:,:,j),'left-msb')',dim_k1+ECxBlock,dim_k1);
 
 end
 
@@ -48,7 +48,7 @@ end
     
 for j = 1:n_Block2
 
-    IntegerData_EC2(:,j) =  gf2dec(rsenc(gf(bi2de(ArrayByte2(:,:,j),'left-msb'),8)',dim_k2+ECxBlock,dim_k2,poli),8);
+    IntegerData_EC2(:,j) =  RSEncoder(bi2de(ArrayByte2(:,:,j),'left-msb')',dim_k2+ECxBlock,dim_k2);
 
 end
 
@@ -67,34 +67,6 @@ end
    
     
 end
-
-
-
-%enc = comm.RSEncoder
-
-
-%RSOutput = zeros(2,35);
-%ECCodewordByte = zeros(18,8,2);
-
-%DataCodewordInteger = zeros(2,length(DataCodewordByte));
-
-%for i = 1:length(DataCodewordByte)
-%    DataCodewordInteger(1,i) = bi2de(DataCodewordByte(i,:,1),'left-msb');  % converto da byte ad interi primo blocco
-%    DataCodewordInteger(2,i) = bi2de(DataCodewordByte(i,:,2),'left-msb');  % converto da byte ad interi secondo blocco
-
-
-
-
-function p = get_polynomial(grado)
-
-a=gf(2,8);
-p=[1 1];
-for i=1:grado-1
- p=conv(p,[1 a^i]);
-end
-
-end
-
 
 
 
