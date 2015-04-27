@@ -8,7 +8,7 @@ function QR_matrix_out = Blocchi_info(QR_matrix_in, mask_reference, ECC_level, V
 
 QR_matrix_out = Blocchi(QR_matrix_in,Version); % metto i blocchi
 
-QR_matrix_out = QRmatrix_information(QR_matrix_out,mask_reference, ECC_level);
+QR_matrix_out = format_information(QR_matrix_out,mask_reference, ECC_level);
 
 end
 
@@ -20,11 +20,11 @@ function QRplaced = Blocchi(QRplaced,Version)
 %m = 29; % propria della versione 3
 m = length(QRplaced(1,:));
 
-QRplaced(6,8:2:m-7)=1;
-QRplaced(6,9:2:m-8)=0;
+QRplaced(7,8:2:m-7)=0;
+QRplaced(7,9:2:m-8)=1;
 
-QRplaced(8:2:m-7,6)=1;
-QRplaced(9:2:m-8,6)=0;
+QRplaced(8:2:m-7,7)=0;
+QRplaced(9:2:m-8,7)=1;
 
 
 QRplaced(1:7,1:7) = 0;  % Disegno quadrato in alto a sinistra
@@ -36,26 +36,20 @@ QRplaced(m-6:m,1:7) = 0;  % Disegno quadrato in basso a sinistra
 QRplaced(m-8:m-4,m-8:m-4) = 0;  % Disegno quadrato in basso a destra
 
 
-QRplaced(1,1:7) = 1;  % Disegno quadrato in alto a sinistra
-QRplaced(7,1:7) = 1;
-QRplaced(1:7,1) = 1;
-QRplaced(1:7,7) = 1;
+QRplaced(1:7,1:7) = 1;  % Disegno quadrato in alto a sinistra
+QRplaced(2:6,2:6) = 0;
 QRplaced(3:5,3:5) = 1;
 QRplaced(1:8,8) = 0;
 QRplaced(8,1:8) = 0;
 
-QRplaced(1,m-6:m) = 1;  % Disegno quadrato in alto a destra
-QRplaced(7,m-6:m) = 1;
-QRplaced(1:6,m) = 1;
-QRplaced(1:6,m-6) = 1;
+QRplaced(1:7,m-6:m) = 1;  % Disegno quadrato in alto a destra
+QRplaced(2:6,m-5:m-1) = 0;
 QRplaced(3:5,m-4:m-2) = 1;
 QRplaced(8,m-7:m) = 0;
 QRplaced(1:7,m-7) = 0;
 
-QRplaced(m,1:7) = 1;  % Disegno quadrato in basso a sinistra
-QRplaced(m-6,1:7) = 1;
-QRplaced(m-6:m,1) = 1;
-QRplaced(m-6:m,7) = 1;
+QRplaced(m-6:m,1:7) = 1;  % Disegno quadrato in basso a sinistra
+QRplaced(m-5:m-1,2:6) = 0;
 QRplaced(m-4:m-2,3:5) = 1;
 QRplaced(m-7,1:8) = 0;
 QRplaced(m-7:m,8) = 0;
@@ -87,7 +81,7 @@ end
 % 'Q' e 'H'.
 
 
-function QRmatrix = QRmatrix_information(QRmatrix,mask_reference, ECC_level)
+function QRmatrix = format_information(QRmatrix,mask_reference, ECC_level)
 
 Mask_pattern = gf([1 0 1 0 1 0 0 0 0 0 1 0 0 1 0]);
 
@@ -117,4 +111,10 @@ end
  QRmatrix(m:-1:m-6,9) = Bitsequence(1:7);
 
 end
+
+
+
+
+
+
 
