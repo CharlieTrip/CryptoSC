@@ -20,7 +20,7 @@ function [Msg, t] = Padding(M)
 						1050, 1304, 1558];
 					
 % Length of the unpadded message
-	Len = length(Msg);
+	Len = length(M);
 	
 % Size of the matrix
 	Size = 0;
@@ -29,10 +29,12 @@ function [Msg, t] = Padding(M)
 	t = 0;
 	while Size<=Len
 		t = t+1;
-		if data_word_length(t)>=Len
+		if DataWordLength(t)>=Len
 			Size = DataWordLength(t);
 		end
 	end
+	
+	Msg=M;
 
 % Padding
 	PadLength = Size-Len;

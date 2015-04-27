@@ -16,7 +16,6 @@ data=dtemp;
 mode = mat2str(data(1:4));
 message ='not supported';
 switch mode([2,4,6,8])
-    
     case '0001'
         %mode = 'Numeric';
         if version<=9

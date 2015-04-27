@@ -1,6 +1,7 @@
 %Questa funzione prende in Input la matrice qr_matrix
 %e restituisce il numero di maschera da applicare
 %(per la numerazione delle masks vedi il file release_masking.m).
+%...
 
 function n_mask=choose_mask(qr_matrix,version)
 
