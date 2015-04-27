@@ -1,4 +1,4 @@
-function msg = RSencoding( msg, k, n )
+function msg = RSencoding( msg, n, k )
 %Questa funzione effettua la codifica Reed-Solomon.
 %Codifica sistematica: ridondanza + messaggio
 %Input: 'msg' ? messaggio da codificare - Vector of elements in gf(2^8)
@@ -19,7 +19,7 @@ xnk=gf(xnk,8);
 p=get_polynomial(n-k);
 [quotient,remainders]=deconv(conv(msg,xnk),p);
 redundance=remainders(k+1:n);
-msg=[redundance,msg];
+msg=[msg,redundance];
 
 end
 
