@@ -8,27 +8,21 @@
 %	IMG		: DataMatrix image
 
 % Message to be encoded
-Str = 'Budroni infame!!';
+Str = 'CiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCi';
 
 % Max data that can be encoded, size by size
 	DataWordLength = [3, 5, 8, 12, 18, 22, 30, 36, 44, ...
-                    62, 86, 114, 144, 174, 204, ...
-                    280, 368, 456, 576, 696, 816, ...
-                    1050, 1304, 1558];
+                    62, 86, 114, 144, 174];
 				
 				
 % Max redundancy that can be encoded, size by size
 	ErrorWordLength = [5, 7, 10, 12, 14, 18, 20, 24, 28, ...
-                     36, 42, 48, 56, 68, 84, ...
-                     112, 144, 192, 224, 272, 336, ...
-                     408, 496, 620];
+                     36, 42, 48, 56, 68];
 				 
 				 
 % Size of the region, size by size
 	DataRegionSize = [8, 10, 12, 14, 16, 18, 20, 22, 24, ...
-                    14, 16, 18, 20, 22, 24, ...
-                    14, 16, 18, 20, 22, 24, ...
-                    18, 20, 22];
+                    28, 32, 36, 40, 44];
 	
 				
 % String to ASCII
@@ -49,11 +43,21 @@ Str = 'Budroni infame!!';
 	disp('Matrix form = ')
 	disp(DM)
 	
+	DM2=DM;
+	DM2 = Margin(DM2);	
+	Q = ones(length(DM2))-DM2;
+	imwrite(Q, 'NoCross.png');
+
+% Central cross function
+	if SizeIndex>9
+		DM=CentralCross(DM, DataRegionSize(SizeIndex));
+	end
+	
 % Adding margin
- 	DM = Margin(DM, DataRegionSize(SizeIndex));
+ 	DM = Margin(DM);
  	disp('Matrix form with margin = ')
  	disp(DM)
 
 % Matrix-to-image function
-	Q = ones(DataRegionSize(SizeIndex)+4)-DM;
+	Q = ones(length(DM))-DM;
 	imwrite(Q, 'test.png');

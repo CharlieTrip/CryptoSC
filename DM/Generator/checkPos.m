@@ -23,7 +23,7 @@ function [newX, newY] = checkPos(x, y, n)
 
 	if y < 1
 	    newY = y + n;
-	    newX = x + (4 - mod((n + 4),8)) ;
+	    newX = mod(x + (4 - mod((n + 4),8)),n)+1 ;
 	end
 
 end

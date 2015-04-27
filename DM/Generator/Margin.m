@@ -4,29 +4,29 @@
 % 
 % Input
 %	DM		: DataMatrix
-%	size	: size of the matrix
 % 
 % Output
 %	DM		: DataMatrix with the margin
 
-function M = Margin(DM, size)
+function M = Margin(DM)
 
+	size = length(DM);
 	M = zeros(size+4);
-	for i=1:(size+3)
-		for j=1:(size+3)
-			if (i==2 && mod(j,2)==0) || (j==(size+3) && mod(i,2)==1 && i~=1)
-				%disp('Primo if')
-				%i, j
+	for i=2:(size+3)
+		for j=2:(size+3)
+			
+			% Punctured margin on top and right
+			if (i==2 && mod(j,2)==0) || (j==(size+3) && mod(i,2)==1)
 				M(i,j)=1;
 			end
-			if (j==2 && i~=1 )|| (i==(size+3) && j~=1)
-				%disp('Secondo if')
-				%i, j
+			
+			% L-margin on bottom and left
+			if j==2 || i==(size+3)
 				M(i,j)=1;
 			end
+			
+			% Fill the DM with the matrix
 			if i>2 && i<(size+3) && j>2 && j<(size+3)
-				%disp('Terzo if')
-				%i, j
 				M(i,j)=DM(i-2,j-2);
 			end
 		end
