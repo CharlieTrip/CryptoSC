@@ -23,5 +23,5 @@ message = retrieve_message(data, version, ecl);
 %disp(version);
 %join all character TODO:fix it for alphanumeric
 message=strjoin(cellstr(message),'');
-sprintf('%s',message(:));
+sprintf('%s',message(:))
 end
