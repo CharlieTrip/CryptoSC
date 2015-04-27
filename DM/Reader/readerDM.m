@@ -9,6 +9,7 @@ function [msg] = readerDM (immDM)
 
 % dall'immagine alla matrice di 1 e 0
 
+immDM = imread(immDM);
 matrix = leggiDM (immDM);
 
 
