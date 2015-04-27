@@ -27,5 +27,7 @@ M = ones(length(QRmatrix),length(QRmatrix));
 
 QRmatrix = M-QRmatrix;
 
+QRmatrix = imresize(uint8(QRmatrix),[length(QRmatrix)*10,length(QRmatrix)*10]);
+imshow(QRmatrix*255);
 
 end

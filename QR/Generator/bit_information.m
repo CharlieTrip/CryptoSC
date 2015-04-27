@@ -95,9 +95,10 @@ version_bits=gf(de2bi(version,6,'left-msb'),8);
 version_bits_xnk=conv(version_bits,xnk);
 
 [quotient,remainder]=deconv(version_bits_xnk,gf([1 1 1 1 1 0 0 1 0 0 1 0 1],8));
-remainder=gf2dec(remainder(7:18),8);
+remainder=(remainder(7:18));
 
-BCHcode_VI=[version_bits,remainder];
+BCHcode_VI=gf2dec([version_bits,remainder],8);
 
 
 end
+

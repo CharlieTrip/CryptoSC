@@ -12,7 +12,7 @@ function [ArrayByte1,ArrayByte2] = Codifica(Stringa,Version,mode,EClevel)
 
 
 if mode == [0,0,1,0] %  TODO aggiungere gli altri mode
-    ArrayBit = alfa_numeric(Stringa);
+    ArrayBit = alfa_numeric(Stringa,Version);
 elseif mode == [0,0,0,1]
     ArrayBit = numerica(Stringa,Version);
 end
@@ -74,7 +74,7 @@ end
 
 
 
-function ArrayBit = alfa_numeric(Stringa)
+function ArrayBit = alfa_numeric(Stringa,version)
 
 keySet = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',' ','$','%','*','+','-','.','/',':'];
 

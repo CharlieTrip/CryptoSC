@@ -6,13 +6,15 @@
 function qr_matrix = Positioner(ArrayCodeword, version)
 global null ;
 null = -1;
-
+%ArrayCodeword = fliplr(ArrayCodeword);
 get_dim = [21 25 29 33 37 41 45 49 53 57 61 65 69 73 77 81 85 89 93 97 101 105 109 113 117 121 125 129 133 137 141 145 149 153 157 161 165 169 173 177];
 
 dim = get_dim(version);
 
 qr_matrix = zeros(dim,dim);
+
 qr_matrix = remove_allignments_bits(qr_matrix,version); 
+
 %starting from right down corner
 %n is used for count the number of bit, 
 %it start from 7 and end in 0, then begin 
@@ -28,7 +30,7 @@ n=7;
 
 
 %retrieve data in the first part of qr (prima della riga verticale di 1 0)
-for c=dim:-2:9
+for c=size(qr_matrix,2):-2:9
 	%read from bottom to top
     	[qr_matrix, p, n, ArrayCodeword] = upwards(qr_matrix, [size(qr_matrix,1),c], n, ArrayCodeword);
 	%reverse the matrix for read every time from bottom to top    	
@@ -71,13 +73,15 @@ global null;
             %check if the position is not null
 	    %(for avoid the pattern finder)
             if qr_matrix(r,c) ~= null;
+                
+                   if length(ArrayCodeword) >=1
+                   qr_matrix(r,c) =  ArrayCodeword(1);
+                   ArrayCodeword(1) = [];
+                   end
 		%budro tu devi mettere al posto di n il bit da scrivere                
 		%qr_matrix(r,c) = n;
 		%read the bit
-                    if length(ArrayCodeword) >=1
-                   qr_matrix(r,c-1) =  ArrayCodeword(1);
-                   ArrayCodeword(1) = [];
-                    end
+                    
                 if qr_matrix(r,c-1) ~= null
                     if n==0
                         n=8;

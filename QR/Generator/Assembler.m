@@ -25,7 +25,7 @@ if n_block2 == 0
     for j = 1:EC_x_block
         for i =1:n_block1
 
-            ECCArray = cat(2,ECCArray,ArrayByte1(j,:,i));
+            ECCArray = cat(2,ECCArray,ECCodewordByte1(j,:,i));
 
         end
     end
