@@ -10,6 +10,8 @@ QR_matrix = Blocchi(QR_matrix,version); % metto i blocchi
 
 QR_matrix = format_information(QR_matrix,mask_reference, ECC_level);
 
+QR_matrix = version_information(QR_matrix,version);
+
 end
 
 
@@ -104,7 +106,7 @@ end
  
  QRmatrix(1:6,9) = Bitsequence(15:-1:10);
  QRmatrix(8:9,9) = Bitsequence(9:-1:8);
- QRmatrix(8,9) = Bitsequence(7);
+ QRmatrix(9,8) = Bitsequence(7);
  QRmatrix(9,6:-1:1) = Bitsequence(6:-1:1); 
   
  QRmatrix(9,m:-1:m-7) = Bitsequence(15:-1:8);
@@ -121,7 +123,52 @@ end
 
 function QR_matrix = version_information(QR_matrix,version)
 
+if version >=7
+    
+String_encoded = BCHencoding(version);
+m = length(QR_matrix);
+k = 1;
+for j=6:-1:1
+    for i=1:3        
+      QR_matrix(m-7-i,j) = String_encoded(k);  
+      k = k+1;
+    end
+end
 
+k = 1;
+for j=6:-1:1
+    for i=1:3        
+      QR_matrix(j,m-7-i) = String_encoded(k);  
+      k = k+1;
+    end
+end
+
+
+end
+
+end
+
+
+
+
+
+
+function BCHcode_VI=BCHencoding(version)
+xnk=[1 0];
+
+for i=1:11
+    xnk=conv(xnk,[1 0]);
+end
+length(xnk)
+
+version_bits=gf(de2bi(version,6,'left-msb'),8);
+
+version_bits_xnk=conv(version_bits,xnk);
+
+[quotient,remainder]=deconv(version_bits_xnk,gf([1 1 1 1 1 0 0 1 0 0 1 0 1],8));
+remainder=remainder(7:18);
+
+BCHcode_VI=[version_bits,remainder];
 
 
 end
