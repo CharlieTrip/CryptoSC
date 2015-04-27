@@ -89,7 +89,6 @@ xnk=[1 0];
 for i=1:11
     xnk=conv(xnk,[1 0]);
 end
-length(xnk)
 
 version_bits=gf(de2bi(version,6,'left-msb'),8);
 
