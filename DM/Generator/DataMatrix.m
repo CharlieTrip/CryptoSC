@@ -8,7 +8,7 @@
 %	IMG		: DataMatrix image
 
 % Message to be encoded
-Str = 'ciaociaociaociaociaociaociaoQTDciaociaoqwerty';
+Str = 'CiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCi';
 
 % Max data that can be encoded, size by size
 	DataWordLength = [3, 5, 8, 12, 18, 22, 30, 36, 44, ...
