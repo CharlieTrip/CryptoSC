@@ -30,7 +30,7 @@ ECCodewordByte2 = 0;
 
 else
     
-    poli = get_polynomial(ECxBlock);
+%    poli = get_polynomial(ECxBlock);
     
 for j = 1:n_Block1
 
