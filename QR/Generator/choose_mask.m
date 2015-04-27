@@ -4,7 +4,7 @@
 
 function n_mask=choose_mask(qr_matrix,version)
 
-evaluation=zeros(8); %inizializzo il vettore di valutazione
+evaluation=zeros(1,8); %inizializzo il vettore di valutazione
 for i=1:8
     evaluation(i)=evaluation_mask(qr_matrix,i-1,version); %calcolo le valutazioni per 
     %ogni singola mask e le salvo nel vettore evaluation
@@ -14,11 +14,6 @@ n_mask=find(evaluation == min(evaluation))-1; %calcolo la valutazione minima
 %ricerco la maschera corrispondente.
 %REMARK la maschera restituita e' un numero tra 0 e 7.
 end 
-
-
-
-
-
 
 
 %Questa funzione applica a una matrice 'qr_matrix' di versione 
@@ -34,15 +29,12 @@ mask=remove_allignments_bits(mask,version);%rimuovo la maschera nei pattern di o
 %applico la mask costruita sulla qr_matrix.
 for i=1:s
     for j=1:s
+        
         qr_matrix(i,j)=bitxor(mask(i,j),qr_matrix(i,j));
     end
 end
 
 end
-
-
-
-
 
 
 

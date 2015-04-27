@@ -15,7 +15,7 @@ Finsequence = Assembler(ArrayByte1,ArrayByte2, ECCodewordByte1, ECCodewordByte2,
 
 QRmatrix = Positioner(Finsequence,version);  % Qui si posizionano i bit nella matrice, la dimensione va poi aggiornata quando si far?? lo script generalizzato
 
-QRmatrix = Blocchi(QRmatrix,Version);
+QRmatrix = Blocchi_info(QRmatrix, [0 0 0], ecl, version)
 
 %%% Manca da inserire: maschera, blocchi e information bits e xorare,
 %%% eventualmente anche ingrandire
