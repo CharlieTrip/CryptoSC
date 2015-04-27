@@ -89,14 +89,13 @@ xnk=[1 0];
 for i=1:11
     xnk=conv(xnk,[1 0]);
 end
-length(xnk)
 
 version_bits=gf(de2bi(version,6,'left-msb'),8);
 
 version_bits_xnk=conv(version_bits,xnk);
 
 [quotient,remainder]=deconv(version_bits_xnk,gf([1 1 1 1 1 0 0 1 0 0 1 0 1],8));
-remainder=gf2dec(remainder(7:18),1);
+remainder=gf2dec(remainder(7:18),8);
 
 BCHcode_VI=[version_bits,remainder];
 
