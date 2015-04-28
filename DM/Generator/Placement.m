@@ -18,16 +18,16 @@ function DM = Placement(Msg, size)
 	% Start position
 	x = 5;
 	y = 1;
+	% Message index
 	i = 1;
 	
 	while 1
 		
-		% Downwards
+		% Upwards
 		while 1
-			if x<=size && y>0 && DM(x,y)==5
-				DM = MsgToMatrix(DM, Msg(i), x,y, size);
-				i=i+1;
-			end
+			[DM, k] = MsgToMatrix(DM, Msg(i), x,y, size);
+			i=i+k;
+			
 			x=x-2;
 			y=y+2;
 			if x<1 || y>size
@@ -41,12 +41,11 @@ function DM = Placement(Msg, size)
 			break
 		end
 		
-		% Upwards
+		% Downwards
 		while 1
-			if x>0 && y<=size && DM(x,y)==5
-				DM = MsgToMatrix(DM, Msg(i), x,y, size);
-				i=i+1;
-			end
+			[DM, k] = MsgToMatrix(DM, Msg(i), x,y, size);
+			i=i+k;
+			
 			x=x+2;
 			y=y-2;
 			if x>size || y<1

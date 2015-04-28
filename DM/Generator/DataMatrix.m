@@ -7,8 +7,7 @@
 % Output
 %	IMG		: DataMatrix image
 
-% Message to be encoded
-Str = 'CiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCi';
+function DM = DataMatrix(Str)
 
 % Max data that can be encoded, size by size
 	DataWordLength = [3, 5, 8, 12, 18, 22, 30, 36, 44, ...
@@ -29,24 +28,24 @@ Str = 'CiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCi';
 	M = uint8(Str);
 				
 % Padding function
-	[Msg, SizeIndex] = Padding(M);
-	disp('Padded message = ')
-	disp(Msg)
-	
+ 	[Msg, SizeIndex] = Padding(M);
+% 	disp('Padded message = ')
+% 	disp(Msg)
+ 	
 % RS-Encoding function
-	Msg = RSEncoder(DataWordLength(SizeIndex)+ErrorWordLength(SizeIndex), DataWordLength(SizeIndex), Msg);
-	disp('Encoded message = ')
-	disp(Msg)
-	
+ 	Msg = RSEncoder(DataWordLength(SizeIndex)+ErrorWordLength(SizeIndex), DataWordLength(SizeIndex), Msg);
+% 	disp('Encoded message = ')
+% 	disp(Msg)
+ 	
 % Message-to-matrix function
-	DM = Placement(Msg, DataRegionSize(SizeIndex));
-	disp('Matrix form = ')
-	disp(DM)
+ 	DM = Placement(Msg, DataRegionSize(SizeIndex));
+% 	disp('Matrix form = ')
+% 	disp(DM)
 	
 % No-cross version of the DataMatrix
-	DM2=DM;
-	DM2 = Margin(DM2);	
-	Q = ones(length(DM2))-DM2;
+	DM_noCross=DM;
+	DM_noCross = Margin(DM_noCross);	
+	Q = ones(length(DM_noCross))-DM_noCross;
 	imwrite(Q, 'NoCross.png');
 
 % Central cross function
@@ -55,10 +54,12 @@ Str = 'CiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCi';
 	end
 	
 % Adding margin
- 	DM = Margin(DM);
- 	disp('Matrix form with margin = ')
- 	disp(DM)
+  	DM = Margin(DM);
+%  	disp('Matrix form with margin = ')
+%  	disp(DM)
 
 % Matrix-to-image function
 	Q = ones(length(DM))-DM;
 	imwrite(Q, 'test.png');
+	
+end

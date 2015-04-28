@@ -13,13 +13,13 @@
 % Output
 %	DM		: new DataMatrix
 
-function DM = MsgToMatrix(DM, Msg, x,y, n)
+function [DM, k] = MsgToMatrix(DM, Msg, x,y, n)
+
+% Message-writing flag
+	k=0;
 
 % Convertion to binary
-	BinMsg=de2bi(Msg);
-	while length(BinMsg)<8
-		BinMsg(length(BinMsg)+1)=0;
-	end
+	BinMsg=de2bi(Msg, 8);
 
 %
   	% Corner case 1
@@ -44,6 +44,8 @@ function DM = MsgToMatrix(DM, Msg, x,y, n)
 		DM(n , 3  ) = BinMsg(3);
 		DM(n , 2  ) = BinMsg(2);
 		DM(n , 1  ) = BinMsg(1);
+		
+		k=1;
 	end;
 	
 	
@@ -70,6 +72,8 @@ function DM = MsgToMatrix(DM, Msg, x,y, n)
 		DM(n  , 1  ) = BinMsg(3);
 		DM(n-1, 1  ) = BinMsg(2);
 		DM(n-2, 1  ) = BinMsg(1);
+		
+		k=1;
 	end;
 	
 	
@@ -98,6 +102,8 @@ function DM = MsgToMatrix(DM, Msg, x,y, n)
 		DM(n  , 1  ) = BinMsg(3);
 		DM(n-1, 1  ) = BinMsg(2);
 		DM(n-2, 1  ) = BinMsg(1);
+		
+		k=1;
 	end;
 	
 	
@@ -124,31 +130,38 @@ function DM = MsgToMatrix(DM, Msg, x,y, n)
 		DM(1 , n-2) = BinMsg(3);
 		DM(n , n  ) = BinMsg(2);
 		DM(n , 1  ) = BinMsg(1);
+		
+		k=1;
 	end;
 
 % Standard codeword placement
 %	|1|2|
 %	|3|4|5|
 %	|6|7|8|
+
+	if x<=n && x>0 && y>0 && y<=n && DM(x,y)==5
+		
+	% Set the right position for every bit
+		[x8, y8] = checkPos(x  , y  , n);
+		[x7, y7] = checkPos(x  , y-1, n);
+		[x6, y6] = checkPos(x  , y-2, n);
+		[x5, y5] = checkPos(x-1, y  , n);
+		[x4, y4] = checkPos(x-1, y-1, n);
+		[x3, y3] = checkPos(x-1, y-2, n);
+		[x2, y2] = checkPos(x-2, y-1, n);
+		[x1, y1] = checkPos(x-2, y-2, n);
 	
-% Set the right position for every bit
-	[x8, y8] = checkPos(x  , y  , n);
-	[x7, y7] = checkPos(x  , y-1, n);
-	[x6, y6] = checkPos(x  , y-2, n);
-	[x5, y5] = checkPos(x-1, y  , n);
-	[x4, y4] = checkPos(x-1, y-1, n);
-	[x3, y3] = checkPos(x-1, y-2, n);
-	[x2, y2] = checkPos(x-2, y-1, n);
-	[x1, y1] = checkPos(x-2, y-2, n);
-	
-% Placement of the message	
-	DM(x8, y8) = BinMsg(1);
-	DM(x7, y7) = BinMsg(2);
-	DM(x6, y6) = BinMsg(3);
-	DM(x5, y5) = BinMsg(4);
-	DM(x4, y4) = BinMsg(5);
-	DM(x3, y3) = BinMsg(6);
-	DM(x2, y2) = BinMsg(7);
-	DM(x1, y1) = BinMsg(8);
+	% Placement of the message
+		DM(x8, y8) = BinMsg(1);
+		DM(x7, y7) = BinMsg(2);
+		DM(x6, y6) = BinMsg(3);
+		DM(x5, y5) = BinMsg(4);
+		DM(x4, y4) = BinMsg(5);
+		DM(x3, y3) = BinMsg(6);
+		DM(x2, y2) = BinMsg(7);
+		DM(x1, y1) = BinMsg(8);
+		
+		k=1;
+	end
 	
 end
