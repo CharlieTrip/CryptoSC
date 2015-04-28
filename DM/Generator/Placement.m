@@ -65,6 +65,7 @@ function DM = Placement(Msg, size)
 		end
 	end
 	
+	% Fill the unchanged bits with zeros
 	for i=1:size
 		for j=1:size
 			if DM(i,j)==5

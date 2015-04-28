@@ -11,21 +11,26 @@
 
 function M = CentralCross(DM, size)
 
+	% Creation of the matrix
 	M = zeros(size+2);
 	
 	% Central cross
 	for i=1:(size+2)
 		for j=1:(size+2)
+
+			% L-margin
 			if i==((size+2)/2) || j==((size+2)/2+1)
 				M(i,j)=1;
 			end
+
+			% Dotted margin
 			if (i==((size+2)/2+1) && mod(j,2)==0) || (j==((size+2)/2) && mod(i,2)==1)
 				M(i,j)=1;
 			end
 		end		
 	end
 	
-	% Fill the regions
+	% Fill the regions with the data
 	for i=1:size
 		for j=1:size
 			if i<=(size/2) && j<=(size/2)

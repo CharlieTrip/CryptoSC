@@ -43,6 +43,7 @@ Str = 'CiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCiaoCi';
 	disp('Matrix form = ')
 	disp(DM)
 	
+% No-cross version of the DataMatrix
 	DM2=DM;
 	DM2 = Margin(DM2);	
 	Q = ones(length(DM2))-DM2;
