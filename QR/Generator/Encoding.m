@@ -1,8 +1,14 @@
-% funzione che si occupa dell'encoding del messaggio. Prende in input un
-% array di byte (DataCodewordByte) e restituisce un array di byte (ECCodewordInteger) che non
-% sono altro che la ridondanza ottenuta mediante la codifica reedsolomon
-% Versione 3-Q, dunque i CodeWord sono organizzati
-% in 2 blocchi, 1 gruppo
+% Input: 
+%       ArrayByte1 --> array of byte of the group 1
+%       ArrayByte1 --> array of byte of the group 2, 0 if there's not group
+%       version --> int, the right version of QR to use
+%       ecl --> char, 'H','Q','M','L'
+%
+% Output:
+%       ECCodewordByte1 --> array of byte obtained with de Reed Solomon 
+%                           encoding of the Databyte of the group 1
+%       ECCodewordByte2 --> array of byte obtained with de Reed Solomon
+%                           encoding of the Databyte of the group 2
 
 function [ECCodewordByte1, ECCodewordByte2] = Encoding(ArrayByte1,ArrayByte2,version,eclevel)
 
@@ -10,9 +16,7 @@ function [ECCodewordByte1, ECCodewordByte2] = Encoding(ArrayByte1,ArrayByte2,ver
 [ECxBlock, n_Block1, dim_k1, n_Block2, dim_k2] = get_info_version(version,eclevel);
 
 
-if ArrayByte2 == 0
-
-% poli = get_polynomial(ECxBlock);
+if ArrayByte2 == 0  % encoding for the version with 1 group of DataByte
     
 for j = 1:n_Block1
 
@@ -22,15 +26,17 @@ end
 
 
 for i = 1: n_Block1
+    
     IntegerEC1(:,:,i) = IntegerData_EC1(dim_k1+1:dim_k1+ECxBlock,:);
     ECCodewordByte1(:,:,i) = de2bi(IntegerEC1(:,i),8,'left-msb');
+    
 end
 
 ECCodewordByte2 = 0;
 
-else
+else % encoding for the version with 2 group of DataByte
     
-%    poli = get_polynomial(ECxBlock);
+    
     
 for j = 1:n_Block1
 
@@ -71,6 +77,61 @@ end
 
 
 
+
+
+
+% Function to Encode a list of integers in 0..255 using
+% Reed-Solomon with parameter n,k
+% 
+% Input
+% 	n 		: length of the codeword
+% 	k 		: dimension of the message
+% 	comeMsg : list that rappresent the message
+% 
+% Output
+%	EncodeMsg ; encoded message of length n
+function encodedMsg = RSEncoder(codedMsg, n, k)
+
+	% Creating the Encoder using the Matlab's built-in function
+	encoder = comm.RSEncoder(n, k);
+	
+
+	% Enable the possibility to change the parameter of the encoder	release(encoder)
+	
+	% Changing the Primitive Polynomial of the encoder
+	% For DataMatrix, the poly is
+	% 
+	% The function de2bi is in Big Endian so we flip the list to get a Little Endian
+	encoder.PrimitivePolynomialSource = 'Property';
+	encoder.PrimitivePolynomial = fliplr(de2bi(285,9));
+
+	% Changing the Generator Polynomial of the RS code
+	% with respect to the 301 poly for using element of GF(256)
+	encoder.GeneratorPolynomialSource = 'Property';
+	encoder.GeneratorPolynomial = rsgenpoly(255,255 - (n-k),285,0);
+
+
+	% Return the encoding (using step) and traspose it to a row (using ')
+	encodedMsg = step(encoder, codedMsg')';
+	
+end
+
+
+
+
+
+
+
+% Input: 
+%       version --> int, the right version of QR to use
+%       ecl --> char, 'H','Q','M','L'
+
+% Output:
+%       ECxBlock --> int, number of ECCbyte per block supported by the version
+%       dim_k1 --> int, number of Databyte in every block in the first group
+%       n_Block1 --> int, number of block in the first block
+%       dim_k2 --> int, number of Databyte in every block in the second group
+%       n_Block2 --> int, number of block in the second block
 
 
 function [ECxBlock, n_Block1, dim_k1, n_Block2, dim_k2] = get_info_version(version,eclevel)

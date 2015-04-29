@@ -1,23 +1,28 @@
 
-% Funzione che prende in input la stringa, il mode,la Version, l'EClevel, e
-% restituisce due gruppi di blocchi di DataCodeword in byte, nel caso il
-% gruppo (dipende dalla versione) sia solo uno, restituisce 0 al posto del
-% secondo gruppo.
+% Input: 
+%       Stringa --> input string
+%       version --> int, the right version of QR to use
+%       mode --> array of 4 bits
+%       ecl --> char, 'H','Q','M','L'
+%
+% Output:
+%       ArrayByte1 --> array of byte of the group 1
+%       ArrayByte1 --> array of byte of the group 2, 0 if there's not group
+%       2, it depends from the version
+
+function [ArrayByte1,ArrayByte2] = Codifica(Stringa,Version,mode,ecl)
 
 
-function [ArrayByte1,ArrayByte2] = Codifica(Stringa,Version,mode,EClevel)
+[numDataBits, n_data_block1, n_block1, n_data_block2, n_block2] = info_version(Version,ecl);
 
 
-[numDataBits, n_data_block1, n_block1, n_data_block2, n_block2] = info_version(Version,EClevel);
-
-
-if mode == [0,0,1,0] %  TODO aggiungere gli altri mode
+if mode == [0,0,1,0] %  to add the 8bit mode
     ArrayBit = alfa_numeric(Stringa,Version);
 elseif mode == [0,0,0,1]
     ArrayBit = numerica(Stringa,Version);
 end
 
-% Padding e Terminator
+% Add Padding e Terminator
 for(i = 1:4)
     if (length(ArrayBit) == numDataBits)
         break;
@@ -69,8 +74,13 @@ end
 
 
 
+% Input: 
+%       Stringa --> input string
+%       version --> int, the right version of QR to use
 
-% TODO da sistemare, ERMES sa come si fa e dice che lo fa lui
+% Output:
+%       ArrayBit --> array of bit derivating from the input string,
+%       codified with the alfanumeric method
 
 
 
@@ -115,7 +125,13 @@ end
 
 
 
+% Input: 
+%       Stringa --> input string
+%       version --> int, the right version of QR to use
 
+% Output:
+%       ArrayBit --> array of bit derivating from the input string,
+%       codified with the numeric method
 
 
 function ArrayByte = numerica(Stringa,version)
@@ -147,8 +163,16 @@ end
 end
 
 
+% Input: 
+%       version --> int, the right version of QR to use
+%       ecl --> char, 'H','Q','M','L'
 
-
+% Output:
+%       numDataBits --> int, number of Databits supported by the version
+%       n_data_block1 --> number of byte in every block in the first group
+%       n_block1 --> number of block in the first block
+%       n_data_block2 --> number of byte in every block in the second group
+%       n_block2 --> number of block in the second block
 
 
 function [numDataBits, n_data_block1, n_block1, n_data_block2, n_block2] = info_version(version,eclevel)  
