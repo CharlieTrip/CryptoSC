@@ -1,8 +1,12 @@
-% Questa funzione sistema i blocchi nella matrice di posizione e di
-% allineamento
-% Versione straprima di alpha
-% Prende in input la dimensione della matrice
-
+% Input: 
+%       QR_matrix --> matrix
+%       version --> int, the right version of QR to use
+%
+% Output:
+%       QR_matrix --> matrix
+%
+% This function put the allignment pattern on the matrix and put
+% some zeros instead of the version and format information
 
 function QR_matrix = Blocchi_cover_info(QR_matrix, version)
 

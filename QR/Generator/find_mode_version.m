@@ -1,5 +1,12 @@
 
-%ecl 'L', 'M', 'Q', 'H'
+% Input: 
+%       msg --> input string
+%       ecl --> char, 'H','Q','M','L'
+%
+% Output:
+%       mode --> array of 4 bits
+%       version --> int, the right version of QR to use
+
 function [mode, version] = find_mode_version( msg, ecl )
 
 msg_ASCII = double(msg); %convert message to ascii
@@ -19,7 +26,7 @@ else
     mode = [0 1 0 0];
 end
 
-mode = [0 0 1 0]; %TODO da modificare colpa di Andrea
+mode = [0 0 1 0];
 
 version = retrieve_version(length(msg), mode, ecl);
 end
@@ -28,6 +35,13 @@ end
 
 
 
+% Input: 
+%       length --> type int, length of the input string
+%       mode --> array of 4 bits
+%       ecl --> char, 'H','Q','M','L'
+%
+% Output:
+%       version --> int, the right version of QR to use
 
 
 function version=retrieve_version(length, mode, ecl)

@@ -1,3 +1,14 @@
+% Input: 
+%       QR_matrix --> matrix
+%       version --> int, the right version of QR to use
+%       ecl --> char, 'H','Q','M','L'
+%
+% Output:
+%       QR_matrix --> matrix
+%
+% This function put the the version and format information encoded with a
+% (15,5) and a (18,6) BCH code
+
 
 function QRmatrix = bit_information(QRmatrix,n_mask, ecl,version)
 

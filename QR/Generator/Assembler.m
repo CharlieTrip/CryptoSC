@@ -1,7 +1,16 @@
+% Input: 
+%       ArrayByte1 --> array of byte of the group 1
+%       ArrayByte1 --> array of byte of the group 2, 0 if there's not group
+%       ECCodewordByte1 --> array of byte obtained with de Reed Solomon 
+%                           encoding of the Databyte of the group 1
+%       ECCodewordByte2 --> array of byte obtained with de Reed Solomon
+%                           encoding of the Databyte of the group 2
+%       version --> int, the right version of QR to use
+%       ecl --> char, 'H','Q','M','L'
+%
+% Output:
 
-
-% Questa funzione crea l final sequence. prende in input i DataBlock e gli
-% ECBlock
+%       Finsequence --> bit array, sequence of bits including Databits and ECBits
 
 function Finsequence = Assembler(ArrayByte1,ArrayByte2, ECCodewordByte1, ECCodewordByte2, version, eclevel)
 
@@ -94,6 +103,17 @@ end
 
 
 
+% Input: 
+%       version --> int, the right version of QR to use
+%       ecl --> char, 'H','Q','M','L'
+
+% Output:
+%       numDataBits --> int, number of Databits supported by the version
+%       ECxBlock --> int, number of ECCbyte per block supported by the version
+%       n_data_block1 --> number of byte in every block in the first group
+%       n_block1 --> number of block in the first block
+%       n_data_block2 --> number of byte in every block in the second group
+%       n_block2 --> number of block in the second block
 
 
 
