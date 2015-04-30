@@ -1,9 +1,12 @@
-<<<<<<< Updated upstream
 
+% Input: 
+%       msg --> input string
+%       ecl --> char, 'H','Q','M','L'
+%
+% Output:
+%       mode --> array of 4 bits
+%       version --> int, the right version of QR to use
 
-=======
->>>>>>> Stashed changes
-%ecl 'L', 'M', 'Q', 'H'
 function [mode, version] = find_mode_version( msg, ecl )
 
 msg_ASCII = double(msg); %convert message to ascii
@@ -23,15 +26,7 @@ else
     mode = [0 1 0 0];
 end
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-mode = [0 0 1 0]; %TODO da modificare colpa di Andrea
-=======
-
->>>>>>> Stashed changes
-=======
->>>>>>> origin/master
-
+mode = [0 0 1 0];
 
 version = retrieve_version(length(msg), mode, ecl);
 end
@@ -40,6 +35,13 @@ end
 
 
 
+% Input: 
+%       length --> type int, length of the input string
+%       mode --> array of 4 bits
+%       ecl --> char, 'H','Q','M','L'
+%
+% Output:
+%       version --> int, the right version of QR to use
 
 
 function version=retrieve_version(length, mode, ecl)
@@ -47,12 +49,9 @@ function version=retrieve_version(length, mode, ecl)
 
 
         % numeric
-<<<<<<< Updated upstream
         if isequal(mode,[0,0,0,1])
-=======
-        if mode == [0,0,0,1]          
->>>>>>> Stashed changes
-            switch ecl
+
+           switch ecl
                 
                 case 'L'
                 
@@ -65,7 +64,7 @@ function version=retrieve_version(length, mode, ecl)
                     
                 case 'M'
                     
-                    Data_capacity = [34 63 101 149 202 255 293 365 432 513 604 691 796 871 991 1082 1212 1346 1500 1600 1708 1872 2059 2188 2395 2544 2701 2857 3035 3289 3486 3693 3909 4134 4343 4588 4775 5039 5313 5596]
+                    Data_capacity = [34 63 101 149 202 255 293 365 432 513 604 691 796 871 991 1082 1212 1346 1500 1600 1708 1872 2059 2188 2395 2544 2701 2857 3035 3289 3486 3693 3909 4134 4343 4588 4775 5039 5313 5596];
                     version = 1;
                     while length >= Data_capacity(version)
                         version = version+1;
@@ -73,7 +72,7 @@ function version=retrieve_version(length, mode, ecl)
                     
                 case 'Q'
                     
-                    Data_capacity = [27 48 77 111 144 178 207 259 312 364 427 489 580 621 703 775 876 948 1063 1159 1224 1358 1468 1588 1718 1804 1933 2085 2181 2358 2473 2670 2805 2949 3081 3244 3417 3599 3791 3993]
+                    Data_capacity = [27 48 77 111 144 178 207 259 312 364 427 489 580 621 703 775 876 948 1063 1159 1224 1358 1468 1588 1718 1804 1933 2085 2181 2358 2473 2670 2805 2949 3081 3244 3417 3599 3791 3993];
                     version = 1;
                     while length >= Data_capacity(version)
                         version = version+1;
@@ -95,11 +94,7 @@ function version=retrieve_version(length, mode, ecl)
             
             
             % alphanumeric
-<<<<<<< Updated upstream
         elseif isequal(mode,[0,0,1,0])          
-=======
-        elseif mode == [0,0,1,0]          
->>>>>>> Stashed changes
             switch ecl        
              case 'L'
                 
@@ -141,21 +136,11 @@ function version=retrieve_version(length, mode, ecl)
             
             
             
-            % byte mode
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-       % elseif isequal(mode,[0,1,0,0])          
-=======
-       % elseif mode == [0,1,0,0]          
->>>>>>> Stashed changes
-       %     switch ecl  
-                
-      %          case 'L'
-=======
-       elseif isequal(mode,[0,1,0,0])          
-      switch ecl        
+     % 8byte mode
+
+      elseif isequal(mode,[0,1,0,0])          
+        switch ecl        
              case 'L'
->>>>>>> origin/master
                 
                     Data_capacity = [17	32	53	78	106	134	154	192	230	271	321	367	425	458	520	586	644	718	792	858	929	1003	1 091	1171	1273	1367	1465	1528	1628	1732	1840	1952	2068	2188	2303	2431	2563 2699 2809 2953];
                     version = 1;

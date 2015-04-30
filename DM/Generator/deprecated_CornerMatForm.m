@@ -5,10 +5,10 @@
 % 
 % Input
 %	DM		: old DataMatrix
-%	n		: size of the matrix
 % 	Msg		: message
 %	x		: x-position of the LSB
 %	y		: y-position of the LSB
+%	n		: size of the matrix
 % 
 % Output
 %	DM		: new DataMatrix

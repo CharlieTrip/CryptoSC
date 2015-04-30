@@ -1,62 +1,47 @@
-% funzione che si occupa dell'encoding del messaggio. Prende in input un
-% array di byte (DataCodewordByte) e restituisce un array di byte (ECCodewordInteger) che non
-% sono altro che la ridondanza ottenuta mediante la codifica reedsolomon
-% Versione 3-Q, dunque i CodeWord sono organizzati
-% in 2 blocchi, 1 gruppo
+% Input: 
+%       ArrayByte1 --> array of byte of the group 1
+%       ArrayByte1 --> array of byte of the group 2, 0 if there's not group
+%       version --> int, the right version of QR to use
+%       ecl --> char, 'H','Q','M','L'
+%
+% Output:
+%       ECCodewordByte1 --> array of byte obtained with de Reed Solomon 
+%                           encoding of the Databyte of the group 1
+%       ECCodewordByte2 --> array of byte obtained with de Reed Solomon
+%                           encoding of the Databyte of the group 2
 
 function [ECCodewordByte1, ECCodewordByte2] = Encoding(ArrayByte1,ArrayByte2,version,eclevel)
 
-<<<<<<< HEAD
-a = gf(2,8); % definisco un elemento primitivo di gf(2^8)
-% questo che segue ?? il polinomio di grado 18 proprio del metodo 3-Q
-p = [1, a^215, a^234, a^158, a^94, a^184, a^97, a^118, a^170, a^79, a^187, a^152, a^148, a^252, a^179, a^5, a^98, a^96, a^153];
-k = 17; % dimensione propria della versione 3-Q
-n = 35; % lunghezza propria della versione 3-Q (per blocco)
-RSOutput = zeros(2,35);
-ECCodewordByte = zeros(18,8,2);
-=======
+
 [ECxBlock, n_Block1, dim_k1, n_Block2, dim_k2] = get_info_version(version,eclevel);
->>>>>>> origin/master
 
 
-if ArrayByte2 == 0
-
-poli = get_polynomial(ECxBlock);
+if ArrayByte2 == 0  % encoding for the version with 1 group of DataByte
     
 for j = 1:n_Block1
 
-        IntegerData_EC11(:,j) =  gf2dec(rsenc(gf(bi2de(ArrayByte1(:,:,j),'left-msb'),8)',dim_k1+ECxBlock,dim_k1,poli),8);
+        IntegerData_EC1(:,j) =  RSEncoder(bi2de(ArrayByte1(:,:,j),'left-msb')',dim_k1+ECxBlock,dim_k1);
 
 end
 
 
 for i = 1: n_Block1
+    
     IntegerEC1(:,:,i) = IntegerData_EC1(dim_k1+1:dim_k1+ECxBlock,:);
     ECCodewordByte1(:,:,i) = de2bi(IntegerEC1(:,i),8,'left-msb');
+    
 end
 
 ECCodewordByte2 = 0;
 
-else
+else % encoding for the version with 2 group of DataByte
     
-    poli = get_polynomial(ECxBlock);
+    
     
 for j = 1:n_Block1
 
-    IntegerData_EC1(:,j) =  gf2dec(rsenc(gf(bi2de(ArrayByte1(:,:,j),'left-msb'),8)',dim_k1+ECxBlock,dim_k1,poli),8);
+    IntegerData_EC1(:,j) =  RSEncoder(bi2de(ArrayByte1(:,:,j),'left-msb')',dim_k1+ECxBlock,dim_k1);
 
-<<<<<<< HEAD
- 
- RSOutput(1,:) = gf2dec(rsenc(gf(DataCodewordInteger(1,:),8),n,k,p),8); % codifico in reed solomon il primo blocco e converto in interi
- RSOutput(2,:) = gf2dec(rsenc(gf(DataCodewordInteger(2,:),8),n,k,p),8); % codifico in reed solomon il secondo blocco e converto in interi
- 
-for i =1:18
- 
- ECCodewordByte(i,:,1) = de2bi(RSOutput(1,k+i),8,'left-msb'); % converto in byte e salvo solo la ridondanza, che sar?? la EC CodeWord, blocco 1
- ECCodewordByte(i,:,2) = de2bi(RSOutput(2,k+i),8,'left-msb'); % converto in byte salvo solo la ridondanza, che sar?? la EC CodeWord, blocco 2
- 
-=======
->>>>>>> origin/master
 end
 
 
@@ -69,7 +54,7 @@ end
     
 for j = 1:n_Block2
 
-    IntegerData_EC2(:,j) =  gf2dec(rsenc(gf(bi2de(ArrayByte2(:,:,j),'left-msb'),8)',dim_k2+ECxBlock,dim_k2,poli),8);
+    IntegerData_EC2(:,j) =  RSEncoder(bi2de(ArrayByte2(:,:,j),'left-msb')',dim_k2+ECxBlock,dim_k2);
 
 end
 
@@ -91,54 +76,44 @@ end
 
 
 
-%enc = comm.RSEncoder
-
-
-%RSOutput = zeros(2,35);
-%ECCodewordByte = zeros(18,8,2);
-
-%DataCodewordInteger = zeros(2,length(DataCodewordByte));
-
-%for i = 1:length(DataCodewordByte)
-%    DataCodewordInteger(1,i) = bi2de(DataCodewordByte(i,:,1),'left-msb');  % converto da byte ad interi primo blocco
-%    DataCodewordInteger(2,i) = bi2de(DataCodewordByte(i,:,2),'left-msb');  % converto da byte ad interi secondo blocco
-    
-%end
-
-
-
-<<<<<<< HEAD
-%polgrad 
-%a=gf(2,8);
-%p=
-=======
- 
-% RSOutput(1,:) = gf2dec(rsenc(gf(DataCodewordInteger(1,:),8),n,k,p),8); % codifico in reed solomon il primo blocco e converto in interi
-% RSOutput(2,:) = gf2dec(rsenc(gf(DataCodewordInteger(2,:),8),n,k,p),8); % codifico in reed solomon il secondo blocco e converto in interi
- 
-%for i =1:18
- 
-% ECCodewordByte(i,:,1) = de2bi(RSOutput(1,k+i),8,'left-msb'); % converto in byte e salvo solo la ridondanza, che sarà la EC CodeWord, blocco 1
-% ECCodewordByte(i,:,2) = de2bi(RSOutput(2,k+i),8,'left-msb'); % converto in byte salvo solo la ridondanza, che sarà la EC CodeWord, blocco 2
- 
-%end
-
- 
- 
-%end
->>>>>>> origin/master
 
 
 
 
-function p = get_polynomial(grado)
+% Function to Encode a list of integers in 0..255 using
+% Reed-Solomon with parameter n,k
+% 
+% Input
+% 	n 		: length of the codeword
+% 	k 		: dimension of the message
+% 	comeMsg : list that rappresent the message
+% 
+% Output
+%	EncodeMsg ; encoded message of length n
+function encodedMsg = RSEncoder(codedMsg, n, k)
 
-a=gf(2,8);
-p=[1 1];
-for i=1:grado-1
- p=conv(p,[1 a^i]);
-end
+	% Creating the Encoder using the Matlab's built-in function
+	encoder = comm.RSEncoder(n, k);
+	
 
+	% Enable the possibility to change the parameter of the encoder	release(encoder)
+	
+	% Changing the Primitive Polynomial of the encoder
+	% For DataMatrix, the poly is
+	% 
+	% The function de2bi is in Big Endian so we flip the list to get a Little Endian
+	encoder.PrimitivePolynomialSource = 'Property';
+	encoder.PrimitivePolynomial = fliplr(de2bi(285,9));
+
+	% Changing the Generator Polynomial of the RS code
+	% with respect to the 301 poly for using element of GF(256)
+	encoder.GeneratorPolynomialSource = 'Property';
+	encoder.GeneratorPolynomial = rsgenpoly(255,255 - (n-k),285,0);
+
+
+	% Return the encoding (using step) and traspose it to a row (using ')
+	encodedMsg = step(encoder, codedMsg')';
+	
 end
 
 
@@ -147,8 +122,18 @@ end
 
 
 
+% Input: 
+%       version --> int, the right version of QR to use
+%       ecl --> char, 'H','Q','M','L'
 
-<<<<<<< Updated upstream
+% Output:
+%       ECxBlock --> int, number of ECCbyte per block supported by the version
+%       dim_k1 --> int, number of Databyte in every block in the first group
+%       n_Block1 --> int, number of block in the first block
+%       dim_k2 --> int, number of Databyte in every block in the second group
+%       n_Block2 --> int, number of block in the second block
+
+
 function [ECxBlock, n_Block1, dim_k1, n_Block2, dim_k2] = get_info_version(version,eclevel)
 
 Tot_info = [19	7	1	19	0	0	;
@@ -332,62 +317,3 @@ n_Block2 = Tot_info(4*(version-1) + c,5);
 dim_k2 = Tot_info(4*(version-1) + c,6);
 
 end
-=======
-% Salvo i polinomi
-
-
-% polinomio di grado 7
-% p = [1, a^87, a^229, a^146, a^149, a^238, a^102, a^21];
-
-
-
-% polinomio di grado 10
-% p = [1, a^251, a^67, a^46, a^61, a^118, a^70, a^64, a^94, a^32      45];
-
-
-% polinomio di grado 13
-% p = [1, a^74, a^152, a^176, a^100, a^86, a^100, a^106, a^104, a^130, a^218, a^206, a^140      78];
-
-
-% polinomio di grado 15
-% p = [1, a^8, a^183, a^61, a^91, a^202, a^37, a^51, a^58, a^58, a^237, a^140, a^124, a^5, a^99      105];
-
-
-
-% polinomio di grado 18
-% a = gf(2,8);
-% p = [1, a^215, a^234, a^158, a^94, a^184, a^97, a^118, a^170, a^79, a^187, a^152, a^148, a^252, a^179, a^5, a^98, a^96, a^153];
-
-
-
-% polinomio di grado 36
-% a = gf(2,8);
-% p=[1, a^200, a^183, a^98, a^16, a^172, a^31, a^246, a^234, a^60, a^152, a^115, 1, a^167, a^152, a^113, a^248, a^238, a^107, a^18, a^63, a^218, a^37, a^87 , a^210, %%% a^105, a^177, a^120, a^74, a^121, a^196, a^117, a^251, a^113, a^233, a^30, a^120];
-
-
-%polgrad 
-%a=gf(2,8);
-%p=
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> Stashed changes
-
-
-
-

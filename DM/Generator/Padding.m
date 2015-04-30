@@ -15,24 +15,24 @@ function [Msg, t] = Padding(M)
 
 % Vector of matrix sizes
 	DataWordLength = [3, 5, 8, 12, 18, 22, 30, 36, 44, ...
-						62, 86, 114, 144, 174, 204, ...
-						280, 368, 456, 576, 696, 816, ...
-						1050, 1304, 1558];
+                    62, 86, 114, 144, 174];
 					
 % Length of the unpadded message
-	Len = length(Msg);
+	Len = length(M);
 	
 % Size of the matrix
 	Size = 0;
 
 % Choice the right matrix dimension
 	t = 0;
-	while Size<=Len
+	while Size<Len
 		t = t+1;
-		if data_word_length(t)>=Len
+		if DataWordLength(t)>=Len
 			Size = DataWordLength(t);
 		end
 	end
+	
+	Msg=M;
 
 % Padding
 	PadLength = Size-Len;

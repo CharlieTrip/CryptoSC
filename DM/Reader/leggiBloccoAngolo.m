@@ -120,7 +120,7 @@ function [matr,listaBit] = leggiBloccoAngolo(matrixDM , x , y)
     	bit1 = matrixDM( n - 2, 1);
 		bit2 = matrixDM( n - 1 , 1);
 		bit3 = matrixDM( n  , 1);
-		bit4 = matrixDM( 1, n-1 )
+		bit4 = matrixDM( 1, n-1 );
 		bit5 = matrixDM( 1 , n );
 		bit6 = matrixDM( 2 , n );
 		bit7 = matrixDM( 3 , n);
@@ -154,7 +154,7 @@ function [matr,listaBit] = leggiBloccoAngolo(matrixDM , x , y)
     % x == grandezza + 5 and y == 3 and (grandezza % 8 == 0)
     %
 
-    if (x == (n + 5)) && (y == 4) && (mod(n,8) == 0)
+    if (x == (n + 5)) && (y == 3) && (mod(n,8) == 0)
     	bit1 = matrixDM( n , 1);
 		bit2 = matrixDM( n , n);
 		bit3 = matrixDM( 1 , n - 2);

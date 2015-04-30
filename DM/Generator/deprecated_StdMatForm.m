@@ -9,7 +9,7 @@
 %	y		: y-position of the LSB
 % 
 % Output
-%	NewDM	: new DataMatrix
+%	DM		: new DataMatrix
 
 function DM = StdMatForm(DM, Msg, x,y)
 

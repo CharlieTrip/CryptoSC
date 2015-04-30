@@ -1,32 +1,28 @@
-<<<<<<< Updated upstream
-% Funzione che prende in input la stringa, il mode,la Version, l'EClevel, e
-% restituisce due gruppi di blocchi di DataCodeword in byte, nel caso il
-% gruppo (dipende dalla versione) sia solo uno, restituisce 0 al posto del
-% secondo gruppo.
+
+% Input: 
+%       Stringa --> input string
+%       version --> int, the right version of QR to use
+%       mode --> array of 4 bits
+%       ecl --> char, 'H','Q','M','L'
+%
+% Output:
+%       ArrayByte1 --> array of byte of the group 1
+%       ArrayByte1 --> array of byte of the group 2, 0 if there's not group
+%       2, it depends from the version
+
+function [ArrayByte1,ArrayByte2] = Codifica(Stringa,Version,mode,ecl)
 
 
-function [ArrayByte1,ArrayByte2] = Codifica(Stringa,Version,mode,EClevel)
-=======
-% Funzione che prende in input una stringa e restituisce un array di bit
-% corrispondente (conversione alfanumerica)
-% Gli input devono essere maiuscoli... nel caso bisogna fixare il problema
-% del casesensitive
-% Livello di correzione Q, versione 3
+[numDataBits, n_data_block1, n_block1, n_data_block2, n_block2] = info_version(Version,ecl);
 
 
-function ArrayByte = Codifica(Stringa,Version,mode,EClevel)
->>>>>>> Stashed changes
-
-[numDataBits, n_data_block1, n_block1, n_data_block2, n_block2] = info_version(Version,EClevel);
-
-
-if mode == [0,0,1,0] %  TODO aggiungere gli altri mode
-    ArrayBit = alfa_numeric(Stringa);
+if mode == [0,0,1,0] %  to add the 8bit mode
+    ArrayBit = alfa_numeric(Stringa,Version);
 elseif mode == [0,0,0,1]
     ArrayBit = numerica(Stringa,Version);
 end
 
-% Padding e Terminator
+% Add Padding e Terminator
 for(i = 1:4)
     if (length(ArrayBit) == numDataBits)
         break;
@@ -50,7 +46,7 @@ end
 tmpt = transpose(reshape(ArrayBit,8,numDataBits/8));
 
 
-<<<<<<< Updated upstream
+
 ArrayByte1 = [];
 ArrayByte2 = [];
 if  n_block2 == 0
@@ -59,14 +55,7 @@ if  n_block2 == 0
         tmpt(1:n_data_block1,:) = [];
     end
     ArrayByte2 = 0;
-=======
-ArrayByte = {};
-if  n_block2 == 0
-    for i = 1:n_block1
-        ArrayByte(1:n_data_block1,:,i) = tmpt(1:n_data_block1,:);
-        tmpt(1:n_data_block1,:) = [];
-    end
->>>>>>> Stashed changes
+
 else
     for i = 1:n_block1
         ArrayByte1(1:n_data_block1,:,i) = tmpt(1:n_data_block1,:);
@@ -78,47 +67,51 @@ else
     end
 end
 
-<<<<<<< Updated upstream
-=======
-ArrayByte = [ArrayByte1,ArrayByte2];
-
-
-
->>>>>>> Stashed changes
 
 end
 
 
 
-<<<<<<< Updated upstream
-% TODO da sistemare, ERMES sa come si fa e dice che lo fa lui
-=======
-% TODO da sistemare
->>>>>>> Stashed changes
 
 
-function ArrayBit = alfa_numeric(Stringa)
+% Input: 
+%       Stringa --> input string
+%       version --> int, the right version of QR to use
+
+% Output:
+%       ArrayBit --> array of bit derivating from the input string,
+%       codified with the alfanumeric method
+
+
+
+function ArrayBit = alfa_numeric(Stringa,version)
 
 keySet = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',' ','$','%','*','+','-','.','/',':'];
 
 mode = [0,0,1,0];
 
-ArrayBit= cat(2,mode,de2bi(length(Stringa),9,'left-msb'));  % Inizializzo il mod che sarà la prima parte dell'Array con il valore che indica il mode alfanumerico con la lunghezza in bit della Stringa
+if version < 10
+ArrayBit = cat(2,mode,de2bi(length(Stringa),9,'left-msb'));
+elseif  and(version >= 10, version < 27)
+    ArrayBit = cat(2,mode,de2bi(length(Stringa),11,'left-msb'));
+else
+    ArrayBit = cat(2,mode,de2bi(length(Stringa),13,'left-msb'));
+end
 
 
 parity = mod(length(Stringa),2);    % Verifico se la lunghezza della stringa sia pari o dispari(parity = 1 \/ 0)
 lenStringa = (length(Stringa)-parity);   % Lunghezza della stringa a meno dell'ultimo carattere
 
-Coppie = zeros(2,lenStringa/2);  % inizializzo un array a due dimensioni in cui registrerò le coppie di char
+Coppie = zeros(2,lenStringa/2);  % inizializzo un array a due dimensioni in cui registrer?? le coppie di char
 
-for (i = 1:lenStringa/2)  % registro ogni coppia di caratteri
+for i = 1:lenStringa/2  % registro ogni coppia di caratteri
     Coppie(1,i) = find(keySet == Stringa(2*i-1))-1;
     Coppie(2,i) = find(keySet == Stringa(2*i))-1;
         
 end
 
 
-for (i = 1:lenStringa/2) % converto ogni coppia di caratteri in bit e casto tutto in un unico array 
+for i = 1:lenStringa/2 % converto ogni coppia di caratteri in bit e casto tutto in un unico array 
     ArrayBit = cat(2,ArrayBit,de2bi(Coppie(1,i)*45 + Coppie(2,i),11,'left-msb'));
     
 end
@@ -132,15 +125,14 @@ end
 
 
 
-<<<<<<< Updated upstream
+% Input: 
+%       Stringa --> input string
+%       version --> int, the right version of QR to use
 
-% prende in input una stringa di numeri e la versione e la codifica nel
-% mode numerico
-=======
-%% prende in input una stringa di numeri e la versione e la codifica nel mode numerico.
-%% poi bisognera fare ancora il padding
+% Output:
+%       ArrayBit --> array of bit derivating from the input string,
+%       codified with the numeric method
 
->>>>>>> Stashed changes
 
 function ArrayByte = numerica(Stringa,version)
 parity = mod(length(Stringa),3); %resto mod 3
@@ -171,32 +163,18 @@ end
 end
 
 
+% Input: 
+%       version --> int, the right version of QR to use
+%       ecl --> char, 'H','Q','M','L'
+
+% Output:
+%       numDataBits --> int, number of Databits supported by the version
+%       n_data_block1 --> number of byte in every block in the first group
+%       n_block1 --> number of block in the first block
+%       n_data_block2 --> number of byte in every block in the second group
+%       n_block2 --> number of block in the second block
 
 
-
-<<<<<<< Updated upstream
-=======
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> Stashed changes
 function [numDataBits, n_data_block1, n_block1, n_data_block2, n_block2] = info_version(version,eclevel)  
 
 Block_info = [19	7	1	19	0	0	;
@@ -379,15 +357,5 @@ n_block1 = Block_info(4*(version-1) + c,3);
 n_data_block2 = Block_info(4*(version-1) + c,6);
 n_block2 = Block_info(4*(version-1) + c,5); 
 
-
-
-<<<<<<< Updated upstream
 end
 
-=======
-
-
-end
-
-
->>>>>>> Stashed changes

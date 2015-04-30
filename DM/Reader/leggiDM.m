@@ -71,7 +71,7 @@ function matrixDM = leggiDM(immDM)
 	% Estraggo dalla matrice il valore e lo inserisco nella matrice di output
 
 	normalizzare = max(max(immDM));
-	colore = sum([ uint8(immDM(passo,passo)/normalizzare) uint8(immDM(length(immDM) - passo , passo)/normalizzare) uint8(immDM(passo , length(immDM) - passo )/normalizzare) uint8(immDM(length(immDM) - passo , length(immDM) - passo ))]);
+	colore = sum([ uint8(immDM(uint32(passo),uint32(passo))/normalizzare) uint8(immDM(uint32(length(immDM) - passo) , uint32(passo))/normalizzare) uint8(immDM(uint32(passo) , uint32(length(immDM) - passo ))/normalizzare) uint8(immDM(uint32(length(immDM) - passo ), uint32(length(immDM) - passo ))/normalizzare) ]);
 
 
 

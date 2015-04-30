@@ -2,43 +2,32 @@
 
 function QRmatrix = QRcode(Stringa)
 
-ecl = 'Q';
+ecl = input('Inserisci il livello di codifica (L,M,Q,H) :','s');
 
-[mode, version] = find_mode_version( msg,ecl);
-
-DataBlock = AlfaNumConv(Stringa,version,mode,ecl); % sistemo l'input in blocchi di byte
-
-ECBlock = Encoding(DataBlock); % calcolo gli ECC e li sistemo in blocchi
-
-ArrayCodeword = Assembler(DataBlock, ECBlock); % sistemo tutto in un array
-
-QRmatrix = Positioner(ArrayCodeword,29);  % Qui si posizionano i bit nella matrice, la dimensione va poi aggiornata quando si farà lo script generalizzato
+[mode, version] = find_mode_version( Stringa, ecl );
 
 
+[ArrayByte1,ArrayByte2] = Codifica(Stringa,version,mode,ecl); % sistemo l'input in blocchi di byte
 
-        for i=1:size(QRmatrix,1)
-            for j=1:size(QRmatrix,2)
-                if mod(i+j,2) == 0
-                    QRmatrix(i,j)= bitxor(uint8(QRmatrix(i,j)),1);
-                end
-            end
-        end
+[ECCodewordByte1, ECCodewordByte2] = Encoding(ArrayByte1,ArrayByte2,version,ecl); % calcolo gli ECC e li sistemo in blocchi
 
-QRmatrix = Blocchi_info(QRmatrix,[0,0,0],'Q',3); % va aggiornata per le versioni superiori alla 6 e per la 1
+Finsequence = Assembler(ArrayByte1,ArrayByte2, ECCodewordByte1, ECCodewordByte2, version, ecl); % sistemo tutto in un array
 
-XORmatrix = zeros(length(QRmatrix),length(QRmatrix)); % faccio lo xor
-XORmatrix(1:length(QRmatrix),1:length(QRmatrix))=1; % faccio lo xor
+QRmatrix = Positioner(Finsequence,version);  % Qui si posizionano i bit nella matrice, la dimensione va poi aggiornata quando si far?? lo script generalizzato
 
-QRmatrix = XORmatrix - QRmatrix; % faccio lo xor
+QRmatrix = Blocchi_cover_info(QRmatrix, version);
 
-imshow(QRmatrix);
+n_mask=choose_mask(QRmatrix,version);
 
+QRmatrix = app_masking(QRmatrix, n_mask,version);
 
-% manca inserire le varie info (che palle è più difficile di quello che ci
-% si aspettava) e le maschere
+QRmatrix = bit_information(QRmatrix,n_mask, ecl,version);
 
+M = ones(length(QRmatrix),length(QRmatrix));
 
+QRmatrix = M-QRmatrix;
 
-
+QRmatrix = imresize(uint8(QRmatrix),[length(QRmatrix)*10,length(QRmatrix)*10]);
+imshow(QRmatrix*255);
 
 end

@@ -7,41 +7,59 @@
 % Output
 %	IMG		: DataMatrix image
 
-% Message to be encoded
-M = [97, 98, 99, 100];
+function DM = DataMatrix(Str)
 
 % Max data that can be encoded, size by size
 	DataWordLength = [3, 5, 8, 12, 18, 22, 30, 36, 44, ...
-                    62, 86, 114, 144, 174, 204, ...
-                    280, 368, 456, 576, 696, 816, ...
-                    1050, 1304, 1558];
+                    62, 86, 114, 144, 174];
 				
 				
 % Max redundancy that can be encoded, size by size
 	ErrorWordLength = [5, 7, 10, 12, 14, 18, 20, 24, 28, ...
-                     36, 42, 48, 56, 68, 84, ...
-                     112, 144, 192, 224, 272, 336, ...
-                     408, 496, 620];
+                     36, 42, 48, 56, 68];
 				 
 				 
 % Size of the region, size by size
 	DataRegionSize = [8, 10, 12, 14, 16, 18, 20, 22, 24, ...
-                    14, 16, 18, 20, 22, 24, ...
-                    14, 16, 18, 20, 22, 24, ...
-                    18, 20, 22];
+                    28, 32, 36, 40, 44];
 	
 				
+% String to ASCII
+	M = uint8(Str);
+				
 % Padding function
-	[Msg, SizeIndex] = Padding(M);
-	disp('Padded message = ')
-	disp(Msg)
-	
+ 	[Msg, SizeIndex] = Padding(M);
+% 	disp('Padded message = ')
+% 	disp(Msg)
+ 	
 % RS-Encoding function
-	Msg = RSEncoder(DataRegionSize(SizeIndex), DataWordLength(SizeIndex), Msg);
-	disp('Encoded message = ')
-	disp(Msg)
-	
+ 	Msg = RSEncoder(DataWordLength(SizeIndex)+ErrorWordLength(SizeIndex), DataWordLength(SizeIndex), Msg);
+% 	disp('Encoded message = ')
+% 	disp(Msg)
+ 	
 % Message-to-matrix function
+ 	DM = Placement(Msg, DataRegionSize(SizeIndex));
+% 	disp('Matrix form = ')
+% 	disp(DM)
 	
+% No-cross version of the DataMatrix
+	DM_noCross=DM;
+	DM_noCross = Margin(DM_noCross);	
+	Q = ones(length(DM_noCross))-DM_noCross;
+	imwrite(Q, 'NoCross.png');
+
+% Central cross function
+	if SizeIndex>9
+		DM=CentralCross(DM, DataRegionSize(SizeIndex));
+	end
+	
+% Adding margin
+  	DM = Margin(DM);
+%  	disp('Matrix form with margin = ')
+%  	disp(DM)
 
 % Matrix-to-image function
+	Q = ones(length(DM))-DM;
+	imwrite(Q, 'test.png');
+	
+end
