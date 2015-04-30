@@ -12,14 +12,14 @@ xnk=[1 0];
 for i=1:n-k-1
     xnk=conv(xnk,[1 0]);
 end
-
+msg=gf(msg,8);
 xnk=gf(xnk,8);
 
 %Systematic encoding
 p=get_polynomial(n-k);
 [quotient,remainders]=deconv(conv(msg,xnk),p);
 redundance=remainders(k+1:n);
-msg=[msg,redundance];
+msg=gf2dec([msg,redundance],8);
 
 end
 
@@ -31,5 +31,6 @@ p=[1 1];
 for i=1:grado-1
  p=conv(p,[1 a^i]);
 end
+
 
 end

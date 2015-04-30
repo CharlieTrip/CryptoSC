@@ -1,3 +1,4 @@
+%MODIFICA DA FARE= se lavoriamo con vettori in gf(2) va pi? veloce
 % Input: 
 %       ArrayByte1 --> array of byte of the group 1
 %       ArrayByte1 --> array of byte of the group 2, 0 if there's not group
@@ -20,7 +21,7 @@ if ArrayByte2 == 0  % encoding for the version with 1 group of DataByte
     
 for j = 1:n_Block1
 
-        IntegerData_EC1(:,j) =  RSEncoder(bi2de(ArrayByte1(:,:,j),'left-msb')',dim_k1+ECxBlock,dim_k1);
+        IntegerData_EC1(:,j) =  RSencoding(bi2de(ArrayByte1(:,:,j),'left-msb')',dim_k1+ECxBlock,dim_k1);
 
 end
 
@@ -40,7 +41,7 @@ else % encoding for the version with 2 group of DataByte
     
 for j = 1:n_Block1
 
-    IntegerData_EC1(:,j) =  RSEncoder(bi2de(ArrayByte1(:,:,j),'left-msb')',dim_k1+ECxBlock,dim_k1);
+    IntegerData_EC1(:,j) =  RSEncoding(bi2de(ArrayByte1(:,:,j),'left-msb')',dim_k1+ECxBlock,dim_k1);
 
 end
 
@@ -54,7 +55,7 @@ end
     
 for j = 1:n_Block2
 
-    IntegerData_EC2(:,j) =  RSEncoder(bi2de(ArrayByte2(:,:,j),'left-msb')',dim_k2+ECxBlock,dim_k2);
+    IntegerData_EC2(:,j) =  RSEncoding(bi2de(ArrayByte2(:,:,j),'left-msb')',dim_k2+ECxBlock,dim_k2);
 
 end
 
