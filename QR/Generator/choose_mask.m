@@ -5,13 +5,16 @@
 
 function n_mask=choose_mask(qr_matrix,version)
 
-evaluation=zeros(1,8); %inizializzo il vettore di valutazione
-for i=1:8
-    evaluation(i)=evaluation_mask(qr_matrix,i-1,version); %calcolo le valutazioni per 
-    %ogni singola mask e le salvo nel vettore evaluation
+%inizializzo il vettore di valutazione
+evaluation=[evaluation_mask(qr_matrix,0,version),1];
+for i=2:8
+    part_evaluation=evaluation_mask(qr_matrix,i-1,version);
+    if part_evaluation < evaluation
+       evaluation=[part_evaluation(i-1),i-1];
+    end                                                           
 end
 
-n_mask=find(evaluation == min(evaluation))-1; %calcolo la valutazione minima 
+n_mask=evaluation(2)-1; %calcolo la valutazione minima 
 %ricerco la maschera corrispondente.
 %REMARK la maschera restituita e' un numero tra 0 e 7.
 end 

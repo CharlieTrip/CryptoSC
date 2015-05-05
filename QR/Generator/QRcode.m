@@ -4,7 +4,13 @@ function QRmatrix = QRcode(Stringa)
 
 ecl = input('Inserisci il livello di codifica (L,M,Q,H) :','s');
 
-[mode, version] = find_mode_version( Stringa, ecl );
+[mode,version] = find_mode_version(Stringa,ecl);
+
+if length(mode)== 1
+    fprintf('It has been inserted a not codificable symbol');
+    QRmatrix=[];
+    return
+end
 
 
 [ArrayByte1,ArrayByte2] = Codifica(Stringa,version,mode,ecl); % sistemo l'input in blocchi di byte
