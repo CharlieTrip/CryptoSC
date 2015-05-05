@@ -161,9 +161,9 @@ end
 %removing version information if version is bigger then 6
 if version > 6
     %down left
-    qr_matrix([(size(qr_matrix)-10):(size(qr_matrix)-8)], [1:6]) = null;
+    qr_matrix((size(qr_matrix)-10):(size(qr_matrix)-8), 1:6) = null;
     %up right
-    qr_matrix([1:6], [(size(qr_matrix)-10):(size(qr_matrix)-8)]) = null;
+    qr_matrix(1:6, (size(qr_matrix)-10):(size(qr_matrix)-8)) = null;
 end
 end
 
