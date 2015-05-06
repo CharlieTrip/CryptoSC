@@ -6,7 +6,7 @@
 
 function [stringa] = convertiASCII(lista)
 
-	stringa = char( lista ) ;
+	stringa = char( lista  - 1)  ;
 
 end
 
