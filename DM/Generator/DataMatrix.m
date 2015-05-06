@@ -25,7 +25,7 @@ function DM = DataMatrix(Str)
 	
 				
 % String to ASCII
-	M = uint8(Str);
+	M = uint8(Str)+1;
 				
 % Padding function
  	[Msg, SizeIndex] = Padding(M);
