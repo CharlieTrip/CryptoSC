@@ -39,7 +39,8 @@ QRplaced(1:6,m-6:m) = 0;  % Disegno quadrato in alto a destra
 
 QRplaced(m-6:m,1:7) = 0;  % Disegno quadrato in basso a sinistra
 
-QRplaced(m-8:m-4,m-8:m-4) = 0;  % Disegno quadrato in basso a destra
+
+
 
 
 QRplaced(1:7,1:7) = 1;  % Disegno quadrato in alto a sinistra

@@ -3,18 +3,18 @@
 %(per la numerazione delle masks vedi il file release_masking.m).
 %...
 
-function n_mask=choose_mask(qr_matrix,version)
+function n_mask=choose_mask(qr_matrix,version,ecl)
 
 %inizializzo il vettore di valutazione
-evaluation=[evaluation_mask(qr_matrix,0,version),1];
+evaluation=[evaluation_mask(qr_matrix,0,version,ecl),0];
 for i=2:8
-    part_evaluation=evaluation_mask(qr_matrix,i-1,version);
-    if part_evaluation < evaluation
-       evaluation=[part_evaluation(i-1),i-1];
+    part_evaluation=evaluation_mask(qr_matrix,i-1,version,ecl);
+    if part_evaluation(1) < evaluation(1)
+       evaluation=[part_evaluation(1),i-1];
     end                                                           
 end
 
-n_mask=evaluation(2)-1; %calcolo la valutazione minima 
+n_mask=evaluation(2); %calcolo la valutazione minima 
 %ricerco la maschera corrispondente.
 %REMARK la maschera restituita e' un numero tra 0 e 7.
 end 
@@ -33,7 +33,6 @@ mask=remove_allignments_bits(mask,version);%rimuovo la maschera nei pattern di o
 %applico la mask costruita sulla qr_matrix.
 for i=1:s
     for j=1:s
-        
         qr_matrix(i,j)=bitxor(mask(i,j),qr_matrix(i,j));
     end
 end
@@ -283,9 +282,9 @@ end
 %Data in input una matrice qr, valuta quale maschera tra le 8 definite
 %dalle referenze va applicata
 
-function n=evaluation_mask(qr_matrix,mask_n,version)
+function n=evaluation_mask(qr_matrix,mask_n,version,ecl)
 s=size(qr_matrix,1);
-
+qr_matrix = bit_information(qr_matrix,mask_n, ecl,version);
 %Applico la maschera k-esima
 qr_matrix=app_masking(qr_matrix, mask_n,version);
 
@@ -332,6 +331,7 @@ for j=1:s%scorre le righe della matrice
                 end;
 end;
 
+n
 %Feature 2
 %Ricerco solo blocchi 2x2, che e' equivalente al cercare i blocchi delle
 %varie size mxn
@@ -349,28 +349,14 @@ end
 %Feature 3
 
 %GENERO v
-for q=1:floor(s/7)
-    v=[];
-    for j=1:q
-        v=cat(2,v,1);
-    end
-    for j=1:q
-        v=cat(2,v,0);
-    end
-    for j=1:q
-        v=cat(2,v,[1 1 1]);
-    end
-    for j=1:q
-        v=cat(2,v,0);
-    end
-    for j=1:q
-        v=cat(2,v,1);
-    end
+v=[0 0 0 0 1 0 1 1 1 0 1 0 0 0 0];
+v2=v(1:11);
+v3=v(5:15);
 %RICERCO v
-%righe (indico ii perch? sto usando i nel ciclo for esterno)
+%righe
 for i=1:s
-    for j=1:s-(7*q-1);
-        if isequal(qr_matrix(i,j:j+7*q-1),v)
+    for j=1:s-14;
+        if isequal(qr_matrix(i,j:j+14),v)
             n=n+40;
         end
     end
@@ -378,15 +364,51 @@ end
 
 %colonne
 for j=1:s
-    for i=1:s-(7*q-1);
-        if isequal(qr_matrix(i:i+7*q-1,j),transpose(v))
+    for i=1:s-14;
+        if isequal(qr_matrix(i:i+14,j),transpose(v))
+            n=n+40;
+        end
+    end
+end
+
+%Ricerco v2
+for i=1:s
+    for j=1:s-10;
+        if isequal(qr_matrix(i,j:j+10),v2)
+            n=n+40;
+        end
+    end
+end
+
+%colonne
+for j=1:s
+    for i=1:s-10;
+        if isequal(qr_matrix(i:i+10,j),transpose(v2))
+            n=n+40;
+        end
+    end
+end
+
+%ricerco v3
+for i=1:s
+    for j=1:s-10;
+        if isequal(qr_matrix(i,j:j+10),v3)
+            n=n+40;
+        end
+    end
+end
+
+%colonne
+for j=1:s
+    for i=1:s-10;
+        if isequal(qr_matrix(i:i+10,j),transpose(v3))
             n=n+40;
         end
     end
 end
 
 
-end
+
 
 %Feature 4
 number_of_blacks=0;
@@ -405,7 +427,6 @@ else
     k=ceil(norm(perc_number_of_blacks-50)/5)-1; 
 end
 n=n+k*10;
-
 end
 
 

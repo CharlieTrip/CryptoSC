@@ -23,7 +23,7 @@ QRmatrix = Positioner(Finsequence,version);  % Qui si posizionano i bit nella ma
 
 QRmatrix = Blocchi_cover_info(QRmatrix, version);
 
-n_mask=choose_mask(QRmatrix,version);
+n_mask=choose_mask(QRmatrix,version,ecl);
 
 QRmatrix = app_masking(QRmatrix, n_mask,version);
 
