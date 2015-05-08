@@ -16,7 +16,7 @@ function [ArrayByte1,ArrayByte2] = Codifica(Stringa,Version,mode,ecl)
 [numDataBits, n_data_block1, n_block1, n_data_block2, n_block2] = info_version(Version,ecl);
 
 
-if mode == [0,0,1,0] %  to add the 8bit mode
+if mode == [0,0,1,0] %
     ArrayBit = alfa_numeric(Stringa,Version);
 elseif mode == [0,0,0,1]
     ArrayBit = numerica(Stringa,Version);

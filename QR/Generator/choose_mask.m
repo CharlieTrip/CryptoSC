@@ -290,18 +290,14 @@ qr_matrix=app_masking(qr_matrix, mask_n,version);
 
 %Feature 1 Adjacents modules
 %Righe
-n=0;
+n=0;%initializing score
 for i=1:s %scorre le righe della matrice
     n_uguali=1;
     for j=1:s-1 %scorre il vettore riga 
-        
         if qr_matrix(i,j) == qr_matrix(i,j+1);
             n_uguali=n_uguali+1;
-            
-        else
-                if n_uguali>=5
-                    n= n+(n_uguali-5)+3;
-                end;
+        elseif n_uguali>=5
+                 n= n+(n_uguali-5)+3;
                 n_uguali=1;
         end;
     end;
@@ -319,11 +315,9 @@ for j=1:s%scorre le righe della matrice
         if qr_matrix(i,j) == qr_matrix(i+1,j);
             n_uguali=n_uguali+1;
             
-        else
-                if n_uguali>=5
-                    n= n+(n_uguali-5)+3;
-                end;
-                n_uguali=1;
+        elseif n_uguali>=5
+           n= n+(n_uguali-5)+3;
+           n_uguali=1;
         end;
     end;
                 if (qr_matrix(s-1,j) == qr_matrix(s,j)) && n_uguali>=5;
@@ -331,7 +325,6 @@ for j=1:s%scorre le righe della matrice
                 end;
 end;
 
-n
 %Feature 2
 %Ricerco solo blocchi 2x2, che e' equivalente al cercare i blocchi delle
 %varie size mxn
@@ -349,64 +342,45 @@ end
 %Feature 3
 
 %GENERO v
-v=[0 0 0 0 1 0 1 1 1 0 1 0 0 0 0];
-v2=v(1:11);
-v3=v(5:15);
+for q=1:floor(s/7)
+    v=[];
+    for j=1:q
+        v=cat(2,v,1);
+    end
+    for j=1:q
+        v=cat(2,v,0);
+    end
+    for j=1:q
+        v=cat(2,v,[1 1 1]);
+    end
+    for j=1:q
+        v=cat(2,v,0);
+    end
+    for j=1:q
+        v=cat(2,v,1);
+    end
 %RICERCO v
-%righe
+%righe (indico ii perch? sto usando i nel ciclo for esterno)
+
 for i=1:s
-    for j=1:s-14;
-        if isequal(qr_matrix(i,j:j+14),v)
-            n=n+40;
-        end
-    end
+ for j=1:s-7*q+1;
+ if isequal(qr_matrix(i,j:j+7*q-1),v)
+ n=n+40;
+ end
+ end
 end
 
 %colonne
 for j=1:s
-    for i=1:s-14;
-        if isequal(qr_matrix(i:i+14,j),transpose(v))
-            n=n+40;
-        end
-    end
+ for i=1:s-7*q+1;
+ if isequal(qr_matrix(i:i+7*q-1,j),transpose(v))
+ n=n+40;
+ end
+ end
 end
 
-%Ricerco v2
-for i=1:s
-    for j=1:s-10;
-        if isequal(qr_matrix(i,j:j+10),v2)
-            n=n+40;
-        end
-    end
-end
 
-%colonne
-for j=1:s
-    for i=1:s-10;
-        if isequal(qr_matrix(i:i+10,j),transpose(v2))
-            n=n+40;
-        end
-    end
 end
-
-%ricerco v3
-for i=1:s
-    for j=1:s-10;
-        if isequal(qr_matrix(i,j:j+10),v3)
-            n=n+40;
-        end
-    end
-end
-
-%colonne
-for j=1:s
-    for i=1:s-10;
-        if isequal(qr_matrix(i:i+10,j),transpose(v3))
-            n=n+40;
-        end
-    end
-end
-
 
 
 
