@@ -1,8 +1,11 @@
 % 
 % Main file
+% This function takes a string of standard ASCII char as input
+% and returns a PNG file (called 'DataMatrix.png').
+% The maximum length of the message is 174.
 %   
 % Input
-% 	M 		: raw message
+% 	Str		: string form of the message
 %  
 % Output
 %	IMG		: DataMatrix image
@@ -22,44 +25,41 @@ function DM = DataMatrix(Str)
 % Size of the region, size by size
 	DataRegionSize = [8, 10, 12, 14, 16, 18, 20, 22, 24, ...
                     28, 32, 36, 40, 44];
-	
+
+
+if length(Str)>DataWordLength(14)
+	error('The message is too long.');
+end
 				
 % String to ASCII
 	M = uint8(Str)+1;
 				
 % Padding function
  	[Msg, SizeIndex] = Padding(M);
-% 	disp('Padded message = ')
-% 	disp(Msg)
+ 	disp('Padded message = ')
+ 	disp(Msg)
  	
 % RS-Encoding function
  	Msg = RSEncoder(DataWordLength(SizeIndex)+ErrorWordLength(SizeIndex), DataWordLength(SizeIndex), Msg);
-% 	disp('Encoded message = ')
-% 	disp(Msg)
+ 	disp('Encoded message = ')
+ 	disp(Msg)
  	
 % Message-to-matrix function
  	DM = Placement(Msg, DataRegionSize(SizeIndex));
-% 	disp('Matrix form = ')
-% 	disp(DM)
+ 	disp('Matrix form = ')
+ 	disp(DM)
 	
-% No-cross version of the DataMatrix
-	DM_noCross=DM;
-	DM_noCross = Margin(DM_noCross);	
-	Q = ones(length(DM_noCross))-DM_noCross;
-	imwrite(Q, 'NoCross.png');
-
 % Central cross function
-	if SizeIndex>9
+	if SizeIndex>=10
 		DM=CentralCross(DM, DataRegionSize(SizeIndex));
 	end
 	
 % Adding margin
   	DM = Margin(DM);
-%  	disp('Matrix form with margin = ')
-%  	disp(DM)
+  	disp('Matrix form with margin = ')
+  	disp(DM)
 
 % Matrix-to-image function
-	Q = ones(length(DM))-DM;
-	imwrite(Q, 'test.png');
+	imwrite(ones(length(DM))-DM, 'DataMatrix.png');
 	
 end
