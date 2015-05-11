@@ -9,11 +9,10 @@ function n_mask=choose_mask(qr_matrix,version,ecl)
 evaluation=[evaluation_mask(qr_matrix,0,version,ecl),0];
 for i=2:8
     part_evaluation=evaluation_mask(qr_matrix,i-1,version,ecl);
-    if part_evaluation(1) < evaluation(1)
-       evaluation=[part_evaluation(1),i-1];
+    if part_evaluation < evaluation(1)
+       evaluation=[part_evaluation,i-1];
     end                                                           
 end
-
 n_mask=evaluation(2); %calcolo la valutazione minima 
 %ricerco la maschera corrispondente.
 %REMARK la maschera restituita e' un numero tra 0 e 7.
