@@ -28,6 +28,7 @@ switch mode([2,4,6,8])
             character_count = data(5:18);
             data = data(19:length(data));
         end
+        message = retrieve_numeric(data, bi2de(character_count,'left-msb'));
         
     case '0010'
         %mode = 'Alphanumeric';
@@ -83,6 +84,24 @@ end
 
 end
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%Numeric part
+
+function message = retrieve_numeric(data,character_num)
+    delta = mod(character_num,3);
+    n = (character_num -delta)/3;
+    message = ' ';
+    for i=1:n
+        message=strcat(message, mat2str(bi2de(data((i-1)*10+1:i*10),'left-msb')));
+    end
+    if delta==1
+        message=strcat(message, mat2str(bi2de(data(n*10+1:n*10+4),'left-msb')));
+    end
+    if delta == 2
+        message=strcat(message, mat2str(bi2de(data(n*10+1:n*10+7),'left-msb')));
+    end
+end
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%Byte part
 function message = retrieve_byte(data,character_num)
@@ -92,8 +111,6 @@ global version_ ecl_
         l=bi2de(data([(i-1)*8+1:i*8]),'left-msb');
         message=[message ,num2jis8(l)];
     end
-    
-
 end
 
 %Given a byte (num between 0 and 256) return the character 

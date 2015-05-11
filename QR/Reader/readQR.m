@@ -1,5 +1,6 @@
 %Given the qr image path return the decoded message
 function [message] = readQR(image_path)
+%try
 global null;
 null = -1;
 %read image
@@ -24,4 +25,6 @@ message = retrieve_message(data, version, ecl);
 %join all character TODO:fix it for alphanumeric
 message=strjoin(cellstr(message),'');
 sprintf('%s',message(:))
+%catch
+%    disp('budroni è infame, per colpa sua qualcosa è andato storto e b. ride');
 end
