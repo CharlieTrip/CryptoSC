@@ -1,35 +1,49 @@
-%Questa funzione prende in Input la matrice qr_matrix
-%e restituisce il numero di maschera da applicare
-%(per la numerazione delle masks vedi il file release_masking.m).
-%...
+%This function chooses the useful mask to be applied to the qr_matrix.
+%
+%Input: 
+%        qr_matrix -->matrix of bits
+%        version --> int, the right version of QR to use
+%        ecl --> char, indicates the error corretcion level
+%Output: 
+%       n_mask--> int, mask to be applied.
 
 function n_mask=choose_mask(qr_matrix,version,ecl)
 
-%inizializzo il vettore di valutazione
+%initialing the evaluation vector, it will contain the score and the associed 
+%index mask 
 evaluation=[evaluation_mask(qr_matrix,0,version,ecl),0];
 for i=2:8
+    %calculating the score for each mask
     part_evaluation=evaluation_mask(qr_matrix,i-1,version,ecl);
+    %if we find a better score, we substitute the old score and index mask.
     if part_evaluation < evaluation(1)
        evaluation=[part_evaluation,i-1];
     end                                                           
 end
-n_mask=evaluation(2); %calcolo la valutazione minima 
-%ricerco la maschera corrispondente.
-%REMARK la maschera restituita e' un numero tra 0 e 7.
+n_mask=evaluation(2); %storing the best mask in the output variable
+
 end 
 
 
-%Questa funzione applica a una matrice 'qr_matrix' di versione 
-%'version' la maschera 'mask_n'. Per chiarimenti vedi funzioni 'locali' 
-%in basso
+
+%This function applies a fixed mask(that is rapresented by a matrix) to a matrix by summing them.
+%There is 8 different available masks. 
+%
+% Input: 
+%       qr_matrix -->matrix of bits 
+%       mask_n --> int, mask index
+%       version --> int, the right version of QR to use
+%
+% Output:
+%      qr_matrix -->matrix of bits
 
 function [ qr_matrix ] = app_masking(qr_matrix, mask_n,version)
-s=size(qr_matrix,1);
-mask=zeros(s,s);%definisco una matrice nulla della stessa dimensione di qr_matrix
-mask=app_masking_all(mask,mask_n);%mask_n applicata a tutta la matrice nulla
-mask=remove_allignments_bits(mask,version);%rimuovo la maschera nei pattern di orientamento
+s=size(qr_matrix,1);%size of qr_matrix
+mask=zeros(s,s);%initializing a zeros matrix of same size of qr_code
+mask=app_masking_all(mask,mask_n);%applying the mask shape to all matrix
+mask=remove_allignments_bits(mask,version);%removing the maskshape in allignments positions.
 
-%applico la mask costruita sulla qr_matrix.
+%summing qr_matrix and chosen mask
 for i=1:s
     for j=1:s
         qr_matrix(i,j)=bitxor(mask(i,j),qr_matrix(i,j));
@@ -38,16 +52,20 @@ end
 
 end
 
+%This function applies the mask shape to entire matrix 
+%
+%Input:
+%       qr_matrix -->matrix of bits 
+%       mask_n --> int, mask index
+%
+% Output:
+%      qr_matrix -->matrix of bits
 
-
-
-
-%Applica la maschera a tutta la matrice - modificata da release_masking.m
 function [ qr_matrix ] = app_masking_all(qr_matrix, mask_n)
 
-switch mask_n
+switch mask_n%switch to select the chosen mask
     
-    case 0
+    case 0 % constructing mask 0
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod(i+j,2) == 0
@@ -56,7 +74,7 @@ switch mask_n
             end
         end
         
-    case 1
+    case 1 % constructing mask 1
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod(i-1,2) == 0
@@ -65,7 +83,7 @@ switch mask_n
             end
         end
         
-    case 2
+    case 2 % constructing mask 2
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod(j-1,3) == 0
@@ -74,7 +92,7 @@ switch mask_n
             end
         end
         
-    case 3
+    case 3 % constructing mask 3
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod(i+j-2,3) == 0
@@ -83,7 +101,7 @@ switch mask_n
             end
         end
         
-    case 4
+    case 4 % constructing mask 4
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod(idivide(uint8(i-1),uint8(2))+idivide(uint8(j-1),uint8(3)),2) == 0
@@ -92,7 +110,7 @@ switch mask_n
             end
         end
         
-    case 5
+    case 5 % constructing mask 5
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod((i-1)*(j-1),2)+ mod((i-1)*(j-1),3) == 0
@@ -101,7 +119,7 @@ switch mask_n
             end
         end
         
-    case 6
+    case 6 % constructing mask 6
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod(mod((i-1)*(j-1),2)+ mod((i-1)*(j-1),3),2) == 0
@@ -110,7 +128,7 @@ switch mask_n
             end
         end
         
-    case 7
+    case 7 % constructing mask 7
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod(mod((i-1)+(j-1),2)+ mod((i-1)*(j-1),3),2) == 0
@@ -121,13 +139,15 @@ switch mask_n
 end
 end
 
+%%This function removes the various finder puttin the null value
+%
+%Input:
+%       qr_matrix -->matrix of bits 
+%       version --> int, the right version of QR to use
+%       
+% Output:
+%      qr_matrix -->matrix of bits
 
-
-
-
-
-
-%%Remove the various finder puttin the null value
 function [ qr_matrix ] = remove_allignments_bits( qr_matrix, version)
 %value for pointless bit
 global null;
@@ -159,9 +179,9 @@ end
 %removing version information if version is bigger then 6
 if version > 6
     %down left
-    qr_matrix((size(qr_matrix)-10):(size(qr_matrix)-8), 1:6) = null;
+    qr_matrix([(size(qr_matrix)-10):(size(qr_matrix)-8)], [1:6]) = null;
     %up right
-    qr_matrix(1:6, (size(qr_matrix)-10):(size(qr_matrix)-8)) = null;
+    qr_matrix([1:6], [(size(qr_matrix)-10):(size(qr_matrix)-8)]) = null;
 end
 end
 
@@ -260,7 +280,7 @@ if v>1
     m = min(rc);
     for r =rc
         for c=rc
-            %evito i quadratoni nei tre bordi
+            %avoiding Position Detection Patterns
             if (c~=M|| r~=M)&&(c~=m || r~=m) && ...
                     (r~=M || c~=m)
                 result = [result struct('r',s-r,'c',c+1)]; 
@@ -272,45 +292,48 @@ end
 end
 
 
-
-
-
-
-
-
-%Data in input una matrice qr, valuta quale maschera tra le 8 definite
-%dalle referenze va applicata
+%This function calculates the score for a fixed mask, evalueating four 
+%different features.
+%
+%Input:
+%       qr_matrix -->matrix of bits 
+%       mask_n --> int, mask index
+%       version --> int, the right version of QR to use
+%       ecl --> char, indicates the error corretcion level
+%
+%Output:
+%       n --> int, score computed
+%
 
 function n=evaluation_mask(qr_matrix,mask_n,version,ecl)
-s=size(qr_matrix,1);
-qr_matrix = bit_information(qr_matrix,mask_n, ecl,version);
-%Applico la maschera k-esima
+s=size(qr_matrix,1); %size of qr_matrix
+qr_matrix = bit_information(qr_matrix,mask_n, ecl,version); %finding information bits
+%Applying n-th mask
 qr_matrix=app_masking(qr_matrix, mask_n,version);
 
-%Feature 1 Adjacents modules
-%Righe
+%Feature 1 Adjacent modules
+%
+%Searching in the rows
 n=0;%initializing score
-for i=1:s %scorre le righe della matrice
-    n_uguali=1;
-    for j=1:s-1 %scorre il vettore riga 
-        if qr_matrix(i,j) == qr_matrix(i,j+1);
-            n_uguali=n_uguali+1;
+for i=1:s %columns index
+    n_uguali=1;%initializing number of equal adjacent modules
+    for j=1:s-1 %rows index 
+        if qr_matrix(i,j) == qr_matrix(i,j+1); %check if this modules are equal
+            n_uguali=n_uguali+1;%increasing number of equal adjacent modules
         elseif n_uguali>=5
-                 n= n+(n_uguali-5)+3;
+                 n= n+(n_uguali-5)+3; %adding penalty points
                 n_uguali=1;
         end;
     end;
-                if (qr_matrix(i,s-1) == qr_matrix(i,s)) && n_uguali>=5;
-                    n= n+(n_uguali-5)+3;
+                if (qr_matrix(i,s-1) == qr_matrix(i,s)) && n_uguali>=5; %checking if the last two modules are equal
+                    n= n+(n_uguali-5)+3; %adding penalty points
                 end;
 end;
 
-%columns
-
-for j=1:s%scorre le righe della matrice
+%Searching in the columns
+for j=1:s %rows index
     n_uguali=1;
-    for i=1:s-1%scorre il vettore riga 
-        
+    for i=1:s-1 %columns index
         if qr_matrix(i,j) == qr_matrix(i+1,j);
             n_uguali=n_uguali+1;
             
@@ -325,23 +348,23 @@ for j=1:s%scorre le righe della matrice
 end;
 
 %Feature 2
-%Ricerco solo blocchi 2x2, che e' equivalente al cercare i blocchi delle
-%varie size mxn
-square_n=[1,1;1,1]; %quadrato 2x2 nero
-square_b=[0,0;0,0]; %quadrato 2x2 bianco
+%Searching 2x2 blocks
+square_n=[1,1;1,1]; %2x2 black square
+square_b=[0,0;0,0]; %2x2 white square
 
-for i=1:s-1%righe
-    for j=1:s-1%colonne
-        if isequal(qr_matrix(i:i+1,j:j+1),square_n) || isequal(qr_matrix(i:i+1,j:j+1),square_b)
-            n=n+3;
+for i=1:s-1
+    for j=1:s-1%
+        %checking if there are this kind of this blocks
+        if isequal(qr_matrix(i:i+1,j:j+1),square_n) || isequal(qr_matrix(i:i+1,j:j+1),square_b) 
+            n=n+3; %adding penalty points
         end
     end
 end
 
 %Feature 3
 
-%GENERO v
 for q=1:floor(s/7)
+    % generating particular kind of vectors
     v=[];
     for j=1:q
         v=cat(2,v,1);
@@ -358,48 +381,48 @@ for q=1:floor(s/7)
     for j=1:q
         v=cat(2,v,1);
     end
-%RICERCO v
-%righe (indico ii perch? sto usando i nel ciclo for esterno)
-
-for i=1:s
- for j=1:s-7*q+1;
- if isequal(qr_matrix(i,j:j+7*q-1),v)
- n=n+40;
- end
- end
-end
-
-%colonne
-for j=1:s
- for i=1:s-7*q+1;
- if isequal(qr_matrix(i:i+7*q-1,j),transpose(v))
- n=n+40;
- end
- end
-end
-
-
+    
+    %Searching v in the matrix (rows)
+    %
+    for i=1:s
+        for j=1:s-7*q+1;
+            if isequal(qr_matrix(i,j:j+7*q-1),v)
+                n=n+40;
+            end
+        end
+    end
+    
+    %Searching v in the matrix (columns)
+    for j=1:s
+        for i=1:s-7*q+1;
+            if isequal(qr_matrix(i:i+7*q-1,j),transpose(v))
+                n=n+40;
+            end
+        end
+    end
 end
 
 
 
 %Feature 4
-number_of_blacks=0;
+%
+number_of_blacks=0;%Initializing number of blacks
 for i= 1: s
     for j = 1:s
         if qr_matrix(i,j) == 1;
-            number_of_blacks= number_of_blacks+1;
+            %Computing number of blacks in the matrix
+            number_of_blacks= number_of_blacks+1; 
         end
     end
 end
-
-perc_number_of_blacks=floor(number_of_blacks*100/(s^2));
+%Computing percentage of blacks
+perc_number_of_blacks=floor((number_of_blacks*100)/(s^2));
 if perc_number_of_blacks == 50 
     k=0;
 else
     k=ceil(norm(perc_number_of_blacks-50)/5)-1; 
 end
-n=n+k*10;
+n=n+k*10; %adding penalty points
 end
 
 

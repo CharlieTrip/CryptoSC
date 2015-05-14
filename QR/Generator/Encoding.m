@@ -1,9 +1,8 @@
-%MODIFICA DA FARE= se lavoriamo con vettori in gf(2) va pi? veloce
 % Input: 
 %       ArrayByte1 --> array of byte of the group 1
 %       ArrayByte1 --> array of byte of the group 2, 0 if there's not group
 %       version --> int, the right version of QR to use
-%       ecl --> char, 'H','Q','M','L'
+%       ecl --> char, indicates the error corretcion level
 %
 % Output:
 %       ECCodewordByte1 --> array of byte obtained with de Reed Solomon 

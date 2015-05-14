@@ -1,4 +1,3 @@
-
 % Input: 
 %       Stringa --> input string
 %       version --> int, the right version of QR to use

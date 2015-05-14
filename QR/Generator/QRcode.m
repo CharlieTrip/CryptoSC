@@ -35,6 +35,6 @@ QRmatrix = M-QRmatrix;
 
 QRmatrix = imresize(uint8(QRmatrix),[length(QRmatrix)*10,length(QRmatrix)*10]);
 imshow(QRmatrix*255);
-imwrite(QRmatrix,'QR.png');
+imwrite(QRmatrix*255,'QR.png');
 
 end

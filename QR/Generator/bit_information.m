@@ -91,23 +91,31 @@ end
 
 
 
-
-
-
+%This function computes BCH encoding.
+%Systematic encoding: redundance + message
+%Input: 
+%       version --> int, the right version of QR to use 
+%Output 
+%       BCHcode_VI -->  Vector of elements in gf(2^8) (0..255 notation) , encoded message
 function BCHcode_VI=BCHencoding(version)
 xnk=[1 0];
 
+%Constructing coefficients vector of x^10
 for i=1:11
     xnk=conv(xnk,[1 0]);
 end
 
+%computing version bits 
 version_bits=gf(de2bi(version,6,'left-msb'),8);
 
+%multiplying version bits to x^10 
 version_bits_xnk=conv(version_bits,xnk);
 
+%computing redundance dividing by a fixed polynomial
 [quotient,remainder]=deconv(version_bits_xnk,gf([1 1 1 1 1 0 0 1 0 0 1 0 1],8));
 remainder=(remainder(7:18));
 
+%converting in integer notation
 BCHcode_VI=gf2dec([version_bits,remainder],8);
 
 

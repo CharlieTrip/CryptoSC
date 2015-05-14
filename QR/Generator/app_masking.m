@@ -1,14 +1,21 @@
-%Questa funzione applica a una matrice 'qr_matrix' di versione 
-%'version' la maschera 'mask_n'. Per chiarimenti vedi funzioni 'locali' 
-%in basso
+%This function applies a fixed mask(that is rapresented by a matrix) to a matrix by summing them.
+%There is 8 different available masks. 
+%
+% Input: 
+%       qr_matrix -->matrix of bits 
+%       mask_n --> int, mask index
+%       version --> int, the right version of QR to use
+%
+% Output:
+%      qr_matrix -->matrix of bits
 
 function [ qr_matrix ] = app_masking(qr_matrix, mask_n,version)
-s=size(qr_matrix,1);
-mask=zeros(s,s);%definisco una matrice nulla della stessa dimensione di qr_matrix
-mask=app_masking_all(mask,mask_n);%mask_n applicata a tutta la matrice nulla
-mask=remove_allignments_bits(mask,version);%rimuovo la maschera nei pattern di orientamento
+s=size(qr_matrix,1);%size of qr_matrix
+mask=zeros(s,s);%initializing a zeros matrix of same size of qr_code
+mask=app_masking_all(mask,mask_n);%applying the mask shape to all matrix
+mask=remove_allignments_bits(mask,version);%removing the maskshape in allignments positions.
 
-%applico la mask costruita sulla qr_matrix.
+%summing qr_matrix and chosen mask
 for i=1:s
     for j=1:s
         qr_matrix(i,j)=bitxor(mask(i,j),qr_matrix(i,j));
@@ -17,12 +24,20 @@ end
 
 end
 
-%Applica la maschera a tutta la matrice - modificata da release_masking.m
+%This function applies the mask shape to entire matrix 
+%
+%Input:
+%       qr_matrix -->matrix of bits 
+%       mask_n --> int, mask index
+%
+% Output:
+%      qr_matrix -->matrix of bits
+
 function [ qr_matrix ] = app_masking_all(qr_matrix, mask_n)
 
-switch mask_n
+switch mask_n%switch to select the chosen mask
     
-    case 0
+    case 0 % constructing mask 0
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod(i+j,2) == 0
@@ -31,7 +46,7 @@ switch mask_n
             end
         end
         
-    case 1
+    case 1 % constructing mask 1
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod(i-1,2) == 0
@@ -40,7 +55,7 @@ switch mask_n
             end
         end
         
-    case 2
+    case 2 % constructing mask 2
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod(j-1,3) == 0
@@ -49,7 +64,7 @@ switch mask_n
             end
         end
         
-    case 3
+    case 3 % constructing mask 3
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod(i+j-2,3) == 0
@@ -58,7 +73,7 @@ switch mask_n
             end
         end
         
-    case 4
+    case 4 % constructing mask 4
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod(idivide(uint8(i-1),uint8(2))+idivide(uint8(j-1),uint8(3)),2) == 0
@@ -67,7 +82,7 @@ switch mask_n
             end
         end
         
-    case 5
+    case 5 % constructing mask 5
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod((i-1)*(j-1),2)+ mod((i-1)*(j-1),3) == 0
@@ -76,7 +91,7 @@ switch mask_n
             end
         end
         
-    case 6
+    case 6 % constructing mask 6
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod(mod((i-1)*(j-1),2)+ mod((i-1)*(j-1),3),2) == 0
@@ -85,7 +100,7 @@ switch mask_n
             end
         end
         
-    case 7
+    case 7 % constructing mask 7
         for i=1:size(qr_matrix,1)
             for j=1:size(qr_matrix,2)
                 if mod(mod((i-1)+(j-1),2)+ mod((i-1)*(j-1),3),2) == 0
@@ -96,7 +111,15 @@ switch mask_n
 end
 end
 
-%%Remove the various finder puttin the null value
+%%This function removes the various finder puttin the null value
+%
+%Input:
+%       qr_matrix -->matrix of bits 
+%       version --> int, the right version of QR to use
+%
+% Output:
+%      qr_matrix -->matrix of bits
+
 function [ qr_matrix ] = remove_allignments_bits( qr_matrix, version)
 %value for pointless bit
 global null;
@@ -229,7 +252,7 @@ if v>1
     m = min(rc);
     for r =rc
         for c=rc
-            %evito i quadratoni nei tre bordi
+            %avoiding Position Detection Patterns
             if (c~=M|| r~=M)&&(c~=m || r~=m) && ...
                     (r~=M || c~=m)
                 result = [result struct('r',s-r,'c',c+1)]; 
