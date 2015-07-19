@@ -37,7 +37,6 @@ end
 
 %%return the center of the allignemts patterns
 function [ result ] = get_allignment_patterns_center( v )
-%TODO: edit center in case bigger then 7
 if v>1
     switch v
         case 2

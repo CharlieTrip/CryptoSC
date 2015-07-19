@@ -1,8 +1,11 @@
 %0 is black
 for i=1:22
-    %read imgz
-    readQR(strcat('qr_test/',mat2str(i),'.png'))
-   
+    %read imgz 5/12
+    % 20 strange 21
+    %if i~=5 && i~=12 && i~=20 && i~=21
+    readQR(strcat('qr_test/',mat2str(i),'.png'))   
+    
+   % end
 end 
 %  [img,map]=imread('qr_test/17.png','png');
 %  %img = uint8(ones(size(img)))-uint8(img);

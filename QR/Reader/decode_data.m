@@ -24,7 +24,7 @@ else
     for i=1:car.nblock(1)
         j=i;
         col=1;
-        while j<=length(M)
+        while col<=car.n(1)
             blocks1(i,col)=M(j);
             j=j+car.nblock(1)+car.nblock(2);
             col=col+1;
@@ -35,7 +35,7 @@ else
     for i=1:car.nblock(2)
         j=i;
         col = 1;
-        while j<=length(M)
+        while j<=car.n(2)
             blocks2(i,col)=M(j);
             j=j+car.nblock(1)+car.nblock(2);
             col= col +1;

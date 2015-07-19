@@ -24,7 +24,7 @@ message = retrieve_message(data, version, ecl);
 %disp(version);
 %join all character TODO:fix it for alphanumeric
 message=strjoin(cellstr(message),'');
-sprintf('%s',message(:))
+sprintf('%s',message(:));
 %catch
-%    disp('budroni è infame, per colpa sua qualcosa è andato storto e b. ride');
+%    disp('budroni ? infame, per colpa sua qualcosa ? andato storto e b. ride');
 end

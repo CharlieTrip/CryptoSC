@@ -30,7 +30,7 @@ end
 mask_n = mat2str(decoded_format([3:5]));
 mask_n = mask_n([2,4,6]);
 %%calculate version
-version = (size(qr_matrix,1)-21)/4+1;
+version = uint8((size(qr_matrix,1)-21)/4+1);
 if version >6
     %TODO: do decoding
     %version = retrieve_version_information(qr_matrix);

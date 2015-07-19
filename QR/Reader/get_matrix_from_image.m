@@ -1,12 +1,12 @@
 %%Recognize Black\White Modules
 function [ qr_matrix ] = get_matrix_from_image( image_qr )
     image_qr = uint8(ones(size(image_qr)))-uint8(image_qr);
-    image_qr = crop_QR(image_qr); 
+    %image_qr = crop_QR(image_qr); 
     qr_matrix = image_to_matrix(image_qr);
 end
 
 %%Crop the image after the right orientation
-function [ cropped_image ] = crop_QR( qr )
+function [ cropped_image ] = crop_QR(qr)
 
 lux =1;
 luy=1;
@@ -45,19 +45,39 @@ end
 
 %Given a cropped image return the matrix
 function [ qr_matrix ] = image_to_matrix( qr )
+% Deprecated
+% tx=1;
+% ty=1;
+% 
+% while qr(tx,ty)==0
+%     tx=tx+1;
+% end
 
-tx=1;
-ty=1;
+%test
+a = get_rectangle_ceneter(qr*255);
+tx = mean([a(:,3);a(:,4)]);
 
-while qr(tx,ty)==0
-    tx=tx+1;
-end
 %total number of modulo in the side
-tn = floor(size(qr,1)/((tx-1)/7));
+tn = floor(size(qr,1)/((tx)/7));
+rema = rem((tn-21)/4,1);
+if rema >0.5
+while rema~=0    
+        tn=tn+1;
+        rema = rem((tn-21)/4,1);
+end
+else
+ while rema~=0    
+        tn=tn-1;
+        rema = rem((tn-21)/4,1);
+end
+end
+if tn<=17 
+    tn=21;
+end
 %is incredible but the resize works very nice 
 qr_matrix = ones([tn tn])-double(imresize(qr,[tn tn]));
 %modulo length
-% ml=idivide(uint8(tx-1),7);
+%ml=idivide(uint8(tx-1),7);
 % 
 % tx = ml;
 % ty = ml;w
